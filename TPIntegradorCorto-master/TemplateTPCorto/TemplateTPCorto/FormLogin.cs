@@ -28,5 +28,10 @@ namespace TemplateTPCorto
             Credencial credencial = loginNegocio.login(usuario, password);
 
         }
+
+        private void FormLogin_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
