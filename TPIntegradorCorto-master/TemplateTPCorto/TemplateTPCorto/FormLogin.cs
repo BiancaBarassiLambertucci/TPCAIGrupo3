@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Persistencia; //REVISAR
+
 namespace TemplateTPCorto
 {
     public partial class FormLogin : Form
@@ -26,12 +28,21 @@ namespace TemplateTPCorto
 
             LoginNegocio loginNegocio = new LoginNegocio();
             Credencial credencial = loginNegocio.login(usuario, password);
+            if (credencial != null) //NUEVO
+            {
 
+            }
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
 
+        }
+        //Revisar cómo llamar al método en Persistencia llamado BuscarRegistro()
+        public List<String> BuscarRegistro()
+        {
+            DataBaseUtils dbUtils = new DataBaseUtils();
+            List<string> registros = dbUtils.BuscarRegistro("Credenciales.csv");
         }
     }
 }
