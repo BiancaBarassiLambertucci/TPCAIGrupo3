@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using Persistencia; //REVISAR
+using Persistencia.DataBase;
 
 namespace TemplateTPCorto
 {
@@ -43,6 +43,7 @@ namespace TemplateTPCorto
         {
             DataBaseUtils dbUtils = new DataBaseUtils();
             List<string> registros = dbUtils.BuscarRegistro("Credenciales.csv");
+            return registros;
         }
     }
 }

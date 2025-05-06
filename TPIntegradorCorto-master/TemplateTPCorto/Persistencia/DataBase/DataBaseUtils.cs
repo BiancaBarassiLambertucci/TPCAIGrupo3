@@ -9,6 +9,7 @@ namespace Persistencia.DataBase
 {
     public class DataBaseUtils
     {
+        
         // Definimos la ruta base relativa al directorio actual de ejecución: "Tablas"
         private readonly string baseFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tablas");
 
