@@ -22,17 +22,105 @@ namespace TemplateTPCorto
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
+
         {
-            String usuario = txtUsuario.Text;
-            String password = txtPassword.Text;
 
             LoginNegocio loginNegocio = new LoginNegocio();
+
+            String usuario = txtUsuario.Text;
+
+            String password = txtPassword.Text;
+
+            String usuarioE;
+
+            String passwordE;
+
+            int intentosFallidos = 0;
+
+
+
             Credencial credencial = loginNegocio.login(usuario, password);
-            if (credencial != null) //NUEVO
+
+            if (string.IsNullOrEmpty(usuario) || string.IsNullOrEmpty(password))
+
             {
 
+                MessageBox.Show("Debe ingresar usuario y contraseña para poder continuar");
+
+                return;
+
             }
+            else
+
+            {
+
+                MessageBox.Show("Llegamos hasta aca");
+
+
+                List<string> registros = BuscarRegistro();
+
+                if (registros.Count == 0)
+
+                {
+
+                    MessageBox.Show("La lista esta vacía");
+
+                    return;
+
+                }
+
+                /*for (int i = 0; i < BuscarRegistro().Count; i++) // NO ESTA ACCEDIENDO A ESTO
+
+                {
+
+                    string[] datos = BuscarRegistro()[i].Split(';');
+
+                    usuarioE = datos[1];
+
+                    passwordE = datos[2];
+
+                    if (usuario != usuarioE || password != passwordE)
+
+                    {
+
+                        MessageBox.Show("Usuario y Contraseña incorrectos, intente nuevamente");
+
+                        intentosFallidos++;
+
+                    } else
+
+                    {
+
+                        MessageBox.Show("login EXITOSO");
+
+                        break;
+
+                    }
+
+                }*/
+
+            }
+
+
+
+
+            /*if (credencial == null) //NUEVO
+
+            {
+
+                MessageBox.Show("Dio null");
+
+            } else
+
+            {
+
+                MessageBox.Show("funca");
+
+            }*/
+
+
         }
+
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
