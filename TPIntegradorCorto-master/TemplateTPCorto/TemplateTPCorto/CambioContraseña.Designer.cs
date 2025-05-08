@@ -33,19 +33,21 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(350, 161);
+            this.button1.Location = new System.Drawing.Point(77, 201);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(315, 35);
             this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
+            this.button1.Text = "Cambiar Contraseña";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // CambioContraseña
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(491, 317);
             this.Controls.Add(this.button1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "CambioContraseña";
             this.Text = "CambioContraseña";
             this.ResumeLayout(false);

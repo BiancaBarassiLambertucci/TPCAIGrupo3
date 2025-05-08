@@ -53,10 +53,10 @@ namespace TemplateTPCorto
 
 
             List<string> usuarios = BuscarRegistro(); //Llamo al método que lee el archivo csv y devuelve una lista de lineas. Cada linea representa un usuario.
-           
+
             bool loginCorrecto = false; //Creo variable para saber si encontramos o no un usuario valido
             bool primeraLinea = true;
-            
+
             foreach (string linea in usuarios)
             {
                 //MessageBox.Show(linea); // Validación ver cada línea que se lee
@@ -98,12 +98,40 @@ namespace TemplateTPCorto
                         //Muestra el menú principal de forma modal
                     }
                     break; //Salgo del loop porque encontré al usuario
+
+                } else
+                {
+                    RegistrarIntento(legajoCredencial);
+                    List<string> listaIntentos = ListaIntentos();
+                    int contador = 0;
+                    string fechaActual = DateTime.Now.ToString("yyyy-MM-dd");
+
+                    foreach (string registro in listaIntentos)
+                    {
+                        string[] campos = registro.Split(';');
+                        string legajoGuardado = campos[0].Trim();
+                        string fechaGuardada = campos[1].Trim();
+                        if (legajoGuardado == legajoCredencial && fechaActual == fechaGuardada)
+                        {
+                            contador++;
+                        }
+                    }
+
+                    if (contador >= 3)
+                    {
+                        BloquearUsuario(legajoCredencial);
+                        MessageBox.Show("Usted superó los intentos de ingreso permitidos. Su usuario ha sido bloqueado");
+                        return;
+
+                    } else
+                    {
+                        MessageBox.Show("Usuario o contraseña incorrectos.");
+                        return;
+                    }
+
                 }
             }
-            if (!loginCorrecto)
-            {
-                MessageBox.Show("Usuario o contraseña incorrectos.");
-            }
+
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
@@ -117,7 +145,32 @@ namespace TemplateTPCorto
             List<string> registros = dbUtils.BuscarRegistro("Credenciales.csv");
             return registros;
         }
-        
+
+        public void RegistrarIntento(string legajo)
+        {
+            // Guardo la fecha actual
+            string fechaActual = DateTime.Now.ToString("yyyy-MM-dd");
+
+            // Creo la línea que se va a agregar
+            string registro = $"{legajo};{fechaActual}";
+
+            // Uso el método AgregarRegistro (del DataBaseUtils) para sumar el registro al archivo "login_intentos.csv"
+            DataBaseUtils dbUtils = new DataBaseUtils();
+            dbUtils.AgregarRegistro("login_intentos.csv", registro);
+        }
+
+        public void BloquearUsuario(string legajo)
+        {
+            DataBaseUtils dbUtils = new DataBaseUtils();
+            dbUtils.AgregarRegistro("usuario_bloqueado.csv", legajo);
+        }
+
+        public List<string> ListaIntentos()
+        {
+            DataBaseUtils dbUtils = new DataBaseUtils();
+            List<string> intentos = dbUtils.BuscarRegistro("login_intentos.csv");
+            return intentos;
+        }
     }
 
 }
