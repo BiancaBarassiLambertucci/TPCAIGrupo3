@@ -33,25 +33,24 @@ namespace TemplateTPCorto
 
             String contraseñaTxt = txtPassword.Text;
 
-            //Validaciones de negocio
+            //Validaciones de negocio (si usuario y contraseñas estan vacios)
 
             if (string.IsNullOrWhiteSpace(usuarioTxt))
             {
                 MessageBox.Show("Debe ingresar el usuario para poder ingresar.");
                 return;
-            }
-            if (string.IsNullOrWhiteSpace(contraseñaTxt))
+
+            } else if (string.IsNullOrWhiteSpace(contraseñaTxt))
             {
                 MessageBox.Show("Debe ingresar la contraseña para poder ingresar.");
                 return;
-            }
-            //Longitud de password (mayor igual a 8) 
 
-            if (contraseñaTxt.Length < 8)
+            } else if (contraseñaTxt.Length < 8) //Longitud de password (mayor igual a 8) 
             {
                 MessageBox.Show("La contraseña debe tener 8 o más caracteres.");
                 return;
             }
+
 
             List<string> usuarios = BuscarRegistro(); //Llamo al método que lee el archivo csv y devuelve una lista de lineas. Cada linea representa un usuario.
            
