@@ -9,19 +9,28 @@ namespace Persistencia.DataBase
 {
     public class DataBaseUtils
     {
-        
+
         // Definimos la ruta base relativa al directorio actual de ejecución: "Tablas"
-        private readonly string baseFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tablas");
+
+        //private readonly string baseFolderPath = @"C:\Users\Administrator\OneDrive\Documentos\GitHub\CAI\TPCAIGrupo 3\TPCAIGrupo3\TPIntegradorCorto-master\TemplateTPCorto\Persistencia\DataBase\Tablas\";
+        //private readonly string baseFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tablas");
+        private readonly string baseFolderPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Persistencia\DataBase\Tablas"));
 
         // Método para buscar registros en un archivo CSV
         public List<string> BuscarRegistro(string nombreArchivo)
         {
             // Combina la ruta base con el nombre del archivo
             string rutaArchivo = Path.Combine(baseFolderPath, nombreArchivo);
+            Console.WriteLine("Ruta del archivo: " + rutaArchivo);
             List<string> listado = new List<string>();
 
             try
             {
+                if (!File.Exists(rutaArchivo))
+                {
+                    Console.WriteLine("El archivo no existe: " + rutaArchivo);
+                    return listado;
+                }
                 using (StreamReader sr = new StreamReader(rutaArchivo))
                 {
                     string linea;
@@ -30,6 +39,8 @@ namespace Persistencia.DataBase
                         listado.Add(linea);
                     }
                 }
+                //Verifico que lee todas las lineas
+                System.Diagnostics.Debug.WriteLine("Cantidad de líneas leídas:" + listado.Count);
             }
             catch (Exception e)
             {
@@ -88,7 +99,11 @@ namespace Persistencia.DataBase
                     Console.WriteLine("El archivo no existe: " + rutaArchivo);
                     return;
                 }
-
+                if (string.IsNullOrWhiteSpace(nuevoRegistro) || string.IsNullOrWhiteSpace(nuevoRegistro))
+                {
+                    Console.WriteLine("El usuario y la contraseña no pueden estar vacíos.");
+                    return;
+                }
                 using (StreamWriter sw = new StreamWriter(rutaArchivo, append: true))
                 {
                     sw.WriteLine(nuevoRegistro);
