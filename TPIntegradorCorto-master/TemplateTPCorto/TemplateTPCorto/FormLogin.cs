@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 using Persistencia.DataBase;
 using System.Globalization;
+using System.Diagnostics.Eventing.Reader;
 
 namespace TemplateTPCorto
 {
@@ -33,24 +34,25 @@ namespace TemplateTPCorto
 
             String contraseñaTxt = txtPassword.Text;
 
-            //Validaciones de negocio (si usuario y contraseñas estan vacios)
+            //Validaciones de negocio
 
             if (string.IsNullOrWhiteSpace(usuarioTxt))
             {
                 MessageBox.Show("Debe ingresar el usuario para poder ingresar.");
                 return;
-
-            } else if (string.IsNullOrWhiteSpace(contraseñaTxt))
+            }
+            if (string.IsNullOrWhiteSpace(contraseñaTxt))
             {
                 MessageBox.Show("Debe ingresar la contraseña para poder ingresar.");
                 return;
+            }
+            //Longitud de password (mayor igual a 8) 
 
-            } else if (contraseñaTxt.Length < 8) //Longitud de password (mayor igual a 8) 
+            if (contraseñaTxt.Length < 8)
             {
                 MessageBox.Show("La contraseña debe tener 8 o más caracteres.");
                 return;
             }
-
 
             List<string> usuarios = BuscarRegistro(); //Llamo al método que lee el archivo csv y devuelve una lista de lineas. Cada linea representa un usuario.
 
@@ -98,41 +100,49 @@ namespace TemplateTPCorto
                         //Muestra el menú principal de forma modal
                     }
                     break; //Salgo del loop porque encontré al usuario
+                }
+            }
+            if (!loginCorrecto)
+            {
+                MessageBox.Show("Usuario o contraseña incorrectos.");
+            }
+        }
 
-                } else
+        /*if (!loginCorrecto)
+        {
+            RegistrarIntento(legajoCredencial);
+            List<string> listaIntentos = ListaIntentos();
+            int contador = 0;
+            string fechaActual = DateTime.Now.ToString("yyyy-MM-dd");
+
+            foreach (string registro in listaIntentos)
+            {
+                string[] campos = registro.Split(';');
+                string legajoGuardado = campos[0].Trim();
+                string fechaGuardada = campos[1].Trim();
+                if (legajoGuardado == legajoCredencial && fechaActual == fechaGuardada)
                 {
-                    RegistrarIntento(legajoCredencial);
-                    List<string> listaIntentos = ListaIntentos();
-                    int contador = 0;
-                    string fechaActual = DateTime.Now.ToString("yyyy-MM-dd");
-
-                    foreach (string registro in listaIntentos)
-                    {
-                        string[] campos = registro.Split(';');
-                        string legajoGuardado = campos[0].Trim();
-                        string fechaGuardada = campos[1].Trim();
-                        if (legajoGuardado == legajoCredencial && fechaActual == fechaGuardada)
-                        {
-                            contador++;
-                        }
-                    }
-
-                    if (contador >= 3)
-                    {
-                        BloquearUsuario(legajoCredencial);
-                        MessageBox.Show("Usted superó los intentos de ingreso permitidos. Su usuario ha sido bloqueado");
-                        return;
-
-                    } else
-                    {
-                        MessageBox.Show("Usuario o contraseña incorrectos.");
-                        return;
-                    }
-
+                    contador++;
                 }
             }
 
-        }
+            if (contador >= 3)
+            {
+                BloquearUsuario(legajoCredencial);
+                MessageBox.Show("Usted superó los intentos de ingreso permitidos. Su usuario ha sido bloqueado");
+                break;
+
+            }
+            else
+            {
+                MessageBox.Show("Usuario o contraseña incorrectos.");
+                break;
+            }
+
+        }*/
+
+
+
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
