@@ -111,7 +111,10 @@ namespace TemplateTPCorto
                         else
                         {
                             EliminarIntentosDelDia(legajoCredencial);
-                            MessageBox.Show("¡Acceso concedido!"); 
+                            MessageBox.Show("¡Acceso concedido!");
+                            this.Hide();
+                            FormMenu miFormMenu = new FormMenu();
+                            miFormMenu.ShowDialog();
                         }
                         break; // Salgo del loop porque encontré al usuario.
 

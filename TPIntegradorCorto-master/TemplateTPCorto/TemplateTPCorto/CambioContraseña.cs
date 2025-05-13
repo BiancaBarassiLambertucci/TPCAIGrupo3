@@ -42,12 +42,12 @@ namespace TemplateTPCorto
         {
             if (string.IsNullOrEmpty(contraseñaLogin))
             {
-                MessageBox.Show("Debe ingresar una nueva Contraseña para ingresar");
+                MessageBox.Show("Debe ingresar una nueva contraseña para ingresar.");
                 return false;
             }
             else if (contraseñaLogin.Length < 8)
             {
-                MessageBox.Show("La Contraseña debe tener al menos 8 caracteres");
+                MessageBox.Show("La contraseña debe tener 8 o más caracteres.");
                 return false;
             }
 

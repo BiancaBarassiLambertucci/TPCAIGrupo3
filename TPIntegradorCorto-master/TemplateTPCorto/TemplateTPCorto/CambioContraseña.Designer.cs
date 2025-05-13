@@ -49,9 +49,9 @@
             this.labelNuevaContraseña.AutoSize = true;
             this.labelNuevaContraseña.Location = new System.Drawing.Point(30, 46);
             this.labelNuevaContraseña.Name = "labelNuevaContraseña";
-            this.labelNuevaContraseña.Size = new System.Drawing.Size(122, 16);
+            this.labelNuevaContraseña.Size = new System.Drawing.Size(150, 20);
             this.labelNuevaContraseña.TabIndex = 1;
-            this.labelNuevaContraseña.Text = "Nueva Contraseña:";
+            this.labelNuevaContraseña.Text = "Nueva contraseña:";
             this.labelNuevaContraseña.Click += new System.EventHandler(this.label1_Click);
             // 
             // textBoxNuevaContraseña
