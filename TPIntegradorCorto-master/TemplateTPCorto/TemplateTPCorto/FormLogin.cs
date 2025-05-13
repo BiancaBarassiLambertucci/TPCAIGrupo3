@@ -9,10 +9,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.IO;
 using Persistencia.DataBase;
 using System.Globalization;
 using System.Diagnostics.Eventing.Reader;
+using System.Drawing.Drawing2D;
+using static System.Windows.Forms.LinkLabel;
 
 namespace TemplateTPCorto
 {
@@ -35,12 +37,12 @@ namespace TemplateTPCorto
 
             //Validaciones de negocio
 
-            if (string.IsNullOrWhiteSpace(usuarioTxt)) // Validamos que el se haya ingresado un usuario
+            if (string.IsNullOrWhiteSpace(usuarioTxt)) // Validamos que se haya ingresado un usuario
             {
                 MessageBox.Show("Debe ingresar el usuario para poder ingresar.");
                 return;
             }
-            if (string.IsNullOrWhiteSpace(contraseñaTxt)) // Validamos que el se haya ingresado una contraseña
+            if (string.IsNullOrWhiteSpace(contraseñaTxt)) // Validamos que se haya ingresado una contraseña
             {
                 MessageBox.Show("Debe ingresar la contraseña para poder ingresar.");
                 return;
@@ -79,50 +81,62 @@ namespace TemplateTPCorto
                 DateTime fechaAltaCredencial = DateTime.ParseExact(datos[3], "d/M/yyyy", CultureInfo.InvariantCulture); 
                 DateTime fechaUltimoLoginCredencial = DateTime.ParseExact(datos[4], "d/M/yyyy", CultureInfo.InvariantCulture);
 
-                if (usuarioTxt == usuarioCredencial) // Comparamos usuario ingresado vs. credenciales csv
+                if (usuarioTxt == usuarioCredencial) // Comparamos usuario ingresado vs. credenciales.csv
                 {
                     usuarioEncontrado = true;
 
-                    if (contraseñaTxt == contraseñaCredencial) // Comparamos contraseña ingresada vs. credenciales csv
+                    List<string> listaBloqueados = BuscarBloqueados();
+                   
+                    foreach (string legajoBloqueado in listaBloqueados)
+                    {
+                        if (legajoCredencial == legajoBloqueado)
+                        {
+                            MessageBox.Show("No puede ingresar, su usario se encuantra bloqueado.");
+                            return;
+                        }
+                    }
+                    
+                    if (contraseñaTxt == contraseñaCredencial) // Comparamos contraseña ingresada vs. credenciales.csv
                     {
                         loginCorrecto = true;
 
                         TimeSpan diferenciasFechas = DateTime.Now - fechaUltimoLoginCredencial;
-                        if (diferenciasFechas.Days > 30) // Verificamos si el usuario cambio la contraseña hace más de 30 dias
+                        if (diferenciasFechas.Days > 30) // Verificamos si el usuario cambio la contraseña hace más de 30 dias.
                         {
                             MessageBox.Show("La contraseña ha expirado. Por favor, actualízala.");
-                            this.Hide(); //Oculta el formulario actual
-                            CambioContraseña formContraseña = new CambioContraseña(); //Crea una instancia del formulario contraseña
-                            formContraseña.ShowDialog(); // Muestra el menú contraseña de forma modal
+                            this.Hide(); //Oculta el formulario actual.
+                            CambioContraseña formContraseña = new CambioContraseña(); //Crea una instancia del formulario contraseña.
+                            formContraseña.ShowDialog(); // Muestra el menú contraseña de forma modal.
                         }
                         else
                         {
+                            EliminarIntentosDelDia(legajoCredencial);
                             MessageBox.Show("¡Acceso concedido!"); 
                         }
-                        break; // Salgo del loop porque encontré al usuario
+                        break; // Salgo del loop porque encontré al usuario.
 
                     }
-                    else // Usuario encontrado, pero la contraseña es incorrecta
+                    else // Usuario encontrado, pero la contraseña es incorrecta.
                     {
                         RegistrarIntento(legajoCredencial); // Llamo al método RegistrarIntento para agregar los datos al archivo 'login_intentos'
-                        MessageBox.Show("Se guardo el legajo " + legajoCredencial + " n la lista de intentos fallidos");
+                        MessageBox.Show("Se guardo el legajo " + legajoCredencial + " a la lista de intentos fallidos");
 
                         List<string> listaIntentos = ListaIntentos(); // Creo una lista en base a la lista que devuelve el método ListaIntentos()
                         int contador = 0;
-                        string fechaActual = DateTime.Now.ToString("yyyy-MM-dd");
+                        string fechaActual = DateTime.Now.ToString("d/M/yyyy");
 
                         foreach (string registro in listaIntentos) // Recorro los registros guardados en el archivo 'login_intentos'
                         {
                             string[] campos = registro.Split(';'); // Separo cada uno de los registros 
-                            string legajoGuardado = campos[0].Trim(); // Guardo el legajo guardado en la lista de login_intentos 
-                            string fechaGuardada = campos[1].Trim(); // Guardo el la fecha del login fallido
+                            string legajoGuardado = campos[0].Trim(); // Guardo el legajo en la lista de login_intentos 
+                            string fechaGuardada = campos[1].Trim(); // Guardo la fecha del login fallido
                             if (legajoGuardado == legajoCredencial && fechaActual == fechaGuardada) // Verifico si el legajo guardado es del usuario queriendo ingresar, y si el fallo es del dia de hoy
                             {
                                 contador++;
                             }
                         }
 
-                        if (contador >= 3) // Si tiene 3 intentos fallidos en el dia de hoy
+                        if (contador >= 3) // Si tiene 3 intentos fallidos en el dia de hoy.
                         {
                             BloquearUsuario(legajoCredencial); // Agrego el legajo del usuario al archivo 'usuario_bloqueado' usando el método BloquearUsuario
                             MessageBox.Show("Usted superó los intentos de ingreso permitidos. Su usuario ha sido bloqueado");
@@ -145,7 +159,7 @@ namespace TemplateTPCorto
         {
 
         }
-        //Revisar cómo llamar al método en Persistencia llamado BuscarRegistro()
+
         public List<String> BuscarRegistro()
         {
             DataBaseUtils dbUtils = new DataBaseUtils();
@@ -156,7 +170,7 @@ namespace TemplateTPCorto
         public void RegistrarIntento(string legajo)
         {
             // Guardo la fecha actual
-            string fechaActual = DateTime.Now.ToString("yyyy-MM-dd");
+            string fechaActual = DateTime.Now.ToString("d/M/yyyy");
 
             // Creo la línea que se va a agregar
             string registro = $"{legajo};{fechaActual}";
@@ -169,15 +183,53 @@ namespace TemplateTPCorto
         public void BloquearUsuario(string legajo)
         {
             DataBaseUtils dbUtils = new DataBaseUtils();
-            dbUtils.AgregarRegistro("usuario_bloqueado.csv", legajo); // Agrego el legajo al archivo 'usuario_bloqueado'
+            dbUtils.AgregarRegistro("usuario_bloqueado.csv", legajo); // Agrego el legajo al archivo 'usuario_bloqueado.csv'
         }
 
         public List<string> ListaIntentos()
         {
             DataBaseUtils dbUtils = new DataBaseUtils();
-            List<string> intentos = dbUtils.BuscarRegistro("login_intentos.csv"); // Crea una lista en base a los datos que trae el método BuscarRegistro
+            List<string> intentos = dbUtils.BuscarRegistro("login_intentos.csv"); // Crea una lista en base a los datos que trae el método BuscarRegistro.
             return intentos; 
         }
+
+        public List<string> BuscarBloqueados() // Este método busca en el archivo usuario_bloqueado.csv
+        {
+            DataBaseUtils dbUtils = new DataBaseUtils();
+            List<string> listaBloqueados = dbUtils.BuscarRegistro("usuario_bloqueado.csv");
+       
+            if (File.Exists("usuario_bloqueado.csv"))
+            {
+                string[] lineas = File.ReadAllLines("usuario_bloqueado.csv");
+                
+                for (int i = 1; i < lineas.Length; i++) 
+                {
+                    string legajo = lineas[i].Trim(); // Salta el encabezado del archivo usuario_bloqueado.csv
+                    if (!string.IsNullOrEmpty(legajo))
+                    {
+                        listaBloqueados.Add(legajo);
+                    }
+                }
+            }
+            return listaBloqueados;
+        }
+        public void EliminarIntentosDelDia(string legajo) // Método para que se borren los intentos fallidos del día.
+        {
+            string nombreArchivo = "login_intentos.csv";
+            DateTime fechaActual = DateTime.Now;
+
+            try
+            {
+                DataBaseUtils dbUtils = new DataBaseUtils();
+                dbUtils.BorrarIntentos(nombreArchivo, legajo, fechaActual);
+                MessageBox.Show("Se han eliminado los intentos de hoy, para el usuario " + legajo);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al eliminar los intentos " + ex.Message);
+            }
+
+        } 
     }
 
 }
