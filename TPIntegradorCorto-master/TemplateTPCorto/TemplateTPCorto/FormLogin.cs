@@ -105,7 +105,7 @@ namespace TemplateTPCorto
                         {
                             MessageBox.Show("La contraseña ha expirado. Por favor, actualízala.");
                             this.Hide(); //Oculta el formulario actual.
-                            CambioContraseña formContraseña = new CambioContraseña(); //Crea una instancia del formulario contraseña.
+                            FormCambioContraseña formContraseña = new FormCambioContraseña(); //Crea una instancia del formulario contraseña.
                             formContraseña.ShowDialog(); // Muestra el menú contraseña de forma modal.
                         }
                         else

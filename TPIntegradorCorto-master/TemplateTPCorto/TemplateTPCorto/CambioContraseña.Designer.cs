@@ -1,6 +1,6 @@
 ﻿namespace TemplateTPCorto
 {
-    partial class CambioContraseña
+    partial class FormCambioContraseña
     {
         /// <summary>
         /// Required designer variable.
@@ -28,34 +28,60 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonConfirmar = new System.Windows.Forms.Button();
+            this.labelNuevaContraseña = new System.Windows.Forms.Label();
+            this.textBoxNuevaContraseña = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // button1
+            // buttonConfirmar
             // 
-            this.button1.Location = new System.Drawing.Point(77, 201);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(315, 35);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Cambiar Contraseña";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonConfirmar.Location = new System.Drawing.Point(29, 143);
+            this.buttonConfirmar.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonConfirmar.Name = "buttonConfirmar";
+            this.buttonConfirmar.Size = new System.Drawing.Size(136, 40);
+            this.buttonConfirmar.TabIndex = 0;
+            this.buttonConfirmar.Text = "Confirmar";
+            this.buttonConfirmar.UseVisualStyleBackColor = true;
+            this.buttonConfirmar.Click += new System.EventHandler(this.buttonConfirmar_Click);
             // 
-            // CambioContraseña
+            // labelNuevaContraseña
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.labelNuevaContraseña.AutoSize = true;
+            this.labelNuevaContraseña.Location = new System.Drawing.Point(30, 46);
+            this.labelNuevaContraseña.Name = "labelNuevaContraseña";
+            this.labelNuevaContraseña.Size = new System.Drawing.Size(122, 16);
+            this.labelNuevaContraseña.TabIndex = 1;
+            this.labelNuevaContraseña.Text = "Nueva Contraseña:";
+            this.labelNuevaContraseña.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // textBoxNuevaContraseña
+            // 
+            this.textBoxNuevaContraseña.Location = new System.Drawing.Point(29, 74);
+            this.textBoxNuevaContraseña.Name = "textBoxNuevaContraseña";
+            this.textBoxNuevaContraseña.Size = new System.Drawing.Size(187, 22);
+            this.textBoxNuevaContraseña.TabIndex = 2;
+            // 
+            // FormCambioContraseña
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(491, 317);
-            this.Controls.Add(this.button1);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "CambioContraseña";
+            this.ClientSize = new System.Drawing.Size(436, 254);
+            this.Controls.Add(this.textBoxNuevaContraseña);
+            this.Controls.Add(this.labelNuevaContraseña);
+            this.Controls.Add(this.buttonConfirmar);
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Name = "FormCambioContraseña";
             this.Text = "CambioContraseña";
+            this.Load += new System.EventHandler(this.CambioContraseña_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonConfirmar;
+        private System.Windows.Forms.Label labelNuevaContraseña;
+        private System.Windows.Forms.TextBox textBoxNuevaContraseña;
     }
 }
