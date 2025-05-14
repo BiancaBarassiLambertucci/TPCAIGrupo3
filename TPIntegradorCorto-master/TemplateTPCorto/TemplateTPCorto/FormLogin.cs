@@ -64,11 +64,11 @@ namespace TemplateTPCorto
 
             foreach (string linea in usuarios) // Recorremos la lista de todos los usuarios que nos devolvió el método BuscarRegistro();
             {
-                // Validación ver cada línea que se lee
+                // Saltar encabezado del archivo
                 if (primeraLinea)
                 {
                     primeraLinea = false;
-                    continue; // Saltar encabezado del archivo
+                    continue;
                 }
                 string[] datos = linea.Split(';'); // Partimos cada linea con ; para poder separar los campos
 
@@ -150,10 +150,17 @@ namespace TemplateTPCorto
                         else
                         {
                             MessageBox.Show("Usuario o contraseña incorrectos.");
+                            LimpiarFormulario();
                             break;
                         }
                     }
                     
+                }
+                else
+                {
+                    MessageBox.Show("Usuario o contraseña incorrectos.");
+                    LimpiarFormulario();
+                    break;
                 }
             }
             
@@ -161,7 +168,7 @@ namespace TemplateTPCorto
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-
+            LimpiarFormulario();
         }
 
         public List<String> BuscarRegistro()
@@ -233,7 +240,13 @@ namespace TemplateTPCorto
                 MessageBox.Show("Error al eliminar los intentos " + ex.Message);
             }
 
-        } 
+        }
+        private void LimpiarFormulario()
+        {
+            txtUsuario.Clear();
+            txtPassword.Clear();
+            txtUsuario.Focus();
+        }
     }
 
 }
