@@ -23,6 +23,7 @@ namespace TemplateTPCorto
         public FormLogin()
         {
             InitializeComponent();
+            txtPassword.UseSystemPasswordChar = true;
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
@@ -91,7 +92,7 @@ namespace TemplateTPCorto
                     {
                         if (legajoCredencial == legajoBloqueado)
                         {
-                            MessageBox.Show("No puede ingresar, su usario se encuantra bloqueado.");
+                            MessageBox.Show("No puede ingresar, su usario se encuentra bloqueado.");
                             return;
                         }
                     }
@@ -105,7 +106,7 @@ namespace TemplateTPCorto
                         {
                             MessageBox.Show("La contraseña ha expirado. Por favor, actualízala.");
                             this.Hide(); //Oculta el formulario actual.
-                            FormCambioContraseña formContraseña = new FormCambioContraseña(); //Crea una instancia del formulario contraseña.
+                            FormCambioContraseña formContraseña = new FormCambioContraseña(usuarioTxt); //Crea una instancia del formulario contraseña.
                             formContraseña.ShowDialog(); // Muestra el menú contraseña de forma modal.
                         }
                         else
@@ -113,7 +114,7 @@ namespace TemplateTPCorto
                             EliminarIntentosDelDia(legajoCredencial);
                             MessageBox.Show("¡Acceso concedido!");
                             this.Hide();
-                            FormMenu miFormMenu = new FormMenu();
+                            FormMenu miFormMenu = new FormMenu(usuarioTxt);
                             miFormMenu.ShowDialog();
                         }
                         break; // Salgo del loop porque encontré al usuario.

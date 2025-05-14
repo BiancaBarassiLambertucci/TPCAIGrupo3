@@ -12,9 +12,11 @@ namespace TemplateTPCorto
 {
     public partial class FormMenu : Form
     {
-        public FormMenu()
+        private string usuario;
+        public FormMenu(string nombreUsuario)
         {
             InitializeComponent();
+            usuario = nombreUsuario;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -25,7 +27,7 @@ namespace TemplateTPCorto
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            FormCambioContraseña formCambioContra = new FormCambioContraseña();
+            FormCambioContraseña formCambioContra = new FormCambioContraseña(usuario);
             formCambioContra.ShowDialog();
         }
 

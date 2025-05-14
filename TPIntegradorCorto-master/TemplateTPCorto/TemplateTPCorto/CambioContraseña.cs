@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Persistencia.DataBase;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,12 @@ namespace TemplateTPCorto
 {
     public partial class FormCambioContraseña : Form
     {
-        public FormCambioContraseña()
+        private string usuario;
+        public FormCambioContraseña(string nombreUsuario)
         {
             InitializeComponent();
+            usuario = nombreUsuario;
+            textBoxNuevaContraseña.UseSystemPasswordChar = true;
         }
 
         private void CambioContraseña_Load(object sender, EventArgs e)
@@ -29,13 +33,27 @@ namespace TemplateTPCorto
 
         private void buttonConfirmar_Click(object sender, EventArgs e)
         {
-            string contraseña = textBoxNuevaContraseña.Text;
+            string nuevaContraseña = textBoxNuevaContraseña.Text;
             bool permiteAvanzar = false;
+            permiteAvanzar = ValidarIntegridad(nuevaContraseña);
 
+            string contraseñaActual = ObtenerContraseña("credenciales.csv", usuario);
 
-            permiteAvanzar = ValidarIntegridad(contraseña);
+            if(nuevaContraseña == contraseñaActual) // Valida que la contraseña ingresada no puede ser igual a la anterior.
+            {
+                MessageBox.Show("La nueva contraseña debe ser distinta a la anterior. Ingrese una nueva.");
+                textBoxNuevaContraseña.Clear();
+                return;
+            }
+            else
+            {
+                MessageBox.Show("Contraseña actualizada con éxito. Debe volver a ingresar.");
+                this.Hide();
+                FormLogin loginForm = new FormLogin();
+                loginForm.ShowDialog();
 
-            
+            }
+
         }
 
         private bool ValidarIntegridad(string contraseñaLogin)
@@ -52,6 +70,33 @@ namespace TemplateTPCorto
             }
 
             return true;
+
+        }
+
+        public string ObtenerContraseña(string nombreArchivo, string nombreUsuario) // Método para poder obtener la contraseña del archivo credenciales.csv
+        {
+            DataBaseUtils dbUtils = new DataBaseUtils();
+            List<string> listado = dbUtils.BuscarRegistro(nombreArchivo);
+
+            for (int i = 1; i < listado.Count; i++)
+            {
+                string linea = listado[i];
+                string[] campos = linea.Split(';');
+
+                if (campos.Length < 3)
+                {
+                    continue;
+                }
+
+                string usuarioArchivo = campos[1].Trim();
+                string usuarioRecibido = nombreUsuario.Trim();
+
+                if(usuarioArchivo == usuarioRecibido)
+                {
+                    return campos[2].Trim();
+                }
+            }
+            return "No se encontró el usuario. ";
 
         }
     }

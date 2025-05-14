@@ -12,8 +12,6 @@ namespace Persistencia.DataBase
 
         // Definimos la ruta base relativa al directorio actual de ejecución: "Tablas"
 
-        //private readonly string baseFolderPath = @"C:\Users\Administrator\OneDrive\Documentos\GitHub\CAI\TPCAIGrupo 3\TPCAIGrupo3\TPIntegradorCorto-master\TemplateTPCorto\Persistencia\DataBase\Tablas\";
-        //private readonly string baseFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tablas");
         private readonly string baseFolderPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Persistencia\DataBase\Tablas"));
 
         // Método para buscar registros en un archivo CSV
