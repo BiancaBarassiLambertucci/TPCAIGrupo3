@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 
 namespace TemplateTPCorto
 {
@@ -35,11 +34,8 @@ namespace TemplateTPCorto
         private void buttonConfirmar_Click(object sender, EventArgs e)
         {
             string nuevaContraseña = textBoxNuevaContraseña.Text;
-
-            if (!ValidarIntegridad(nuevaContraseña))
-            {
-                return; // Si la contraseña no pasa la validación, no continúa.
-            }
+            bool permiteAvanzar = false;
+            permiteAvanzar = ValidarIntegridad(nuevaContraseña);
 
             string contraseñaActual = ObtenerContraseña("credenciales.csv", usuario);
 
@@ -49,25 +45,20 @@ namespace TemplateTPCorto
                 textBoxNuevaContraseña.Clear();
                 return;
             }
-            bool actualizado = ActualizarCredencial("credenciales.csv", usuario, nuevaContraseña);
-
-            if (actualizado)
+            else
             {
                 MessageBox.Show("Contraseña actualizada con éxito. Debe volver a ingresar.");
                 this.Hide();
                 FormLogin loginForm = new FormLogin();
                 loginForm.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("No se puedo actualizar la contraseña. Verifique que el usuario exista.");
+
             }
 
         }
 
         private bool ValidarIntegridad(string contraseñaLogin)
         {
-            if (string.IsNullOrWhiteSpace(contraseñaLogin))
+            if (string.IsNullOrEmpty(contraseñaLogin))
             {
                 MessageBox.Show("Debe ingresar una nueva contraseña para ingresar.");
                 return false;
@@ -102,16 +93,11 @@ namespace TemplateTPCorto
 
                 if(usuarioArchivo == usuarioRecibido)
                 {
-                    return campos[2].Trim(); // Contraseña actual
+                    return campos[2].Trim();
                 }
             }
             return "No se encontró el usuario. ";
 
-        }
-
-        public bool ActualizarCredencial(string nombreArchivo, string nombreUsuario, string nuevaContraseña)
-        {
-            return true;// Falta hacer el código
         }
     }
 }
