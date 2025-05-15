@@ -34,8 +34,10 @@ namespace TemplateTPCorto
         private void buttonConfirmar_Click(object sender, EventArgs e)
         {
             string nuevaContraseña = textBoxNuevaContraseña.Text;
-            bool permiteAvanzar = false;
-            permiteAvanzar = ValidarIntegridad(nuevaContraseña);
+            if (!ValidarIntegridad(nuevaContraseña))
+            {
+                return; // Si la contraseña no pasa la validación, no continua.
+            }
 
             string contraseñaActual = ObtenerContraseña("credenciales.csv", usuario);
 
