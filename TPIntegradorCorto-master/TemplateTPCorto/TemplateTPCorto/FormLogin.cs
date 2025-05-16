@@ -80,7 +80,7 @@ namespace TemplateTPCorto
                 string usuarioCredencial = datos[1]; // Guardamos el 'usuario'
                 string contraseñaCredencial = datos[2]; // Guardamos la contraseña del usuario
                 DateTime fechaAltaCredencial = DateTime.ParseExact(datos[3], "d/M/yyyy", CultureInfo.InvariantCulture); 
-                DateTime fechaUltimoLoginCredencial = DateTime.ParseExact(datos[4], "d/M/yyyy", CultureInfo.InvariantCulture);
+                
 
                 if (usuarioTxt == usuarioCredencial) // Comparamos usuario ingresado vs. credenciales.csv
                 {
@@ -100,6 +100,18 @@ namespace TemplateTPCorto
                     if (contraseñaTxt == contraseñaCredencial) // Comparamos contraseña ingresada vs. credenciales.csv
                     {
                         loginCorrecto = true;
+
+                        if (string.IsNullOrWhiteSpace(datos[4])) // Reviso si está vacío el campo de fechaUltimoLogin para revisar si es el Primer Login del usuario.
+                        {
+                            EliminarIntentosDelDia(legajoCredencial);
+                            MessageBox.Show("¡Acceso concedido!");
+                            this.Hide();
+                            FormMenu miFormMenu = new FormMenu(usuarioTxt);
+                            miFormMenu.ShowDialog();
+                            break;
+                        }
+                     
+                        DateTime fechaUltimoLoginCredencial = DateTime.ParseExact(datos[4], "d/M/yyyy", CultureInfo.InvariantCulture);
 
                         TimeSpan diferenciasFechas = DateTime.Now - fechaUltimoLoginCredencial;
                         if (diferenciasFechas.Days > 30) // Verificamos si el usuario cambio la contraseña hace más de 30 dias.
