@@ -101,13 +101,14 @@ namespace TemplateTPCorto
                     {
                         loginCorrecto = true;
 
+                        FormCambioContraseña formContraseña = new FormCambioContraseña(usuarioTxt); //Crea una instancia del formulario contraseña.
+
                         if (string.IsNullOrWhiteSpace(datos[4])) // Reviso si está vacío el campo de fechaUltimoLogin para revisar si es el Primer Login del usuario.
                         {
                             EliminarIntentosDelDia(legajoCredencial);
-                            MessageBox.Show("¡Acceso concedido!");
+                            MessageBox.Show("¡Acceso concedido! No se registra fecha de su último login. Porfavor, actualice su contraseña.");
                             this.Hide();
-                            FormMenu miFormMenu = new FormMenu(usuarioTxt);
-                            miFormMenu.ShowDialog();
+                            formContraseña.ShowDialog();
                             break;
                         }
                      
@@ -118,7 +119,6 @@ namespace TemplateTPCorto
                         {
                             MessageBox.Show("La contraseña ha expirado. Por favor, actualízala.");
                             this.Hide(); //Oculta el formulario actual.
-                            FormCambioContraseña formContraseña = new FormCambioContraseña(usuarioTxt); //Crea una instancia del formulario contraseña.
                             formContraseña.ShowDialog(); // Muestra el menú contraseña de forma modal.
                         }
                         else
@@ -126,8 +126,7 @@ namespace TemplateTPCorto
                             EliminarIntentosDelDia(legajoCredencial);
                             MessageBox.Show("¡Acceso concedido!");
                             this.Hide();
-                            FormMenu miFormMenu = new FormMenu(usuarioTxt);
-                            miFormMenu.ShowDialog();
+                            // PLACEHOLDER PARA AGREGAR PRÓXIMO FORM LUEGO DE UN LOGIN EXITOSO
                         }
                         break; // Salgo del loop porque encontré al usuario.
 
