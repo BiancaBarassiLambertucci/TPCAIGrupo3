@@ -227,11 +227,11 @@ namespace TemplateTPCorto
             {
                 DataBaseUtils dbUtils = new DataBaseUtils();
                 dbUtils.BorrarIntentos(nombreArchivo, legajo, fechaActual);
-                MessageBox.Show("Se han eliminado los intentos de hoy, para el usuario " + legajo);
+                //MessageBox.Show("Se han eliminado los intentos de hoy, para el usuario " + legajo);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al eliminar los intentos " + ex.Message);
+                //MessageBox.Show("Error al eliminar los intentos " + ex.Message);
             }
 
         } 

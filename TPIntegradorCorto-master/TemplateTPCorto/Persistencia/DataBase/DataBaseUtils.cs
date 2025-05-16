@@ -181,6 +181,58 @@ namespace Persistencia.DataBase
                 Console.WriteLine($"Pila de errores: {e.StackTrace}");
             }
         }
+
+        public void ActualizarContraseña(string nombreArchivo, string usuario, string contraseñaNueva)
+        {
+            // Construye la ruta para poder acceder al archivo que queremos.
+            string rutaArchivo = Path.Combine(baseFolderPath, nombreArchivo);
+
+            List<string> lineas = BuscarRegistro(nombreArchivo);
+
+            List<string> lineasActualizadas = new List<string>();
+
+            for (int i = 0; i < lineas.Count; i++)
+            {
+                string linea = lineas[i];
+
+                if (i == 0) // Conservo el encabezado del archivo
+                {
+                    lineasActualizadas.Add(linea);
+                    continue;
+                }
+
+                string[] campos = linea.Split(';');
+                if (campos.Length < 3)
+                {
+                    lineasActualizadas.Add(linea);
+                    continue;
+                }
+
+                if (campos[1].Trim().ToLower() == usuario.ToLower())
+                {
+                    campos[2] = contraseñaNueva.Trim();
+                }
+
+                string nuevaLinea = campos[0].Trim();
+                for (int j = 1; j < campos.Length; j++)
+                {
+                    nuevaLinea += ";" + campos[j].Trim();
+                }
+                lineasActualizadas.Add(nuevaLinea);
+            }
+
+            try
+            {
+                File.WriteAllLines(rutaArchivo, lineasActualizadas.ToArray());
+                //Console.WriteLine("Se actualizó la contraseña del usuario " + usuario);
+            }
+            catch (Exception ex) 
+            {
+                //Console.WriteLine("error al escribir el archivo " + ex.Message);
+            }
+
+        }
+
     }
-    
 }
+    

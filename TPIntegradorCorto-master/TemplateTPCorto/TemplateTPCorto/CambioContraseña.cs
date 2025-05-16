@@ -49,7 +49,8 @@ namespace TemplateTPCorto
             }
             else
             {
-                MessageBox.Show("Contraseña actualizada con éxito. Debe volver a ingresar.");
+                MessageBox.Show("Contraseña actualizada con éxito. Ingrese nuevamente.");
+                ActualizarContraseña(usuario,nuevaContraseña);
                 this.Hide();
                 FormLogin loginForm = new FormLogin();
                 loginForm.ShowDialog();
@@ -100,6 +101,22 @@ namespace TemplateTPCorto
             }
             return "No se encontró el usuario. ";
 
+        }
+
+        public void ActualizarContraseña(string nombreUsuario, string nuevaContraseña)
+        {
+            string archivo = "credenciales.csv";
+
+            try
+            {
+                DataBaseUtils dbUtils = new DataBaseUtils();
+                dbUtils.ActualizarContraseña(archivo, nombreUsuario, nuevaContraseña);
+                MessageBox.Show("Se actualizó la contraseña del usuario " + nombreUsuario);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al actualizar la contrasñea " + ex.Message);
+            }
         }
     }
 }
