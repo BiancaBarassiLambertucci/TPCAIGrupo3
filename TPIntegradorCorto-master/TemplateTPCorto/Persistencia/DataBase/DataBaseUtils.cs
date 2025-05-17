@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -231,6 +232,54 @@ namespace Persistencia.DataBase
                 //Console.WriteLine("error al escribir el archivo " + ex.Message);
             }
 
+        }
+
+        public void ActualizarLogin(string nombreArchivo, string usuario, DateTime fechaActual)
+        {
+            string rutaArchivo = Path.Combine(baseFolderPath, nombreArchivo);
+
+            List<string> lineas = BuscarRegistro(nombreArchivo);
+            List<string> lineasActualizadas = new List<string>();
+
+            for (int i = 0; i < lineas.Count; i++)
+            {
+                string linea = lineas[i];
+
+                if (i == 0)
+                {
+                    lineasActualizadas.Add(linea);
+                    continue;
+                }
+
+                string[] campos = linea.Split(';');
+                if (campos.Length < 5)
+                {
+                    lineasActualizadas.Add(linea);
+                    continue;
+                }
+                
+                if (campos[1].Trim() == usuario.Trim())
+                {
+                    campos[4] = fechaActual.ToString("d/M/yyyy");
+                }
+
+                string nuevaLinea = campos[0].Trim();
+                for (int j = 1; j < campos.Length; j++)
+                {
+                    nuevaLinea += ";" + campos[j].Trim(); 
+                }
+                lineasActualizadas.Add(nuevaLinea);
+
+                try
+                {
+                    File.WriteAllLines(rutaArchivo, lineasActualizadas.ToArray());
+                    //Console.WriteLine("Se actualizó la ultima fecha de login para el usuario " + usuario);
+                }
+                catch (Exception e)
+                {
+                    //Console.WriteLine("Error al actualizar la ultima fecha de login del usuario " + e.Message);
+                }
+            }
         }
 
     }

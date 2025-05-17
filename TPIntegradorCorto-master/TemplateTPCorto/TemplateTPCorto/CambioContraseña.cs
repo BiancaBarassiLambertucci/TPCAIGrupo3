@@ -51,6 +51,7 @@ namespace TemplateTPCorto
             {
                 MessageBox.Show("Contraseña actualizada con éxito. Ingrese nuevamente.");
                 ActualizarContraseña(usuario,nuevaContraseña);
+                ActualizarFechaLogin(usuario);
                 this.Hide();
                 FormLogin loginForm = new FormLogin();
                 loginForm.ShowDialog();
@@ -116,6 +117,23 @@ namespace TemplateTPCorto
             catch (Exception ex)
             {
                 MessageBox.Show("Error al actualizar la contrasñea " + ex.Message);
+            }
+        }
+
+        public void ActualizarFechaLogin(string nombreUsuario)
+        {
+            string archivo = "credenciales.csv";
+            DateTime fechaActual = DateTime.Now;
+
+            try
+            {
+                DataBaseUtils dbUtils = new DataBaseUtils();
+                dbUtils.ActualizarLogin(archivo, nombreUsuario, fechaActual);
+                MessageBox.Show("Se actualizó la ult fecha de login del usuario " + nombreUsuario);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error al actualizar la ult fecha de login " + e.Message);
             }
         }
     }

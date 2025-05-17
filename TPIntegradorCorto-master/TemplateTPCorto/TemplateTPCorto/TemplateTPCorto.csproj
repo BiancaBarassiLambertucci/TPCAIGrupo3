@@ -52,6 +52,18 @@
     <Compile Include="CambioContraseña.Designer.cs">
       <DependentUpon>CambioContraseña.cs</DependentUpon>
     </Compile>
+    <Compile Include="CambioContraseña3°.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CambioContraseña3°.Designer.cs">
+      <DependentUpon>CambioContraseña3°.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormAdministrador.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAdministrador.Designer.cs">
+      <DependentUpon>FormAdministrador.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +80,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CambioContraseña.resx">
       <DependentUpon>CambioContraseña.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CambioContraseña3°.resx">
+      <DependentUpon>CambioContraseña3°.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAdministrador.resx">
+      <DependentUpon>FormAdministrador.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
