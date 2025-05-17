@@ -52,11 +52,11 @@
     <Compile Include="CambioContraseña.Designer.cs">
       <DependentUpon>CambioContraseña.cs</DependentUpon>
     </Compile>
-    <Compile Include="CambioContraseña3°.cs">
+    <Compile Include="FormDesbloquearCredencial.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CambioContraseña3°.Designer.cs">
-      <DependentUpon>CambioContraseña3°.cs</DependentUpon>
+    <Compile Include="FormDesbloquearCredencial.Designer.cs">
+      <DependentUpon>FormDesbloquearCredencial.cs</DependentUpon>
     </Compile>
     <Compile Include="FormAdministrador.cs">
       <SubType>Form</SubType>
@@ -76,13 +76,19 @@
     <Compile Include="FormMenu.Designer.cs">
       <DependentUpon>FormMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSupervisor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSupervisor.Designer.cs">
+      <DependentUpon>FormSupervisor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CambioContraseña.resx">
       <DependentUpon>CambioContraseña.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CambioContraseña3°.resx">
-      <DependentUpon>CambioContraseña3°.cs</DependentUpon>
+    <EmbeddedResource Include="FormDesbloquearCredencial.resx">
+      <DependentUpon>FormDesbloquearCredencial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormAdministrador.resx">
       <DependentUpon>FormAdministrador.cs</DependentUpon>
@@ -92,6 +98,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMenu.resx">
       <DependentUpon>FormMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSupervisor.resx">
+      <DependentUpon>FormSupervisor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

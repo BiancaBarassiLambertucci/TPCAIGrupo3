@@ -28,7 +28,6 @@ namespace TemplateTPCorto
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-
             LoginNegocio loginNegocio = new LoginNegocio();
 
             //Paso a variables lo que tenemos en el textbox

@@ -136,5 +136,10 @@ namespace TemplateTPCorto
                 MessageBox.Show("Error al actualizar la ult fecha de login " + e.Message);
             }
         }
+
+        private void textBoxNuevaContraseña_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

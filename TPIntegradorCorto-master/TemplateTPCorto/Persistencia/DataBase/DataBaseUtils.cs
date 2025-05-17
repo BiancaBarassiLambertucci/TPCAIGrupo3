@@ -234,6 +234,32 @@ namespace Persistencia.DataBase
 
         }
 
+        public void VaciarFechaUltimoLogin(string archivo, string nombreUsuario)
+        {
+            string[] lineas = File.ReadAllLines(archivo);
+            List<string> nuevaslineas = new List<string>();
+
+            foreach(string linea in lineas)
+            {
+                string[] partes = linea.Split(';');
+
+                if (partes[0] == nombreUsuario)
+                {
+                    partes[2] = "";
+                }
+
+                nuevaslineas.Add(string.Join(";", partes));
+            }
+
+            File.WriteAllLines(archivo,nuevaslineas);
+        }
+
+
+
+
+
+
+
         public void ActualizarLogin(string nombreArchivo, string usuario, DateTime fechaActual)
         {
             string rutaArchivo = Path.Combine(baseFolderPath, nombreArchivo);
