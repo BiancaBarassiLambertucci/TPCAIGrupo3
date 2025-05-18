@@ -12,9 +12,12 @@ namespace TemplateTPCorto
 {
     public partial class FormSupervisor : Form
     {
-        public FormSupervisor()
+        private string usuario;
+
+        public FormSupervisor(string usuario)
         {
             InitializeComponent();
+            this.usuario = usuario;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -28,6 +31,11 @@ namespace TemplateTPCorto
         {
             FormCambioContraseña formCambio = new FormCambioContraseña(nombreUsuario);
             formCambio.ShowDialog();
+        }
+
+        private void FormSupervisor_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

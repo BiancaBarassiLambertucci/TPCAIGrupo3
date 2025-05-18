@@ -254,12 +254,6 @@ namespace Persistencia.DataBase
             File.WriteAllLines(archivo,nuevaslineas);
         }
 
-
-
-
-
-
-
         public void ActualizarLogin(string nombreArchivo, string usuario, DateTime fechaActual)
         {
             string rutaArchivo = Path.Combine(baseFolderPath, nombreArchivo);
@@ -306,6 +300,26 @@ namespace Persistencia.DataBase
                     //Console.WriteLine("Error al actualizar la ultima fecha de login del usuario " + e.Message);
                 }
             }
+        }
+
+        //Método para buscar campos inviduales en los archivos CSV
+        public string BuscarValorEnCSV(string archivo, int columnaBuscar, string valor, int columnaResultado)
+        {
+            List<string> registros = BuscarRegistro(archivo);
+
+            foreach (string linea in registros.Skip(1)) //Salteo el encabezado
+            {
+                string[] campos = linea.Split(';');
+                if (campos.Length > Math.Max(columnaBuscar, columnaResultado))//Me aseguro que tenga suficientes columnas el archivo
+                {
+                    if (campos[columnaBuscar].Trim().ToLower() == valor.Trim().ToLower()) //Busco la fila donde el valor de esta columna sea igual al que estoy buscando
+                    {
+                        return campos[columnaResultado].Trim();
+                    }
+
+                }
+            }
+            return null;
         }
 
     }

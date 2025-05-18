@@ -70,6 +70,7 @@
             this.Controls.Add(this.btnAprobar);
             this.Name = "FormAdministrador";
             this.Text = "FormAdministrador";
+            this.Load += new System.EventHandler(this.FormAdministrador_Load);
             this.ResumeLayout(false);
 
         }

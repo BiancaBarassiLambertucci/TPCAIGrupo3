@@ -35,6 +35,8 @@ namespace TemplateTPCorto
 
             String contraseñaTxt = txtPassword.Text;
 
+            String perfil = loginNegocio.ObtenerPerfil(usuarioTxt); //Busco el perfil del usuario ingresado
+
             //Validaciones de negocio
 
             if (string.IsNullOrWhiteSpace(usuarioTxt)) // Validamos que se haya ingresado un usuario
@@ -54,21 +56,17 @@ namespace TemplateTPCorto
                 return;
             }
 
+            MessageBox.Show("Perfil obtenido: " + perfil);
+
             List<string> usuarios = BuscarRegistro(); //Llamo al método que lee el archivo csv y devuelve una lista de lineas. Cada linea representa un usuario.
 
             //Creo variable para saber si encontramos o no un usuario valido
             bool loginCorrecto = false; 
-            bool primeraLinea = true;
             bool usuarioEncontrado = false;
 
-            foreach (string linea in usuarios) // Recorremos la lista de todos los usuarios que nos devolvió el método BuscarRegistro();
+            foreach (string linea in usuarios.Skip(1)) // Recorremos la lista de todos los usuarios que nos devolvió el método BuscarRegistro() y salteamos el encabezado del archivo
             {
-                // Validación ver cada línea que se lee
-                if (primeraLinea)
-                {
-                    primeraLinea = false;
-                    continue; // Saltar encabezado del archivo
-                }
+                
                 string[] datos = linea.Split(';'); // Partimos cada linea con ; para poder separar los campos
 
                 if (datos.Length < 5) // Evita errores si el archivo tiene alguna linea mal escrita (ej. que falte algun campo) y la saltea para leer otra linea.
@@ -124,8 +122,36 @@ namespace TemplateTPCorto
                         {
                             EliminarIntentosDelDia(legajoCredencial);
                             MessageBox.Show("¡Acceso concedido!");
-                            this.Hide();
-                            // PLACEHOLDER PARA AGREGAR PRÓXIMO FORM LUEGO DE UN LOGIN EXITOSO
+                            try
+                            {
+                                if (perfil == "Supervisor")
+                                {
+                                    this.Hide();
+                                    FormSupervisor formSupervisor = new FormSupervisor(usuarioTxt);
+                                    formSupervisor.ShowDialog();
+                                }
+                                else if (perfil == "Administrador")
+                                {
+                                    this.Hide();
+                                    FormAdministrador formAdministrador = new FormAdministrador(usuarioTxt);
+                                    formAdministrador.ShowDialog();
+                                }
+                                else if (perfil == "Operador")
+                                {
+                                    //this.Hide();
+                                    //FormOperador formOperador = new FormOperador(usuarioTxt);
+                                    //formOperador.ShowDialog();
+                                }
+                                else 
+                                {
+                                    MessageBox.Show("No se pudo determinar el perfil del usuario.");
+                                }
+
+                            }
+                            catch (Exception ex) 
+                            {
+                                MessageBox.Show("Error al determinar el perfil del usuario: " + ex.Message);
+                            }
                         }
                         break; // Salgo del loop porque encontré al usuario.
 
@@ -244,7 +270,9 @@ namespace TemplateTPCorto
                 //MessageBox.Show("Error al eliminar los intentos " + ex.Message);
             }
 
-        } 
+        }
+        
+
     }
 
 }

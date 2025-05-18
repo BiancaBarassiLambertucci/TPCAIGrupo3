@@ -12,9 +12,16 @@ namespace TemplateTPCorto
 {
     public partial class FormAdministrador : Form
     {
-        public FormAdministrador()
+        private string usuario;
+        public FormAdministrador(string usuario)
         {
             InitializeComponent();
+            this.usuario = usuario;
+        }
+
+        private void FormAdministrador_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
