@@ -13,10 +13,12 @@ namespace TemplateTPCorto
     public partial class FormOperador : Form
     {
         private string usuario;
-        public FormOperador(string usuario)
+        private string legajoUsuario;
+        public FormOperador(string usuario, string legajoUsuario)
         {
             InitializeComponent();
             this.usuario = usuario;
+            this.legajoUsuario = legajoUsuario;
         }
 
         private void FormOperador_Load(object sender, EventArgs e)

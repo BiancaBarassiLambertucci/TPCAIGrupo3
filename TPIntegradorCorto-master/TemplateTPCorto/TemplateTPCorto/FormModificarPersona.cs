@@ -15,9 +15,11 @@ namespace TemplateTPCorto
     public partial class FormModificarPersona : Form
     {
         private string legajoBuscado = null;
-        public FormModificarPersona()
+        private string legajoSolicitante;
+        public FormModificarPersona(string legajoSolicitante)
         {
             InitializeComponent();
+            this.legajoSolicitante = legajoSolicitante;
         }
 
         private void FormModificarPersona_Load(object sender, EventArgs e)
@@ -65,7 +67,7 @@ namespace TemplateTPCorto
             }
 
             // Registrar el cambio en operacion_cambio_persona.csv
-            RegistrarOperacionCambio(legajo, nombre, apellido, dni, fechaIngreso);
+            RegistrarOperacionCambio(legajo, nombre, apellido, dni, fechaIngreso, legajoSolicitante);
 
             MessageBox.Show("Datos registrados con éxito");
 
@@ -90,11 +92,13 @@ namespace TemplateTPCorto
             return false;
         }
 
-        private void RegistrarOperacionCambio(string legajo, string nombre, string apellido, string dni, DateTime fechaIngreso)
+        private void RegistrarOperacionCambio(string legajo, string nombre, string apellido, string dni, DateTime fechaIngreso, string legajoSolicitante)
         {
+            /*
             try
             {
                 string archivo = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Persistencia\DataBase\Tablas\operacion_cambio_persona.csv"));
+
           
                 int nuevoId = 1;
 
@@ -122,6 +126,73 @@ namespace TemplateTPCorto
             {
                 MessageBox.Show($"Error al escribir en el archivo:\n{ex.Message}");
             }
+            */
+
+            string pathPersona = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Persistencia\DataBase\Tablas\operacion_cambio_persona.csv"));
+            string pathCredencial = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Persistencia\DataBase\Tablas\operacion_cambio_credencial.csv"));
+            string pathAutorizacion = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Persistencia\DataBase\Tablas\autorizacion.csv"));
+
+            int nuevoId = 1;
+            HashSet<int> idsExistentes = new HashSet<int>();
+
+            if (File.Exists(pathPersona))
+            {
+                var lineas = File.ReadAllLines(pathPersona).Skip(1);
+                foreach (var linea in lineas)
+                {
+                    var partes = linea.Split(';');
+                    if (int.TryParse(partes[0], out int id))
+                        idsExistentes.Add(id);
+                }
+            }
+
+            if (File.Exists(pathCredencial))
+            {
+                var lineas = File.ReadAllLines(pathCredencial).Skip(1);
+                foreach (var linea in lineas)
+                {
+                    var partes = linea.Split(';');
+                    if (int.TryParse(partes[0], out int id))
+                        idsExistentes.Add(id);
+                }
+            }
+
+            while (idsExistentes.Contains(nuevoId))
+            {
+                nuevoId++;
+            }
+
+            // ✅ Asegurar que el archivo de persona exista y tenga salto de línea al final
+            if (!File.Exists(pathPersona))
+            {
+                File.WriteAllText(pathPersona, "idOperacion;legajo;nombre;apellido;dni;fecha_ingreso" + Environment.NewLine);
+            }
+            else
+            {
+                // Asegurar que el archivo termine en newline
+                string contenido = File.ReadAllText(pathPersona);
+                if (!contenido.EndsWith(Environment.NewLine))
+                    File.AppendAllText(pathPersona, Environment.NewLine);
+            }
+
+            string nuevaLineaPersona = $"{nuevoId};{legajo};{nombre};{apellido};{dni};{fechaIngreso:yyyy-MM-dd}";
+            File.AppendAllText(pathPersona, nuevaLineaPersona + Environment.NewLine);
+
+            // ✅ Asegurar que el archivo de autorización exista y tenga salto de línea
+            if (!File.Exists(pathAutorizacion))
+            {
+                File.WriteAllText(pathAutorizacion, "idOperacion;tipoOperacion;estado;legajoSolicitante;fechaSolicitud;legajoAutorizador;fechaAutorizacion" + Environment.NewLine);
+            }
+            else
+            {
+                string contenido = File.ReadAllText(pathAutorizacion);
+                if (!contenido.EndsWith(Environment.NewLine))
+                    File.AppendAllText(pathAutorizacion, Environment.NewLine);
+            }
+
+            string nuevaLineaAutorizacion = $"{nuevoId};Modificar Persona;Pendiente;{legajoSolicitante};{DateTime.Now:yyyy-MM-dd};;";
+            File.AppendAllText(pathAutorizacion, nuevaLineaAutorizacion + Environment.NewLine);
+
         }
 
 

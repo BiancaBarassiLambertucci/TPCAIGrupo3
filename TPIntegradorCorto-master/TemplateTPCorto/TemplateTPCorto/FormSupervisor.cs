@@ -13,11 +13,13 @@ namespace TemplateTPCorto
     public partial class FormSupervisor : Form
     {
         private string usuario;
+        private string legajoUsuario;
 
-        public FormSupervisor(string usuario)
+        public FormSupervisor(string usuario, string legajoUsuario)
         {
             InitializeComponent();
             this.usuario = usuario;
+            this.legajoUsuario = legajoUsuario;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -40,7 +42,7 @@ namespace TemplateTPCorto
 
         private void btnModificarPersona_Click(object sender, EventArgs e)
         {
-            FormModificarPersona formModificar = new FormModificarPersona();
+            FormModificarPersona formModificar = new FormModificarPersona(legajoUsuario);
             formModificar.ShowDialog();
         }
     }

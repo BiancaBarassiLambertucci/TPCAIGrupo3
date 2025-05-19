@@ -127,19 +127,19 @@ namespace TemplateTPCorto
                                 if (perfil == "Supervisor")
                                 {
                                     this.Hide();
-                                    FormSupervisor formSupervisor = new FormSupervisor(usuarioTxt);
+                                    FormSupervisor formSupervisor = new FormSupervisor(usuarioTxt, legajoCredencial);
                                     formSupervisor.ShowDialog();
                                 }
                                 else if (perfil == "Administrador")
                                 {
                                     this.Hide();
-                                    FormAdministrador formAdministrador = new FormAdministrador(usuarioTxt);
+                                    FormAdministrador formAdministrador = new FormAdministrador(usuarioTxt, legajoCredencial);
                                     formAdministrador.ShowDialog();
                                 }
                                 else if (perfil == "Operador")
                                 {
                                     this.Hide();
-                                    FormOperador formOperador = new FormOperador(usuarioTxt);
+                                    FormOperador formOperador = new FormOperador(usuarioTxt, legajoCredencial);
                                     formOperador.ShowDialog();
                                 }
                                 else 
