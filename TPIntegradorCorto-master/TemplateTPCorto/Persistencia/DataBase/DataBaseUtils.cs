@@ -243,9 +243,9 @@ namespace Persistencia.DataBase
             {
                 string[] partes = linea.Split(';');
 
-                if (partes[0] == nombreUsuario)
+                if (partes[1] == nombreUsuario)
                 {
-                    partes[2] = "";
+                    partes[4] = "";
                 }
 
                 nuevaslineas.Add(string.Join(";", partes));
@@ -319,7 +319,65 @@ namespace Persistencia.DataBase
 
                 }
             }
+
             return null;
+        }
+
+        public void ActualizarPersonaPorLegajo(string nombreArchivo, string legajo, string nuevoNombre, string nuevoApellido, string nuevoDNI, DateTime nuevaFechaIngreso)
+        {
+            string rutaArchivo = Path.Combine(baseFolderPath, nombreArchivo);
+
+            if (!File.Exists(rutaArchivo))
+            {
+                Console.WriteLine("El archivo no existe.");
+                return;
+            }
+
+            var lineas = File.ReadAllLines(rutaArchivo).ToList();
+            var lineasActualizadas = new List<string>();
+
+            for (int i = 0; i < lineas.Count; i++)
+            {
+                string linea = lineas[i];
+
+                // Mantener la cabecera sin modificar
+                if (i == 0)
+                {
+                    lineasActualizadas.Add(linea);
+                    continue;
+                }
+
+                string[] campos = linea.Split(';');
+                if (campos.Length < 5)
+                {
+                    // Línea mal formada, mantenerla tal cual
+                    lineasActualizadas.Add(linea);
+                    continue;
+                }
+
+                if (campos[0].Trim() == legajo.Trim())
+                {
+                    // Actualizar campos (menos el legajo)
+                    campos[1] = nuevoNombre;
+                    campos[2] = nuevoApellido;
+                    campos[3] = nuevoDNI;
+                    campos[4] = nuevaFechaIngreso.ToString("dd/MM/yyyy");
+                }
+
+                // Reconstruir la línea y agregarla
+                string nuevaLinea = string.Join(";", campos.Select(c => c.Trim()));
+                lineasActualizadas.Add(nuevaLinea);
+            }
+
+            try
+            {
+                File.WriteAllLines(rutaArchivo, lineasActualizadas);
+                Console.WriteLine("Datos actualizados correctamente para legajo " + legajo);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al escribir el archivo: " + ex.Message);
+            }
         }
 
     }

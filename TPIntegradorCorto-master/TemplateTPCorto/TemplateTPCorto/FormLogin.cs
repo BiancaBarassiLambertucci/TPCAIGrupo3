@@ -31,11 +31,11 @@ namespace TemplateTPCorto
             LoginNegocio loginNegocio = new LoginNegocio();
 
             //Paso a variables lo que tenemos en el textbox
-            String usuarioTxt = txtUsuario.Text;
+            string usuarioTxt = txtUsuario.Text;
 
-            String contraseñaTxt = txtPassword.Text;
+            string contraseñaTxt = txtPassword.Text;
 
-            String perfil = loginNegocio.ObtenerPerfil(usuarioTxt); //Busco el perfil del usuario ingresado
+            string perfil = loginNegocio.ObtenerPerfil(usuarioTxt); //Busco el perfil del usuario ingresado
 
             //Validaciones de negocio
 
@@ -138,9 +138,9 @@ namespace TemplateTPCorto
                                 }
                                 else if (perfil == "Operador")
                                 {
-                                    //this.Hide();
-                                    //FormOperador formOperador = new FormOperador(usuarioTxt);
-                                    //formOperador.ShowDialog();
+                                    this.Hide();
+                                    FormOperador formOperador = new FormOperador(usuarioTxt);
+                                    formOperador.ShowDialog();
                                 }
                                 else 
                                 {

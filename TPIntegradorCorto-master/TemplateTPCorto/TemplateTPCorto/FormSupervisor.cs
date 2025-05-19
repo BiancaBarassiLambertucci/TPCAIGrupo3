@@ -37,5 +37,11 @@ namespace TemplateTPCorto
         {
 
         }
+
+        private void btnModificarPersona_Click(object sender, EventArgs e)
+        {
+            FormModificarPersona formModificar = new FormModificarPersona();
+            formModificar.ShowDialog();
+        }
     }
 }

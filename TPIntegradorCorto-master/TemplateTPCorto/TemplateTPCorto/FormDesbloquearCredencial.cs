@@ -60,7 +60,7 @@ namespace TemplateTPCorto
             {
                 string[] partes = linea.Split(';');
 
-                if (partes[0] == usuario)
+                if (partes[1] == usuario)
                 {
                     return true;
                 }

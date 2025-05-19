@@ -48,16 +48,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DataBase\Tablas\autorizacion.csv" />
-    <None Include="DataBase\Tablas\credenciales.csv" />
+    <Content Include="DataBase\Tablas\credenciales.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="DataBase\Tablas\login_intentos.csv" />
     <None Include="DataBase\Tablas\operacion_cambio_credencial.csv" />
     <None Include="DataBase\Tablas\operacion_cambio_persona.csv" />
     <None Include="DataBase\Tablas\perfil.csv" />
     <None Include="DataBase\Tablas\perfil_rol.csv" />
-    <None Include="DataBase\Tablas\persona.csv" />
+    <Content Include="DataBase\Tablas\persona.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="DataBase\Tablas\rol.csv" />
     <None Include="DataBase\Tablas\usuario_bloqueado.csv" />
-    <None Include="DataBase\Tablas\usuario_perfil.csv" />
+    <Content Include="DataBase\Tablas\usuario_perfil.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Datos\Datos.csproj">
