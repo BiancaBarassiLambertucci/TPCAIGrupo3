@@ -166,11 +166,12 @@ namespace Persistencia.DataBase
                 }
                 if (string.IsNullOrWhiteSpace(nuevoRegistro) || string.IsNullOrWhiteSpace(nuevoRegistro))
                 {
-                    Console.WriteLine("El usuario y la contraseña no pueden estar vacíos.");
+                    Console.WriteLine("El registro a modificar no puede estar vacío.");
                     return;
                 }
                 using (StreamWriter sw = new StreamWriter(rutaArchivo, append: true))
                 {
+                    //sw.WriteLine(Environment.NewLine);
                     sw.WriteLine(nuevoRegistro);
                 }
                 Console.WriteLine("Registro agregado correctamente.");
@@ -234,12 +235,13 @@ namespace Persistencia.DataBase
 
         }
 
-        public void VaciarFechaUltimoLogin(string archivo, string nombreUsuario)
+        public void VaciarFechaUltimoLogin(string nombreArchivo, string nombreUsuario)
         {
-            string[] lineas = File.ReadAllLines(archivo);
-            List<string> nuevaslineas = new List<string>();
+            string rutaArchivo = Path.Combine(baseFolderPath, nombreArchivo);
+            List<string> lineas = BuscarRegistro(nombreArchivo);
+            List<string> lineasActualizadas = new List<string>();
 
-            foreach(string linea in lineas)
+            foreach (string linea in lineas)
             {
                 string[] partes = linea.Split(';');
 
@@ -248,13 +250,22 @@ namespace Persistencia.DataBase
                     partes[4] = "";
                 }
 
-                nuevaslineas.Add(string.Join(";", partes));
+                lineasActualizadas.Add(string.Join(";", partes));
             }
 
-            File.WriteAllLines(archivo,nuevaslineas);
+            try
+            {
+                File.WriteAllLines(rutaArchivo, lineasActualizadas.ToArray());
+                //Console.WriteLine("Se actualizó la ultima fecha de login para el usuario " + usuario);
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine("Error al actualizar la ultima fecha de login del usuario " + e.Message);
+
+            }
         }
 
-        public void ActualizarLogin(string nombreArchivo, string usuario, DateTime fechaActual)
+            public void ActualizarLogin(string nombreArchivo, string usuario, DateTime fechaActual)
         {
             string rutaArchivo = Path.Combine(baseFolderPath, nombreArchivo);
 
@@ -419,6 +430,18 @@ namespace Persistencia.DataBase
             AgregarRegistro(archivo, linea);
         }
 
+        public void RegistrarOperacionCambioCredencial(string idOperacion, string legajo, string nombreUsuario, string contrasena, string idPerfil, DateTime fechaAlta, DateTime fechaUltimoLogin)
+        {
+            string linea = $"{idOperacion};{legajo};{nombreUsuario};{contrasena};{idPerfil};{fechaAlta:d/M/yyyy};{fechaUltimoLogin:d/M/yyyy}";
+            string encabezado = "idOperacion;legajo;nombreUsuario;contrasena;idPerfil;fechaAlta;fechaUltimoLogin"; 
+            string archivo = "operacion_cambio_credencial.csv";
+
+            if (!File.Exists(Path.Combine(baseFolderPath, archivo)))
+                File.WriteAllText(Path.Combine(baseFolderPath, archivo), encabezado + Environment.NewLine);
+
+            AgregarRegistro(archivo, linea);
+        }
+
         public void RegistrarAutorizacion(string idOperacion, string tipoOperacion, string legajoSolicitante)
         {
             string linea = $"{idOperacion};{tipoOperacion};Pendiente;{legajoSolicitante};{DateTime.Now:d/M/yyyy};;";
@@ -433,6 +456,15 @@ namespace Persistencia.DataBase
 
             File.AppendAllText(ruta, linea + Environment.NewLine);
         }
+
+        public void ActualizarCredencial(string usuario, string nuevaContraseña) // Método que llama a 2 métodos, reutiliza el método ActualizarContraseña() y llama al método VaciarFechaUltimoLogin() que están ambos en DataBaseUtils.
+        {
+            string archivo = "credenciales.csv";
+
+            ActualizarContraseña(archivo, usuario, nuevaContraseña);
+            VaciarFechaUltimoLogin(archivo, usuario);
+        }
+
 
         public void ActualizarPersona(string legajo, string nombre, string apellido, string dni, string fechaIngreso)
         {

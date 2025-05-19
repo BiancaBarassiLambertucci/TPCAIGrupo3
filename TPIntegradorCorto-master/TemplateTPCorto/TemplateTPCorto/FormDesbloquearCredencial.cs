@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Globalization;
 
 namespace TemplateTPCorto
 {
@@ -36,31 +37,51 @@ namespace TemplateTPCorto
                 MessageBox.Show("El usuario no existe. ");
                 return;
             }
-
-            ActualizarCredencial(usuario, nuevaContraseña);
+            //MessageBox.Show("Usuario Existe con exito. ");
+            DataBaseUtils dbUtils = new DataBaseUtils();
+            string legajo = dbUtils.BuscarValorEnCSV("credenciales.csv", 1, usuario, 0);
+            string fechaAltaStr = dbUtils.BuscarValorEnCSV("credenciales.csv", 1, usuario, 3);
+            //MessageBox.Show("Usuario Existe con exito. " + fechaAltaStr);
+            DateTime fechaAlta = DateTime.ParseExact(fechaAltaStr, "d/M/yyyy", CultureInfo.InvariantCulture);
+            //string fechaUltimoLoginStr = dbUtils.BuscarValorEnCSV("credenciales.csv", 1, usuario, 4);
+            //DateTime fechaUltimoLogin = DateTime.ParseExact(fechaUltimoLoginStr (,"1/1/1900"), "d/M/yyyy", CultureInfo.InvariantCulture);
+            DateTime fechaUltimoLogin = !string.IsNullOrWhiteSpace(dbUtils.BuscarValorEnCSV("credenciales.csv", 1, usuario, 4))
+            ? DateTime.ParseExact(dbUtils.BuscarValorEnCSV("credenciales.csv", 1, usuario, 4), "d/M/yyyy", CultureInfo.InvariantCulture)
+            : new DateTime(1900, 1, 1);
+            string idPerfil = dbUtils.BuscarValorEnCSV("usuario_perfil.csv", 0, legajo, 1);
+            RegistrarOperacionCambio(legajo, usuario, nuevaContraseña, idPerfil, fechaAlta, fechaUltimoLogin);
             MessageBox.Show("Contraseña modificada con éxito. ");
 
             this.Close();
         }
 
-        private void ActualizarCredencial(string usuario, string nuevaContraseña) // Método que llama a 2 métodos, reutiliza el método ActualizarContraseña() y llama al método VaciarFechaUltimoLogin() que están ambos en DataBaseUtils.
+        private void RegistrarOperacionCambio(string legajo, string usuario, string nuevaContraseña, string idPerfil, DateTime fechaAlta, DateTime fechaUltimoLogin)
         {
-            string archivo = "credenciales.csv";
-            DataBaseUtils dbUtils = new DataBaseUtils();
+            DataBaseUtils db = new DataBaseUtils();
+            string idOperacion = db.GenerarIdOperacionUnico();
 
-            dbUtils.ActualizarContraseña(archivo, usuario, nuevaContraseña);
-            dbUtils.VaciarFechaUltimoLogin(archivo, usuario);
+            db.RegistrarOperacionCambioCredencial(idOperacion, legajo, usuario, nuevaContraseña, idPerfil, fechaAlta, fechaUltimoLogin);
+            db.ActualizarCredencial(usuario, nuevaContraseña);
         }
 
         private bool ExisteUsuario(string usuario) // Método para contrastar el usuario con el archivo credenciales.csv
         {
-            string[] lineas = File.ReadAllLines("credenciales.csv");
+            DataBaseUtils dbUtils = new DataBaseUtils();
+            List<string> usuarios = dbUtils.BuscarRegistro("credenciales.csv"); //Llamo al método que lee el archivo csv y devuelve una lista de lineas. Cada linea representa un usuario.
 
-            foreach (string linea in lineas)
+            foreach (string linea in usuarios.Skip(1)) // Recorremos la lista de todos los usuarios que nos devolvió el método BuscarRegistro() y salteamos el encabezado del archivo
             {
-                string[] partes = linea.Split(';');
 
-                if (partes[1] == usuario)
+                string[] datos = linea.Split(';'); // Partimos cada linea con ; para poder separar los campos
+
+                if (datos.Length < 5) // Evita errores si el archivo tiene alguna linea mal escrita (ej. que falte algun campo) y la saltea para leer otra linea.
+                {
+                    continue;
+                }
+
+                string usuarioCredencial = datos[1]; // Guardamos el 'usuario'
+
+                if (usuario == usuarioCredencial) // Comparamos usuario ingresado vs. credenciales.csv
                 {
                     return true;
                 }
