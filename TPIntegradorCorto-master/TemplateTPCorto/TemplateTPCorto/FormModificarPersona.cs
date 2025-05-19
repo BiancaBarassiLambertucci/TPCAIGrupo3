@@ -64,8 +64,10 @@ namespace TemplateTPCorto
                 return;
             }
 
-            ActualizarPersona(legajo, nombre, apellido, dni, fechaIngreso);
-            MessageBox.Show("Datos modificados con éxito");
+            // Registrar el cambio en operacion_cambio_persona.csv
+            RegistrarOperacionCambio(legajo, nombre, apellido, dni, fechaIngreso);
+
+            MessageBox.Show("Datos registrados con éxito");
 
             // Reiniciar estado
             legajoBuscado = null;
@@ -88,14 +90,40 @@ namespace TemplateTPCorto
             return false;
         }
 
-        private void ActualizarPersona(string legajo, string nombre, string apellido, string dni, DateTime fechaIngreso) // Método que llama al método ActualizarPersonaPorLegajo() de DataBaseUtils.cs
+        private void RegistrarOperacionCambio(string legajo, string nombre, string apellido, string dni, DateTime fechaIngreso)
         {
-            string archivo = "persona.csv";
-            DataBaseUtils dbUtils = new DataBaseUtils();
+            try
+            {
+                string archivo = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Persistencia\DataBase\Tablas\operacion_cambio_persona.csv"));
+          
+                int nuevoId = 1;
 
-            dbUtils.ActualizarPersonaPorLegajo(archivo, legajo, nombre, apellido, dni, fechaIngreso);
+                if (File.Exists(archivo))
+                {
+                    var lineas = File.ReadAllLines(archivo).Skip(1);
+                    if (lineas.Any())
+                    {
+                        var ultimoId = lineas
+                            .Select(linea => int.TryParse(linea.Split(';')[0], out int id) ? id : 0)
+                            .Max();
+                        nuevoId = ultimoId + 1;
+                    }
+                }
+                else
+                {
+                    File.WriteAllText(archivo, "idOperacion;legajo;nombre;apellido;dni;fecha_ingreso\n");
+                }
 
+                string nuevaLinea = $"{nuevoId};{legajo};{nombre};{apellido};{dni};{fechaIngreso:yyyy-MM-dd}";
+                File.AppendAllText(archivo, nuevaLinea + Environment.NewLine);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al escribir en el archivo:\n{ex.Message}");
+            }
         }
+
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
@@ -113,7 +141,6 @@ namespace TemplateTPCorto
             }
 
             DataBaseUtils dbUtils = new DataBaseUtils();
-            //string[] lineas = File.ReadAllLines("persona.csv");
 
             List<string> lineas = dbUtils.BuscarRegistro("persona.csv");
 
