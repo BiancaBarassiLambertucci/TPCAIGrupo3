@@ -61,12 +61,12 @@ namespace TemplateTPCorto
             List<string> usuarios = BuscarRegistro(); //Llamo al método que lee el archivo csv y devuelve una lista de lineas. Cada linea representa un usuario.
 
             //Creo variable para saber si encontramos o no un usuario valido
-            bool loginCorrecto = false; 
+            bool loginCorrecto = false;
             bool usuarioEncontrado = false;
 
             foreach (string linea in usuarios.Skip(1)) // Recorremos la lista de todos los usuarios que nos devolvió el método BuscarRegistro() y salteamos el encabezado del archivo
             {
-                
+
                 string[] datos = linea.Split(';'); // Partimos cada linea con ; para poder separar los campos
 
                 if (datos.Length < 5) // Evita errores si el archivo tiene alguna linea mal escrita (ej. que falte algun campo) y la saltea para leer otra linea.
@@ -76,15 +76,15 @@ namespace TemplateTPCorto
                 string legajoCredencial = datos[0]; // Guardamos el legajo del usuario
                 string usuarioCredencial = datos[1]; // Guardamos el 'usuario'
                 string contraseñaCredencial = datos[2]; // Guardamos la contraseña del usuario
-                DateTime fechaAltaCredencial = DateTime.ParseExact(datos[3], "d/M/yyyy", CultureInfo.InvariantCulture); 
-                
+                DateTime fechaAltaCredencial = DateTime.ParseExact(datos[3], "d/M/yyyy", CultureInfo.InvariantCulture);
+
 
                 if (usuarioTxt == usuarioCredencial) // Comparamos usuario ingresado vs. credenciales.csv
                 {
                     usuarioEncontrado = true;
 
                     List<string> listaBloqueados = BuscarBloqueados();
-                   
+
                     foreach (string legajoBloqueado in listaBloqueados)
                     {
                         if (legajoCredencial == legajoBloqueado)
@@ -93,67 +93,42 @@ namespace TemplateTPCorto
                             return;
                         }
                     }
-                    
+
                     if (contraseñaTxt == contraseñaCredencial) // Comparamos contraseña ingresada vs. credenciales.csv
                     {
                         loginCorrecto = true;
 
                         FormCambioContraseña formContraseña = new FormCambioContraseña(usuarioTxt); //Crea una instancia del formulario contraseña.
 
-                        if (string.IsNullOrWhiteSpace(datos[4])) // Reviso si está vacío el campo de fechaUltimoLogin para revisar si es el Primer Login del usuario.
+                        if (datos.Length < 5 || string.IsNullOrWhiteSpace(datos[4]))
                         {
+                            // Primer login
                             EliminarIntentosDelDia(legajoCredencial);
-                            MessageBox.Show("¡Acceso concedido! No se registra fecha de su último login. Porfavor, actualice su contraseña.");
+                            MessageBox.Show("¡Primer ingreso detectado! Debe cambiar su contraseña.");
                             this.Hide();
                             formContraseña.ShowDialog();
-                            break;
-                        }
-                     
-                        DateTime fechaUltimoLoginCredencial = DateTime.ParseExact(datos[4], "d/M/yyyy", CultureInfo.InvariantCulture);
 
-                        TimeSpan diferenciasFechas = DateTime.Now - fechaUltimoLoginCredencial;
-                        if (diferenciasFechas.Days > 30) // Verificamos si el usuario cambio la contraseña hace más de 30 dias.
-                        {
-                            MessageBox.Show("La contraseña ha expirado. Por favor, actualízala.");
-                            this.Hide(); //Oculta el formulario actual.
-                            formContraseña.ShowDialog(); // Muestra el menú contraseña de forma modal.
                         }
                         else
                         {
-                            EliminarIntentosDelDia(legajoCredencial);
-                            MessageBox.Show("¡Acceso concedido!");
-                            try
-                            {
-                                if (perfil == "Supervisor")
-                                {
-                                    this.Hide();
-                                    FormSupervisor formSupervisor = new FormSupervisor(usuarioTxt, legajoCredencial);
-                                    formSupervisor.ShowDialog();
-                                }
-                                else if (perfil == "Administrador")
-                                {
-                                    this.Hide();
-                                    FormAdministrador formAdministrador = new FormAdministrador(usuarioTxt, legajoCredencial);
-                                    formAdministrador.ShowDialog();
-                                }
-                                else if (perfil == "Operador")
-                                {
-                                    this.Hide();
-                                    FormOperador formOperador = new FormOperador(usuarioTxt, legajoCredencial);
-                                    formOperador.ShowDialog();
-                                }
-                                else 
-                                {
-                                    MessageBox.Show("No se pudo determinar el perfil del usuario.");
-                                }
+                            DateTime fechaUltimoLoginCredencial = DateTime.ParseExact(datos[4], "d/M/yyyy", CultureInfo.InvariantCulture);
 
-                            }
-                            catch (Exception ex) 
+                            TimeSpan diferenciasFechas = DateTime.Now - fechaUltimoLoginCredencial;
+
+                            if (diferenciasFechas.Days > 30) // Verificamos si el usuario cambio la contraseña hace más de 30 dias.
                             {
-                                MessageBox.Show("Error al determinar el perfil del usuario: " + ex.Message);
+                                MessageBox.Show("La contraseña ha expirado. Por favor, actualízala.");
+                                this.Hide(); //Oculta el formulario actual.
+                                formContraseña.ShowDialog(); // Muestra el menú contraseña de forma modal.
                             }
+                            else
+                            {
+                                EliminarIntentosDelDia(legajoCredencial);
+                                MessageBox.Show("¡Acceso concedido!");
+                                RedirigirPorPefil(perfil, usuarioTxt, legajoCredencial);
+                            }
+                            break; // Salgo del loop porque encontré al usuario.
                         }
-                        break; // Salgo del loop porque encontré al usuario.
 
                     }
                     else // Usuario encontrado, pero la contraseña es incorrecta.
@@ -189,11 +164,11 @@ namespace TemplateTPCorto
                             break;
                         }
                     }
-                    
+
                 }
 
             }
-            
+
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
@@ -231,19 +206,19 @@ namespace TemplateTPCorto
         {
             DataBaseUtils dbUtils = new DataBaseUtils();
             List<string> intentos = dbUtils.BuscarRegistro("login_intentos.csv"); // Crea una lista en base a los datos que trae el método BuscarRegistro.
-            return intentos; 
+            return intentos;
         }
 
         public List<string> BuscarBloqueados() // Este método busca en el archivo usuario_bloqueado.csv
         {
             DataBaseUtils dbUtils = new DataBaseUtils();
             List<string> listaBloqueados = dbUtils.BuscarRegistro("usuario_bloqueado.csv");
-       
+
             if (File.Exists("usuario_bloqueado.csv"))
             {
                 string[] lineas = File.ReadAllLines("usuario_bloqueado.csv");
-                
-                for (int i = 1; i < lineas.Length; i++) 
+
+                for (int i = 1; i < lineas.Length; i++)
                 {
                     string legajo = lineas[i].Trim(); // Salta el encabezado del archivo usuario_bloqueado.csv
                     if (!string.IsNullOrEmpty(legajo))
@@ -271,9 +246,41 @@ namespace TemplateTPCorto
             }
 
         }
-        
+
+        public void RedirigirPorPefil(string perfil, string usuario, string legajo)
+        {
+            try
+            {
+                if (perfil == "Supervisor")
+                {
+                    this.Hide();
+                    FormSupervisor formSupervisor = new FormSupervisor(usuario, legajo);
+                    formSupervisor.ShowDialog();
+                }
+                else if (perfil == "Administrador")
+                {
+                    this.Hide();
+                    FormAdministrador formAdministrador = new FormAdministrador(usuario, legajo);
+                    formAdministrador.ShowDialog();
+                }
+                else if (perfil == "Operador")
+                {
+                    this.Hide();
+                    FormOperador formOperador = new FormOperador(usuario, legajo);
+                    formOperador.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo determinar el perfil del usuario.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al determinar el perfil del usuario: " + ex.Message);
+            }
+        }
+
+
 
     }
-
 }
-

@@ -379,6 +379,90 @@ namespace Persistencia.DataBase
                 Console.WriteLine("Error al escribir el archivo: " + ex.Message);
             }
         }
+        public string GenerarIdOperacionUnico()
+        {
+            string[] archivos = new string[] { "operacion_cambio_persona.csv", "operacion_cambio_credencial.csv" };
+            HashSet<int> ids = new HashSet<int>();
+
+            for (int i = 0; i < archivos.Length; i++)
+            {
+                string archivo = archivos[i];
+                List<string> lineas = BuscarRegistro(archivo);
+
+                for (int j = 1; j < lineas.Count; j++) // Saltamos encabezado con índice
+                {
+                    string linea = lineas[j];
+                    string[] partes = linea.Split(';');
+
+                    int id;
+                    if (partes.Length > 0 && int.TryParse(partes[0], out id))
+                    {
+                        ids.Add(id);
+                    }
+                }
+            }
+
+            int nuevoId = 1;
+            while (ids.Contains(nuevoId)) nuevoId++;
+            return nuevoId.ToString();
+        }
+
+        public void RegistrarOperacionCambioPersona(string idOperacion, string legajo, string nombre, string apellido, string dni, DateTime fechaIngreso)
+        {
+            string linea = $"{idOperacion};{legajo};{nombre};{apellido};{dni};{fechaIngreso:yyyy-MM-dd}";
+            string encabezado = "idOperacion;legajo;nombre;apellido;dni;fecha_ingreso";
+            string archivo = "operacion_cambio_persona.csv";
+
+            if (!File.Exists(Path.Combine(baseFolderPath, archivo)))
+                File.WriteAllText(Path.Combine(baseFolderPath, archivo), encabezado + Environment.NewLine);
+
+            AgregarRegistro(archivo, linea);
+        }
+
+        public void RegistrarAutorizacion(string idOperacion, string tipoOperacion, string legajoSolicitante)
+        {
+            string linea = $"{idOperacion};{tipoOperacion};Pendiente;{legajoSolicitante};{DateTime.Now:d/M/yyyy};;";
+            string encabezado = "idOperacion;tipoOperacion;estado;legajoSolicitante;fechaSolicitud;legajoAutorizador;fechaAutorizacion";
+            string archivo = "autorizacion.csv";
+
+            string ruta = Path.Combine(baseFolderPath, archivo);
+            if (!File.Exists(ruta))
+            {
+                File.WriteAllText(ruta, encabezado + Environment.NewLine);
+            }
+
+            File.AppendAllText(ruta, linea + Environment.NewLine);
+        }
+
+        public void ActualizarPersona(string legajo, string nombre, string apellido, string dni, string fechaIngreso)
+        {
+            string archivo = Path.Combine(baseFolderPath, "persona.csv");
+            List<string> lineas = BuscarRegistro("persona.csv");
+            List<string> nuevasLineas = new List<string>();
+
+            if (lineas.Count > 0)
+                nuevasLineas.Add(lineas[0]); // Mantener encabezado
+
+            for (int i = 1; i < lineas.Count; i++)
+            {
+                string[] partes = lineas[i].Split(';');
+                if (partes.Length < 5)
+                    continue;
+
+                if (partes[0].Trim() == legajo.Trim())
+                {
+                    // Reemplazo con los nuevos datos
+                    string nuevaLinea = $"{legajo};{nombre};{apellido};{dni};{fechaIngreso}";
+                    nuevasLineas.Add(nuevaLinea);
+                }
+                else
+                {
+                    nuevasLineas.Add(lineas[i]);
+                }
+            }
+
+            File.WriteAllLines(archivo, nuevasLineas);
+        }
 
     }
 }

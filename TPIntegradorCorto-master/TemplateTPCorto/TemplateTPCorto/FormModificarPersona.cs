@@ -69,7 +69,7 @@ namespace TemplateTPCorto
             // Registrar el cambio en operacion_cambio_persona.csv
             RegistrarOperacionCambio(legajo, nombre, apellido, dni, fechaIngreso, legajoSolicitante);
 
-            MessageBox.Show("Datos registrados con éxito");
+            MessageBox.Show($"Autorización de cambios para el usuario {nombre} {apellido} solicitada.");
 
             // Reiniciar estado
             legajoBuscado = null;
@@ -78,13 +78,13 @@ namespace TemplateTPCorto
 
         private bool ExisteLegajo(string legajo) // Método para contrastar el legajo con el archivo credenciales.csv
         {
-            string[] lineas = File.ReadAllLines("persona.csv");
+            DataBaseUtils db = new DataBaseUtils();
+            List<string> lineas = db.BuscarRegistro("persona.csv");
 
             foreach (string linea in lineas.Skip(1))
             {
                 string[] partes = linea.Split(';');
-
-                if (partes[0] == legajo)
+                if (partes[0].Trim() == legajo.Trim())
                 {
                     return true;
                 }
@@ -94,106 +94,13 @@ namespace TemplateTPCorto
 
         private void RegistrarOperacionCambio(string legajo, string nombre, string apellido, string dni, DateTime fechaIngreso, string legajoSolicitante)
         {
-            /*
-            try
-            {
-                string archivo = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Persistencia\DataBase\Tablas\operacion_cambio_persona.csv"));
+            DataBaseUtils db = new DataBaseUtils();
+            string idOperacion = db.GenerarIdOperacionUnico();
 
-          
-                int nuevoId = 1;
-
-                if (File.Exists(archivo))
-                {
-                    var lineas = File.ReadAllLines(archivo).Skip(1);
-                    if (lineas.Any())
-                    {
-                        var ultimoId = lineas
-                            .Select(linea => int.TryParse(linea.Split(';')[0], out int id) ? id : 0)
-                            .Max();
-                        nuevoId = ultimoId + 1;
-                    }
-                }
-                else
-                {
-                    File.WriteAllText(archivo, "idOperacion;legajo;nombre;apellido;dni;fecha_ingreso\n");
-                }
-
-                string nuevaLinea = $"{nuevoId};{legajo};{nombre};{apellido};{dni};{fechaIngreso:yyyy-MM-dd}";
-                File.AppendAllText(archivo, nuevaLinea + Environment.NewLine);
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al escribir en el archivo:\n{ex.Message}");
-            }
-            */
-
-            string pathPersona = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Persistencia\DataBase\Tablas\operacion_cambio_persona.csv"));
-            string pathCredencial = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Persistencia\DataBase\Tablas\operacion_cambio_credencial.csv"));
-            string pathAutorizacion = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Persistencia\DataBase\Tablas\autorizacion.csv"));
-
-            int nuevoId = 1;
-            HashSet<int> idsExistentes = new HashSet<int>();
-
-            if (File.Exists(pathPersona))
-            {
-                var lineas = File.ReadAllLines(pathPersona).Skip(1);
-                foreach (var linea in lineas)
-                {
-                    var partes = linea.Split(';');
-                    if (int.TryParse(partes[0], out int id))
-                        idsExistentes.Add(id);
-                }
-            }
-
-            if (File.Exists(pathCredencial))
-            {
-                var lineas = File.ReadAllLines(pathCredencial).Skip(1);
-                foreach (var linea in lineas)
-                {
-                    var partes = linea.Split(';');
-                    if (int.TryParse(partes[0], out int id))
-                        idsExistentes.Add(id);
-                }
-            }
-
-            while (idsExistentes.Contains(nuevoId))
-            {
-                nuevoId++;
-            }
-
-            // ✅ Asegurar que el archivo de persona exista y tenga salto de línea al final
-            if (!File.Exists(pathPersona))
-            {
-                File.WriteAllText(pathPersona, "idOperacion;legajo;nombre;apellido;dni;fecha_ingreso" + Environment.NewLine);
-            }
-            else
-            {
-                // Asegurar que el archivo termine en newline
-                string contenido = File.ReadAllText(pathPersona);
-                if (!contenido.EndsWith(Environment.NewLine))
-                    File.AppendAllText(pathPersona, Environment.NewLine);
-            }
-
-            string nuevaLineaPersona = $"{nuevoId};{legajo};{nombre};{apellido};{dni};{fechaIngreso:yyyy-MM-dd}";
-            File.AppendAllText(pathPersona, nuevaLineaPersona + Environment.NewLine);
-
-            // ✅ Asegurar que el archivo de autorización exista y tenga salto de línea
-            if (!File.Exists(pathAutorizacion))
-            {
-                File.WriteAllText(pathAutorizacion, "idOperacion;tipoOperacion;estado;legajoSolicitante;fechaSolicitud;legajoAutorizador;fechaAutorizacion" + Environment.NewLine);
-            }
-            else
-            {
-                string contenido = File.ReadAllText(pathAutorizacion);
-                if (!contenido.EndsWith(Environment.NewLine))
-                    File.AppendAllText(pathAutorizacion, Environment.NewLine);
-            }
-
-            string nuevaLineaAutorizacion = $"{nuevoId};Modificar Persona;Pendiente;{legajoSolicitante};{DateTime.Now:yyyy-MM-dd};;";
-            File.AppendAllText(pathAutorizacion, nuevaLineaAutorizacion + Environment.NewLine);
-
+            db.RegistrarOperacionCambioPersona(idOperacion, legajo, nombre, apellido, dni, fechaIngreso);
+            db.RegistrarAutorizacion(idOperacion, "ModificarPersona", legajoSolicitante);
         }
+
 
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
