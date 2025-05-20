@@ -112,7 +112,7 @@ namespace TemplateTPCorto
             {
                 DataBaseUtils dbUtils = new DataBaseUtils();
                 dbUtils.ActualizarContraseña(archivo, nombreUsuario, nuevaContraseña);
-                MessageBox.Show("Se actualizó la contraseña del usuario " + nombreUsuario);
+                //MessageBox.Show("Se actualizó la contraseña del usuario " + nombreUsuario);
             }
             catch (Exception ex)
             {
@@ -129,7 +129,7 @@ namespace TemplateTPCorto
             {
                 DataBaseUtils dbUtils = new DataBaseUtils();
                 dbUtils.ActualizarLogin(archivo, nombreUsuario, fechaActual);
-                MessageBox.Show("Se actualizó la ult fecha de login del usuario " + nombreUsuario);
+                //MessageBox.Show("Se actualizó la ult fecha de login del usuario " + nombreUsuario);
             }
             catch (Exception e)
             {

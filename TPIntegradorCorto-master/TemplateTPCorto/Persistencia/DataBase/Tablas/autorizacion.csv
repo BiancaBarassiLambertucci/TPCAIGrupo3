@@ -1,5 +1,7 @@
 idOperacion;tipoOperacion;estado;legajoSolicitante;fechaSolicitud;legajoAutorizador;fechaAutorizacion
-6;Modificar Persona;Pendiente;1500;2025-05-19;;
-7;Modificar Persona;Pendiente;2191;2025-05-19;;
-8;ModificarPersona;Pendiente;2222;19/5/2025;;
-11;Cambiar Contraseña;Pendiente;1111;19/5/2025;;
+6;Modificar persona;Pendiente;1500;2025-05-19;;
+7;Modificar persona;Pendiente;2191;2025-05-19;;
+8;Modificar persona;Pendiente;2222;19/5/2025;;
+11;Desbloquear credencial;Aprobado;1111;19/5/2025;3333;19/5/2025
+12;Modificar persona;Pendiente;2222;19/5/2025;;
+13;Desbloquear credencial;Rechazado;3333;19/5/2025;3333;19/05/2025 11:15:42 p. m.

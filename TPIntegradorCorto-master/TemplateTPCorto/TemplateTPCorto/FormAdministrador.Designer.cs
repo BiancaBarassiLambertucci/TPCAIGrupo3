@@ -41,6 +41,7 @@
             this.btnAprobar.TabIndex = 0;
             this.btnAprobar.Text = "Aprobar Cambio";
             this.btnAprobar.UseVisualStyleBackColor = true;
+            this.btnAprobar.Click += new System.EventHandler(this.btnAprobar_Click_1);
             // 
             // btnRechazar
             // 
@@ -50,6 +51,7 @@
             this.btnRechazar.TabIndex = 1;
             this.btnRechazar.Text = "Rechazar Cambio";
             this.btnRechazar.UseVisualStyleBackColor = true;
+            this.btnRechazar.Click += new System.EventHandler(this.btnRechazar_Click);
             // 
             // CambiosPendientes
             // 

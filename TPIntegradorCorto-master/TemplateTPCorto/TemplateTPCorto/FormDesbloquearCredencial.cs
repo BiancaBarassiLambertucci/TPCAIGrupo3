@@ -37,19 +37,19 @@ namespace TemplateTPCorto
                 MessageBox.Show("El usuario no existe. ");
                 return;
             }
-            //MessageBox.Show("Usuario Existe con exito. ");
+         
             DataBaseUtils dbUtils = new DataBaseUtils();
             string legajo = dbUtils.BuscarValorEnCSV("credenciales.csv", 1, usuario, 0);
             string fechaAltaStr = dbUtils.BuscarValorEnCSV("credenciales.csv", 1, usuario, 3);
-            //MessageBox.Show("Usuario Existe con exito. " + fechaAltaStr);
+            string legajoUsuario;
+       
             DateTime fechaAlta = DateTime.ParseExact(fechaAltaStr, "d/M/yyyy", CultureInfo.InvariantCulture);
-            //string fechaUltimoLoginStr = dbUtils.BuscarValorEnCSV("credenciales.csv", 1, usuario, 4);
-            //DateTime fechaUltimoLogin = DateTime.ParseExact(fechaUltimoLoginStr (,"1/1/1900"), "d/M/yyyy", CultureInfo.InvariantCulture);
+     
             DateTime fechaUltimoLogin = !string.IsNullOrWhiteSpace(dbUtils.BuscarValorEnCSV("credenciales.csv", 1, usuario, 4))
             ? DateTime.ParseExact(dbUtils.BuscarValorEnCSV("credenciales.csv", 1, usuario, 4), "d/M/yyyy", CultureInfo.InvariantCulture)
             : new DateTime(1900, 1, 1);
             string idPerfil = dbUtils.BuscarValorEnCSV("usuario_perfil.csv", 0, legajo, 1);
-            RegistrarOperacionCambio(legajo, usuario, nuevaContraseña, idPerfil, fechaAlta, fechaUltimoLogin);
+            RegistrarOperacionCambio(legajo, usuario, nuevaContraseña, idPerfil, fechaAlta, fechaUltimoLogin); // !!!
             MessageBox.Show("Contraseña modificada con éxito. ");
 
             this.Close();
@@ -61,8 +61,8 @@ namespace TemplateTPCorto
             string idOperacion = db.GenerarIdOperacionUnico();
 
             db.RegistrarOperacionCambioCredencial(idOperacion, legajo, usuario, nuevaContraseña, idPerfil, fechaAlta, fechaUltimoLogin);
-            //db.ActualizarCredencial(usuario, nuevaContraseña);
-            db.RegistrarAutorizacion(idOperacion, "Cambiar Contraseña", legajo);
+
+            db.RegistrarAutorizacion(idOperacion, "Desbloquear credencial", legajo); 
         }
 
         private bool ExisteUsuario(string usuario) // Método para contrastar el usuario con el archivo credenciales.csv

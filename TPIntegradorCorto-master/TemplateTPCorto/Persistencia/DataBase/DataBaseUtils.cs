@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -174,7 +175,7 @@ namespace Persistencia.DataBase
                     //sw.WriteLine(Environment.NewLine);
                     sw.WriteLine(nuevoRegistro);
                 }
-                Console.WriteLine("Registro agregado correctamente.");
+                //Console.WriteLine("Registro agregado correctamente.");
             }
             catch (Exception e)
             {
@@ -265,7 +266,7 @@ namespace Persistencia.DataBase
             }
         }
 
-            public void ActualizarLogin(string nombreArchivo, string usuario, DateTime fechaActual)
+        public void ActualizarLogin(string nombreArchivo, string usuario, DateTime fechaActual)
         {
             string rutaArchivo = Path.Combine(baseFolderPath, nombreArchivo);
 
@@ -465,7 +466,6 @@ namespace Persistencia.DataBase
             VaciarFechaUltimoLogin(archivo, usuario);
         }
 
-
         public void ActualizarPersona(string legajo, string nombre, string apellido, string dni, string fechaIngreso)
         {
             string archivo = Path.Combine(baseFolderPath, "persona.csv");
@@ -485,6 +485,49 @@ namespace Persistencia.DataBase
                 {
                     // Reemplazo con los nuevos datos
                     string nuevaLinea = $"{legajo};{nombre};{apellido};{dni};{fechaIngreso}";
+                    nuevasLineas.Add(nuevaLinea);
+                }
+                else
+                {
+                    nuevasLineas.Add(lineas[i]);
+                }
+            }
+
+            File.WriteAllLines(archivo, nuevasLineas);
+        }
+
+        public void ActualizarArchivoAutorizaciones(string idOperacion, bool aprobado, string legajoAutorizador)
+        {
+
+            string archivo = Path.Combine(baseFolderPath, "autorizacion.csv");
+            List<string> lineas = BuscarRegistro("autorizacion.csv");
+            List<string> nuevasLineas = new List<string>();
+
+            if (lineas.Count > 0)
+                nuevasLineas.Add(lineas[0]); // Mantener encabezado
+
+            for (int i = 1; i < lineas.Count; i++)
+            {
+                string[] camposAutorizacion = lineas[i].Split(';');
+                if (camposAutorizacion.Length < 7)
+                    continue;
+
+                if (camposAutorizacion[0].Trim() == idOperacion.Trim())
+                {
+                    // Reemplazo con los nuevos datos
+
+                    if (aprobado)
+                    {
+                        camposAutorizacion[2] = "Aprobado";
+                    } else
+                    {
+                        camposAutorizacion[2] = "Rechazado";
+                    }
+
+                    camposAutorizacion[5] = legajoAutorizador;
+                    camposAutorizacion[6] = DateTime.Now.ToString("d/M/yyyy");
+
+                    string nuevaLinea = $"{camposAutorizacion[0]};{camposAutorizacion[1]};{camposAutorizacion[2]};{camposAutorizacion[3]};{camposAutorizacion[4]};{camposAutorizacion[5]};{camposAutorizacion[6]}";
                     nuevasLineas.Add(nuevaLinea);
                 }
                 else

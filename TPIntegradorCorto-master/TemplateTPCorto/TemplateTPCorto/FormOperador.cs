@@ -25,5 +25,11 @@ namespace TemplateTPCorto
         {
 
         }
+
+        private void cambiarContraseña_Click(object sender, EventArgs e)
+        {
+            FormCambioContraseña formCambio = new FormCambioContraseña(usuario);
+            formCambio.ShowDialog();
+        }
     }
 }

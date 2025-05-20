@@ -28,36 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.bienvenidaOperador = new System.Windows.Forms.Label();
             this.cambiarContraseña = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // bienvenidaOperador
-            // 
-            this.bienvenidaOperador.AutoSize = true;
-            this.bienvenidaOperador.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bienvenidaOperador.Location = new System.Drawing.Point(5, 20);
-            this.bienvenidaOperador.Name = "bienvenidaOperador";
-            this.bienvenidaOperador.Size = new System.Drawing.Size(551, 39);
-            this.bienvenidaOperador.TabIndex = 0;
-            this.bienvenidaOperador.Text = "Bienvenido al sistema, Operador.";
             // 
             // cambiarContraseña
             // 
-            this.cambiarContraseña.Location = new System.Drawing.Point(12, 107);
+            this.cambiarContraseña.Location = new System.Drawing.Point(102, 99);
+            this.cambiarContraseña.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cambiarContraseña.Name = "cambiarContraseña";
-            this.cambiarContraseña.Size = new System.Drawing.Size(157, 56);
+            this.cambiarContraseña.Size = new System.Drawing.Size(177, 45);
             this.cambiarContraseña.TabIndex = 1;
             this.cambiarContraseña.Text = "Cambiar Contraseña";
             this.cambiarContraseña.UseVisualStyleBackColor = true;
+            this.cambiarContraseña.Click += new System.EventHandler(this.cambiarContraseña_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(74, 56);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(241, 20);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Bienvenido al sistema, Operador.";
             // 
             // FormOperador
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(403, 209);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.cambiarContraseña);
-            this.Controls.Add(this.bienvenidaOperador);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormOperador";
             this.Text = "FormOperador";
             this.Load += new System.EventHandler(this.FormOperador_Load);
@@ -67,8 +69,7 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label bienvenidaOperador;
         private System.Windows.Forms.Button cambiarContraseña;
+        private System.Windows.Forms.Label label1;
     }
 }

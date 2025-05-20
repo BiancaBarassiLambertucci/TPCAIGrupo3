@@ -67,7 +67,7 @@ namespace TemplateTPCorto
             }
 
             // Registrar el cambio en operacion_cambio_persona.csv
-            RegistrarOperacionCambio(legajo, nombre, apellido, dni, fechaIngreso, legajoSolicitante);
+            RegistrarOperacionCambio(legajoBuscado, nombre, apellido, dni, fechaIngreso, legajoSolicitante);
 
             MessageBox.Show($"Autorización de cambios para el usuario {nombre} {apellido} solicitada.");
 
@@ -98,7 +98,7 @@ namespace TemplateTPCorto
             string idOperacion = db.GenerarIdOperacionUnico();
 
             db.RegistrarOperacionCambioPersona(idOperacion, legajo, nombre, apellido, dni, fechaIngreso);
-            db.RegistrarAutorizacion(idOperacion, "ModificarPersona", legajoSolicitante);
+            db.RegistrarAutorizacion(idOperacion, "Modificar persona", legajoSolicitante);
         }
 
 

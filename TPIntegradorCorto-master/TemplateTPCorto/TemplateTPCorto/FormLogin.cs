@@ -56,7 +56,7 @@ namespace TemplateTPCorto
                 return;
             }
 
-            MessageBox.Show("Perfil obtenido: " + perfil);
+            //MessageBox.Show("Perfil obtenido: " + perfil);
 
             List<string> usuarios = BuscarRegistro(); //Llamo al método que lee el archivo csv y devuelve una lista de lineas. Cada linea representa un usuario.
 
@@ -179,7 +179,7 @@ namespace TemplateTPCorto
         public List<String> BuscarRegistro()
         {
             DataBaseUtils dbUtils = new DataBaseUtils();
-            List<string> registros = dbUtils.BuscarRegistro("Credenciales.csv");
+            List<string> registros = dbUtils.BuscarRegistro("credenciales.csv");
             return registros;
         }
 
