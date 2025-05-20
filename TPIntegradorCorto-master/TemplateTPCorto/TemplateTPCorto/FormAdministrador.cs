@@ -144,7 +144,7 @@ namespace TemplateTPCorto
 
                 if (campos[0].Trim().Equals(idOperacion.Trim(), StringComparison.OrdinalIgnoreCase))
                 {
-                    MessageBox.Show("ID encontrado! Tipo de operación: " + campos[1].Trim());
+                    //MessageBox.Show("ID encontrado! Tipo de operación: " + campos[1].Trim());
                     return campos[1].Trim();
                 }
             }
@@ -178,7 +178,7 @@ namespace TemplateTPCorto
 
             if (datosCambio == null)
             {
-                MessageBox.Show("No se encontró la operación en " + archivoOperacion);
+                //MessageBox.Show("No se encontró la operación en " + archivoOperacion);
                 return;
             }
 

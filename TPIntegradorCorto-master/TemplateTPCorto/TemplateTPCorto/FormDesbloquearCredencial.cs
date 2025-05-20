@@ -41,7 +41,7 @@ namespace TemplateTPCorto
             DataBaseUtils dbUtils = new DataBaseUtils();
             string legajo = dbUtils.BuscarValorEnCSV("credenciales.csv", 1, usuario, 0);
             string fechaAltaStr = dbUtils.BuscarValorEnCSV("credenciales.csv", 1, usuario, 3);
-            string legajoUsuario;
+            string legajoUsuario; // Falta guardar el legajo del solicitante
        
             DateTime fechaAlta = DateTime.ParseExact(fechaAltaStr, "d/M/yyyy", CultureInfo.InvariantCulture);
      
@@ -49,8 +49,8 @@ namespace TemplateTPCorto
             ? DateTime.ParseExact(dbUtils.BuscarValorEnCSV("credenciales.csv", 1, usuario, 4), "d/M/yyyy", CultureInfo.InvariantCulture)
             : new DateTime(1900, 1, 1);
             string idPerfil = dbUtils.BuscarValorEnCSV("usuario_perfil.csv", 0, legajo, 1);
-            RegistrarOperacionCambio(legajo, usuario, nuevaContraseña, idPerfil, fechaAlta, fechaUltimoLogin); // !!!
-            MessageBox.Show("Contraseña modificada con éxito. ");
+            RegistrarOperacionCambio(legajo, usuario, nuevaContraseña, idPerfil, fechaAlta, fechaUltimoLogin);             
+            MessageBox.Show($"Autorización de cambios para el usuario {usuario} solicitada."); ;
 
             this.Close();
         }
