@@ -28,10 +28,10 @@ namespace TemplateTPCorto
             formCambio3.ShowDialog();
         }
 
-        private string nombreUsuario;
+        //private string nombreUsuario;
         private void btnCambiarContraseñaPropia_Click(object sender, EventArgs e)
         {
-            FormCambioContraseña formCambio = new FormCambioContraseña(nombreUsuario);
+            FormCambioContraseña formCambio = new FormCambioContraseña(usuario);
             formCambio.ShowDialog();
         }
 

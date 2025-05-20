@@ -61,7 +61,8 @@ namespace TemplateTPCorto
             string idOperacion = db.GenerarIdOperacionUnico();
 
             db.RegistrarOperacionCambioCredencial(idOperacion, legajo, usuario, nuevaContraseña, idPerfil, fechaAlta, fechaUltimoLogin);
-            db.ActualizarCredencial(usuario, nuevaContraseña);
+            //db.ActualizarCredencial(usuario, nuevaContraseña);
+            db.RegistrarAutorizacion(idOperacion, "Cambiar Contraseña", legajo);
         }
 
         private bool ExisteUsuario(string usuario) // Método para contrastar el usuario con el archivo credenciales.csv
