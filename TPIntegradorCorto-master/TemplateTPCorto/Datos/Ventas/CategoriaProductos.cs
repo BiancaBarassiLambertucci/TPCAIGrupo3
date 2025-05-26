@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Datos.Ventas
 {
-    internal class CategoriaProductos
+    public class CategoriaProductos
     {
         String _id;
 

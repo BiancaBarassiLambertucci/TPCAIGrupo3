@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Datos.Ventas
 {
-    internal class Cliente
+    public class Cliente
     {
         Guid _id;
 

@@ -31,5 +31,12 @@ namespace TemplateTPCorto
             FormCambioContraseña formCambio = new FormCambioContraseña(usuario);
             formCambio.ShowDialog();
         }
+
+        private void btnRegistrarVenta_Click(object sender, EventArgs e)
+        {
+            FormVentas formVentas = new FormVentas();
+            this.Hide();
+            formVentas.ShowDialog();
+        }
     }
 }
