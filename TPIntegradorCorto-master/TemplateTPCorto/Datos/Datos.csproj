@@ -49,6 +49,7 @@
     <Compile Include="Ventas\CategoriaProductos.cs" />
     <Compile Include="Ventas\Cliente.cs" />
     <Compile Include="Ventas\Producto.cs" />
+    <Compile Include="Ventas\ProductoCarrito.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
