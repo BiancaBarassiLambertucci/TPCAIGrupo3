@@ -18,6 +18,7 @@ namespace Datos.Ventas
         public Guid IdUsuario { get => idUsuario; set => idUsuario = value; }
         public int Cantidad { get => cantidad; set => cantidad = value; }
 
+        //testeo de commit
        
     }
 }
