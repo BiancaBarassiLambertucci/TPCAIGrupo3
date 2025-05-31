@@ -1,4 +1,5 @@
 ﻿using Datos.Ventas;
+using Persistencia.CarritoPersistencia;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,21 @@ namespace Negocio.Carrito
     {
         public List<Producto> obtenerProductosPorCategoria(String categoria)
         {
+            List<Producto> listadoProductos = new List<Producto>();
             // Aplico la logica de negocio
 
             // 1- Mostrar solo productos que tienen stock positivo
-            return null; // Borrar esto
+
+            ProductoPersistencia PPersistencia = new ProductoPersistencia();
+
+            listadoProductos = PPersistencia.obtenerProductosPorCategoria(categoria);
+
+            /*for (int i = 0; i < listadoProductos.Count; i++)
+            {
+                // COMPLETAR
+            }*/
+
+            return listadoProductos; 
         }
     }
 }
