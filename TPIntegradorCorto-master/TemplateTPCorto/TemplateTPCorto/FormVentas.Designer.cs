@@ -52,30 +52,32 @@
             this.btnListarProductos.Location = new System.Drawing.Point(271, 102);
             this.btnListarProductos.Margin = new System.Windows.Forms.Padding(2);
             this.btnListarProductos.Name = "btnListarProductos";
-            this.btnListarProductos.Size = new System.Drawing.Size(85, 19);
+            this.btnListarProductos.Size = new System.Drawing.Size(97, 21);
             this.btnListarProductos.TabIndex = 34;
             this.btnListarProductos.Text = "Listar productos";
             this.btnListarProductos.UseVisualStyleBackColor = true;
+            this.btnListarProductos.Click += new System.EventHandler(this.btnListarProductos_Click_1);
             // 
             // btnCargar
             // 
             this.btnCargar.Location = new System.Drawing.Point(560, 411);
             this.btnCargar.Margin = new System.Windows.Forms.Padding(2);
             this.btnCargar.Name = "btnCargar";
-            this.btnCargar.Size = new System.Drawing.Size(76, 19);
+            this.btnCargar.Size = new System.Drawing.Size(83, 28);
             this.btnCargar.TabIndex = 33;
             this.btnCargar.Text = "Cargar Venta";
             this.btnCargar.UseVisualStyleBackColor = true;
             // 
             // btnQuitar
             // 
-            this.btnQuitar.Location = new System.Drawing.Point(736, 151);
+            this.btnQuitar.Location = new System.Drawing.Point(731, 151);
             this.btnQuitar.Margin = new System.Windows.Forms.Padding(2);
             this.btnQuitar.Name = "btnQuitar";
-            this.btnQuitar.Size = new System.Drawing.Size(56, 19);
+            this.btnQuitar.Size = new System.Drawing.Size(61, 25);
             this.btnQuitar.TabIndex = 32;
             this.btnQuitar.Text = "Quitar";
             this.btnQuitar.UseVisualStyleBackColor = true;
+            this.btnQuitar.Click += new System.EventHandler(this.btnQuitar_Click);
             // 
             // lablSubTotal
             // 
@@ -92,7 +94,7 @@
             this.btnAgregar.Location = new System.Drawing.Point(169, 411);
             this.btnAgregar.Margin = new System.Windows.Forms.Padding(2);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(97, 19);
+            this.btnAgregar.Size = new System.Drawing.Size(109, 28);
             this.btnAgregar.TabIndex = 29;
             this.btnAgregar.Text = "Agregar a carrito";
             this.btnAgregar.UseVisualStyleBackColor = true;
@@ -234,6 +236,7 @@
             this.Controls.Add(this.cmbClientes);
             this.Name = "FormVentas";
             this.Text = "FormVentas";
+            this.Load += new System.EventHandler(this.FormVentas_Load_1);
             this.ResumeLayout(false);
             this.PerformLayout();
 

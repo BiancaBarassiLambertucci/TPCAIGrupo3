@@ -32,7 +32,7 @@ namespace TemplateTPCorto
             formCambio.ShowDialog();
         }
 
-        private void btnRegistrarVenta_Click(object sender, EventArgs e)
+        private void btnCargarVenta_Click(object sender, EventArgs e)
         {
             FormVentas formVentas = new FormVentas();
             this.Hide();

@@ -21,7 +21,7 @@ namespace TemplateTPCorto
             InitializeComponent();
         }
 
-        private void FormVentas_Load(object sender, EventArgs e)
+        private void FormVentas_Load_1(object sender, EventArgs e)
         {
             CargarClientes();
             CargarCategoriasProductos();
@@ -71,6 +71,16 @@ namespace TemplateTPCorto
         }
 
         private void cmbClientes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnListarProductos_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnQuitar_Click(object sender, EventArgs e)
         {
 
         }

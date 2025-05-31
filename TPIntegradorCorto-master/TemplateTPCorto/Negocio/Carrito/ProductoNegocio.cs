@@ -14,7 +14,7 @@ namespace Negocio.Carrito
             // Aplico la logica de negocio
 
             // 1- Mostrar solo productos que tienen stock positivo
-            return null;
+            return null; // Borrar esto
         }
     }
 }
