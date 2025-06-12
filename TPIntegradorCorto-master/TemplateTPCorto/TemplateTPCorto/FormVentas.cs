@@ -61,19 +61,28 @@ namespace TemplateTPCorto
 
         public void CargarProductosValidos()
         {
-            string categoriaID = cboCategoriaProductos.ToString();
-           
-            ProductoNegocio productoNegocio = new ProductoNegocio();
+            
+                if (cboCategoriaProductos.SelectedItem == null)
+                {
+                    MessageBox.Show("Debe seleccionar una categoría.");
+                    return;
+                }
 
-            List<Producto> listadoProductos = productoNegocio.obtenerProductosPorCategoria(categoriaID);
+                CategoriaProductos categoriaSeleccionada = (CategoriaProductos)cboCategoriaProductos.SelectedItem;
+                string categoriaID = categoriaSeleccionada.Id.ToString();
 
+                ProductoNegocio productoNegocio = new ProductoNegocio();
+                List<Producto> productosValidos = productoNegocio.obtenerProductosPorCategoria(categoriaID);
+
+                lstProducto.DataSource = null;
+                lstProducto.DataSource = productosValidos;
+                lstProducto.DisplayMember = "Nombre"; // Asegurate que Producto tiene esta propiedad
             
         }
 
         private void btnListarProductos_Click(object sender, EventArgs e)
         {
-            VentaNegocio ventasNegocio = new VentaNegocio();
-            CargarProductosValidos();
+           
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -88,7 +97,8 @@ namespace TemplateTPCorto
 
         private void btnListarProductos_Click_1(object sender, EventArgs e)
         {
-
+            VentaNegocio ventasNegocio = new VentaNegocio();
+            CargarProductosValidos();
         }
 
         private void btnQuitar_Click(object sender, EventArgs e)
