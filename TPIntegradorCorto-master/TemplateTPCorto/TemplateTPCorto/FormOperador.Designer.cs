@@ -35,10 +35,11 @@
             // 
             // cambiarContraseña
             // 
-            this.cambiarContraseña.Location = new System.Drawing.Point(68, 64);
-            this.cambiarContraseña.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.cambiarContraseña.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cambiarContraseña.Location = new System.Drawing.Point(242, 220);
+            this.cambiarContraseña.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cambiarContraseña.Name = "cambiarContraseña";
-            this.cambiarContraseña.Size = new System.Drawing.Size(118, 29);
+            this.cambiarContraseña.Size = new System.Drawing.Size(198, 53);
             this.cambiarContraseña.TabIndex = 1;
             this.cambiarContraseña.Text = "Cambiar Contraseña";
             this.cambiarContraseña.UseVisualStyleBackColor = true;
@@ -47,18 +48,21 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(49, 36);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(163, 82);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(162, 13);
+            this.label1.Size = new System.Drawing.Size(370, 29);
             this.label1.TabIndex = 2;
             this.label1.Text = "Bienvenido al sistema, Operador.";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // btnCargarVenta
             // 
-            this.btnCargarVenta.Location = new System.Drawing.Point(68, 117);
+            this.btnCargarVenta.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCargarVenta.Location = new System.Drawing.Point(242, 146);
+            this.btnCargarVenta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCargarVenta.Name = "btnCargarVenta";
-            this.btnCargarVenta.Size = new System.Drawing.Size(118, 23);
+            this.btnCargarVenta.Size = new System.Drawing.Size(198, 53);
             this.btnCargarVenta.TabIndex = 3;
             this.btnCargarVenta.Text = "Cargar Venta";
             this.btnCargarVenta.UseVisualStyleBackColor = true;
@@ -66,13 +70,13 @@
             // 
             // FormOperador
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(341, 210);
+            this.ClientSize = new System.Drawing.Size(676, 369);
             this.Controls.Add(this.btnCargarVenta);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cambiarContraseña);
-            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormOperador";
             this.Text = "FormOperador";
             this.Load += new System.EventHandler(this.FormOperador_Load);

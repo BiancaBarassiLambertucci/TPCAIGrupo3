@@ -23,13 +23,7 @@ namespace TemplateTPCorto
 
         private void FormOperador_Load(object sender, EventArgs e)
         {
-
-        }
-
-        private void cambiarContraseña_Click(object sender, EventArgs e)
-        {
-            FormCambioContraseña formCambio = new FormCambioContraseña(usuario);
-            formCambio.ShowDialog();
+            this.ActiveControl = btnCargarVenta;
         }
 
         private void btnCargarVenta_Click(object sender, EventArgs e)
@@ -37,6 +31,18 @@ namespace TemplateTPCorto
             FormVentas formVentas = new FormVentas();
             this.Hide();
             formVentas.ShowDialog();
+        }
+
+        private void cambiarContraseña_Click(object sender, EventArgs e)
+        {
+            FormCambioContraseña formCambio = new FormCambioContraseña(usuario);
+            this.Hide();
+            formCambio.ShowDialog();
+        }     
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
