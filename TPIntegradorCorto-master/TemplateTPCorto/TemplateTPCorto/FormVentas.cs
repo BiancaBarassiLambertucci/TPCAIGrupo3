@@ -59,10 +59,21 @@ namespace TemplateTPCorto
             }
         }
 
+        public void CargarProductosValidos()
+        {
+            string categoriaID = cboCategoriaProductos.ToString();
+           
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+
+            List<Producto> listadoProductos = productoNegocio.obtenerProductosPorCategoria(categoriaID);
+
+            
+        }
+
         private void btnListarProductos_Click(object sender, EventArgs e)
         {
             VentaNegocio ventasNegocio = new VentaNegocio();
-
+            CargarProductosValidos();
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
