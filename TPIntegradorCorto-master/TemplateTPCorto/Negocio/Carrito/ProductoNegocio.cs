@@ -5,11 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Persistencia.CarritoPersistencia;
 
 namespace Negocio.Carrito
 {
-    internal class ProductoNegocio
+    public class ProductoNegocio
     {
+
+        public ProductoPersistencia productoPersistencia = new ProductoPersistencia();
         public List<Producto> obtenerProductosPorCategoria(String categoria)
         {
             List<Producto> listadoProductos = new List<Producto>();
