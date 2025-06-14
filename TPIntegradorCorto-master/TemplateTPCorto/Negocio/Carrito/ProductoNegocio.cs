@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Persistencia.CarritoPersistencia;
 
 namespace Negocio.Carrito
 {
@@ -15,21 +14,21 @@ namespace Negocio.Carrito
         public ProductoPersistencia productoPersistencia = new ProductoPersistencia();
         public List<Producto> obtenerProductosPorCategoria(String categoria)
         {
-            List<Producto> listadoProductos = new List<Producto>();
-            // Aplico la logica de negocio
+            List<Producto> productosValidos = new List<Producto>();
 
-            // 1- Mostrar solo productos que tienen stock positivo
+            // Obtener productos desde la persistencia
+            List<Producto> productos = productoPersistencia.obtenerProductosPorCategoria(categoria);
 
-            ProductoPersistencia PPersistencia = new ProductoPersistencia();
-
-            listadoProductos = PPersistencia.obtenerProductosPorCategoria(categoria);
-
-            /*for (int i = 0; i < listadoProductos.Count; i++)
+            // Filtrar manualmente los productos con stock > 0 y sin fecha de baja
+            foreach (Producto p in productos)
             {
-                // COMPLETAR
-            }*/
+                if (p.Stock > 0 && p.FechaBaja == null)
+                {
+                    productosValidos.Add(p);
+                }
+            }
 
-            return listadoProductos; 
+            return productosValidos;
         }
     }
 }

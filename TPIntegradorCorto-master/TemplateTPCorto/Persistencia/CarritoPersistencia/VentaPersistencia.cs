@@ -18,7 +18,7 @@ namespace Persistencia.CarritoPersistencia
         {
             var jsonRequest = JsonConvert.SerializeObject(venta);
 
-            HttpResponseMessage response = WebHelper.Post("Venta/AgregarVenta", jsonRequest);
+            HttpResponseMessage response = WebHelper.Post("/api/Venta/AgregarVenta", jsonRequest);
 
             if (response.IsSuccessStatusCode)
             {

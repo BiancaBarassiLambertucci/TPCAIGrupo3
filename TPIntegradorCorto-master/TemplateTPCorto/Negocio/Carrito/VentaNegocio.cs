@@ -44,5 +44,113 @@ namespace Negocio.Carrito
 
             return categoriaProductos;
         }
+
+        public List<ProductoCarrito> productosCarrito = new List<ProductoCarrito>();
+
+        public void AgregarProductoCarrito(Producto producto, int cantidad)
+        {
+            if (producto == null)
+                throw new Exception("Debe seleccionar un producto.");
+            if (cantidad <= 0)
+                throw new Exception("La cantidad debe ser mayor a cero.");
+
+            // Buscar si el producto ya está en el carrito
+            foreach (var item in productosCarrito)
+            {
+                if (item.IdProducto == producto.Id)
+                {
+                    int nuevaCantidadTotal = item.Cantidad + cantidad;
+
+                    if (nuevaCantidadTotal > producto.Stock)
+                        throw new Exception("No hay suficiente stock disponible para esta cantidad.");
+
+                    item.Cantidad = nuevaCantidadTotal;
+                    return; // Ya se actualizó, no se agrega uno nuevo
+                }
+            }
+
+            // Si no estaba en el carrito, verifico el stock y lo agrego
+            if (cantidad > producto.Stock)
+                throw new Exception("No hay suficiente stock disponible.");
+
+            ProductoCarrito nuevoItem = new ProductoCarrito
+            {
+                IdProducto = producto.Id,
+                Cantidad = cantidad
+            };
+
+            productosCarrito.Add(nuevoItem);
+        }
+
+
+        public List<ProductoCarrito> ObtenerCarrito()
+        {
+            return productosCarrito;
+        }
+
+        public void LimpiarCarrito()
+        {
+            productosCarrito.Clear();
+        }
+        public void QuitarProducto(Guid idProducto)
+        {
+            for (int i = 0; i < productosCarrito.Count; i++)
+            {
+                if (productosCarrito[i].IdProducto == idProducto)
+                {
+                    productosCarrito.RemoveAt(i);
+                    return;
+                }
+            }
+        }
+
+        public decimal ObtenerSubtotal(List<ProductoCarrito> carrito, List<Producto> productosDisponibles)
+        {
+            decimal subtotal = 0;
+
+            foreach (var item in carrito)
+            {
+                Producto producto = productosDisponibles.Find(p => p.Id == item.IdProducto);
+                if (producto != null)
+                {
+                    subtotal += producto.Precio * item.Cantidad;
+                }
+            }
+
+            return subtotal;
+        }
+
+        public decimal ObtenerTotalConDescuento(List<ProductoCarrito> carrito, List<Producto> productosDisponibles)
+        {
+            decimal total = 0;
+            decimal totalElectroHogar = 0;
+
+            foreach (var item in carrito)
+            {
+                Producto producto = productosDisponibles.Find(p => p.Id == item.IdProducto);
+                if (producto != null)
+                {
+                    decimal monto = producto.Precio * item.Cantidad;
+
+                    if (producto.IdCategoria == 3) // Electro Hogar
+                    {
+                        totalElectroHogar += monto;
+                    }
+
+                    total += monto;
+                }
+            }
+
+            if (totalElectroHogar > 1000000)
+            {
+                total -= totalElectroHogar * 0.15m; // Aplicar 15% de descuento solo a Electro Hogar
+            }
+
+            return total;
+        }
+
+
     }
+
 }
+
