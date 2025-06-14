@@ -2,6 +2,8 @@
 using Datos.Ventas;
 using Negocio;
 using Negocio.Carrito;
+using Newtonsoft.Json;
+using Persistencia.CarritoPersistencia;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -238,6 +240,88 @@ namespace TemplateTPCorto
             dgvCarrito.AllowUserToAddRows = false;
         }
 
+        public List<ProductoCarrito> GenerarVentaParaWS()
+        {
+            List<ProductoCarrito> productosParaWS = new List<ProductoCarrito>();
+            List<ProductoCarrito> carrito = ventasNegocio.ObtenerCarrito();
+
+            if (cmbClientes.SelectedItem == null)
+            {
+                MessageBox.Show("Debe seleccionar un cliente.");
+                return productosParaWS;
+            }
+
+            Cliente clienteSeleccionado = (Cliente)cmbClientes.SelectedItem;
+
+            for (int i = 0; i < carrito.Count; i++)
+            {
+                ProductoCarrito item = new ProductoCarrito();
+                item.IdProducto = carrito[i].IdProducto;
+                item.Cantidad = carrito[i].Cantidad;
+                item.IdCliente = clienteSeleccionado.Id; // se completa en AgregarVenta también
+                productosParaWS.Add(item);
+            }
+
+            return productosParaWS;
+        }
+
+        public void btnCargar_Click(object sender, EventArgs e)
+        {
+            AddVenta ventaFinal = GenerarAddVentaParaWS(); // renombrado
+
+            
+            if (ventaFinal == null || ventaFinal.Productos.Count == 0)
+            {
+                MessageBox.Show("Debe seleccionar un cliente y al menos un producto.");
+                return;
+            }
+
+            VentaPersistencia persistencia = new VentaPersistencia();
+            string error = persistencia.AgregarVenta(ventaFinal);
+
+            if (error == null)
+            {
+                MessageBox.Show("Venta registrada correctamente.");
+                productosCarritoDinamico.Clear();
+                IniciarTotales();
+            }
+            else
+            {
+                MessageBox.Show("Error al registrar la venta:\n" + error);
+            }
+        }
+
+      
+        public AddVenta GenerarAddVentaParaWS()
+        {
+            AddVenta venta = new AddVenta();
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+            List<ItemVenta> productos = new List<ItemVenta>();
+
+            
+            if (cmbClientes.SelectedItem == null)
+            return null;
+
+            Cliente cliente = (Cliente)cmbClientes.SelectedItem;
+            venta.IdCliente = cliente.Id;
+            venta.IdUsuario = new Guid("784c07f2-2b26-4973-9235-4064e94832b5");
+
+            for (int i = 0; i < productosCarritoDinamico.Count; i++)
+            {
+                CarritoDisplay display = productosCarritoDinamico[i];
+                Producto p = productoNegocio.BuscarPorNombre(display.Nombre);
+                if (p == null)
+                    continue;
+
+                ItemVenta item = new ItemVenta();
+                item.IdProducto = p.Id;
+                item.Cantidad = display.Cantidad;
+                productos.Add(item);
+            }
+
+            venta.Productos = productos;
+            return venta;
+        }
 
     }
 }
