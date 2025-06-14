@@ -21,7 +21,7 @@ namespace TemplateTPCorto
             InitializeComponent();
         }
 
-        private BindingList<ProductoCarrito> productosCarritoDinamico = new BindingList<ProductoCarrito>();
+        public BindingList<CarritoDisplay> productosCarritoDinamico = new BindingList<CarritoDisplay>();
 
         private void FormVentas_Load_1(object sender, EventArgs e)
         {
@@ -29,6 +29,8 @@ namespace TemplateTPCorto
             CargarCategoriasProductos();
             IniciarTotales();
             dgvCarrito.DataSource = productosCarritoDinamico;
+            dgvCarrito.AllowUserToAddRows = false;
+            dgvCarrito.ReadOnly = true;
 
         }
 
@@ -38,7 +40,7 @@ namespace TemplateTPCorto
             lblTotal.Text = "0.00";
         }
 
-        private VentaNegocio ventasNegocio = new VentaNegocio();
+        public VentaNegocio ventasNegocio = new VentaNegocio();
 
         private void CargarCategoriasProductos()
         {      
@@ -62,22 +64,27 @@ namespace TemplateTPCorto
 
         public void CargarProductosValidos()
         {
-            
-                if (cboCategoriaProductos.SelectedItem == null)
-                {
-                    MessageBox.Show("Debe seleccionar una categoría.");
-                    return;
-                }
+            if (cmbClientes.SelectedItem == null)
+            {
+                MessageBox.Show("Debe seleccionar un cliente.");
+                return;
+            }
 
-                CategoriaProductos categoriaSeleccionada = (CategoriaProductos)cboCategoriaProductos.SelectedItem;
-                string categoriaID = categoriaSeleccionada.Id.ToString();
+            if (cboCategoriaProductos.SelectedItem == null)
+            {
+                MessageBox.Show("Debe seleccionar una categoría.");
+                return;
+            }
 
-                ProductoNegocio productoNegocio = new ProductoNegocio();
-                List<Producto> productosValidos = productoNegocio.obtenerProductosPorCategoria(categoriaID);
+            CategoriaProductos categoriaSeleccionada = (CategoriaProductos)cboCategoriaProductos.SelectedItem;
+            string categoriaID = categoriaSeleccionada.Id.ToString();
 
-                lstProducto.DataSource = null;
-                lstProducto.DataSource = productosValidos;
-                lstProducto.DisplayMember = "Nombre"; // Asegurate que Producto tiene esta propiedad
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+            List<Producto> productosValidos = productoNegocio.obtenerProductosPorCategoria(categoriaID);
+
+            lstProducto.DataSource = null;
+            lstProducto.DataSource = productosValidos;
+            lstProducto.DisplayMember = "Nombre"; 
             
         }
 
@@ -110,26 +117,42 @@ namespace TemplateTPCorto
                 return;
             }
 
-            ProductoCarrito seleccionado = (ProductoCarrito)dgvCarrito.SelectedRows[0].DataBoundItem;
-            ventasNegocio.QuitarProducto(seleccionado.IdProducto);
+            CarritoDisplay seleccionado = (CarritoDisplay)dgvCarrito.SelectedRows[0].DataBoundItem;
+
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+            Producto producto = productoNegocio.BuscarPorNombre(seleccionado.Nombre);
+
+            if (producto == null)
+            {
+                MessageBox.Show("No se pudo identificar el producto para quitar.");
+                return;
+            }
+
+            ventasNegocio.QuitarProducto(producto.Id);
 
             productosCarritoDinamico.Clear();
             foreach (var item in ventasNegocio.ObtenerCarrito())
             {
-                productosCarritoDinamico.Add(item);
+                var prod = productoNegocio.BuscarPorId(item.IdProducto);
+                productosCarritoDinamico.Add(new CarritoDisplay
+                {
+                    Nombre = prod?.Nombre ?? "Desconocido",
+                    Precio = prod?.Precio ?? 0,
+                    Cantidad = item.Cantidad
+                });
             }
 
-            //ActualizarTotales();
+            ActualizarTotales();
         }
 
         private void btnAgregar_Click_1(object sender, EventArgs e)
         {
+            
             if (lstProducto.SelectedItem == null)
             {
                 MessageBox.Show("Debe seleccionar un producto.");
                 return;
             }
-
 
             if (string.IsNullOrWhiteSpace(txtCantidad.Text))
             {
@@ -149,15 +172,22 @@ namespace TemplateTPCorto
             {
                 ventasNegocio.AgregarProductoCarrito(productoSeleccionado, cantidad);
 
-                // Refrescar la grilla del carrito
                 productosCarritoDinamico.Clear();
+                ProductoNegocio productoNegocio = new ProductoNegocio();
+
                 foreach (var item in ventasNegocio.ObtenerCarrito())
                 {
-                    productosCarritoDinamico.Add(item);
+                    var producto = productoNegocio.BuscarPorId(item.IdProducto);
+                    productosCarritoDinamico.Add(new CarritoDisplay
+                    {
+                        Nombre = producto?.Nombre ?? "Desconocido",
+                        Precio = producto?.Precio ?? 0,
+                        Cantidad = item.Cantidad
+                    });
                 }
 
                 // Actualizar totales
-               // ActualizarTotales();
+                ActualizarTotales();
 
                 // Limpiar campo cantidad
                 txtCantidad.Clear();
@@ -167,12 +197,12 @@ namespace TemplateTPCorto
                 MessageBox.Show(ex.Message);
             }
         }
-        /*private void ActualizarTotales()
+        public void ActualizarTotales()
         {
-            ProductoNegocio productoNegocio = new ProductoNegocio();
-            List<Producto> productosDisponibles = productoNegocio.ObtenerProductos(); // o una versión que te devuelva todos
-
             List<ProductoCarrito> carrito = ventasNegocio.ObtenerCarrito();
+
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+            List<Producto> productosDisponibles = productoNegocio.ObtenerProductos();
 
             decimal subtotal = ventasNegocio.ObtenerSubtotal(carrito, productosDisponibles);
             decimal total = ventasNegocio.ObtenerTotalConDescuento(carrito, productosDisponibles);
@@ -180,8 +210,34 @@ namespace TemplateTPCorto
             lablSubTotal.Text = subtotal.ToString("C");
             lblTotal.Text = total.ToString("C");
         }
-        */
+        private void dgvCarrito_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
-       
+        }
+
+        public void ActualizarGrillaCarrito()
+        {
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+            List<ProductoCarrito> carrito = ventasNegocio.ObtenerCarrito();
+
+            var datosParaMostrar = carrito.Select(p =>
+            {
+                var producto = productoNegocio.BuscarPorId(p.IdProducto);
+                return new CarritoDisplay
+                {
+                    Nombre = producto?.Nombre ?? "Desconocido",
+                    Precio = producto?.Precio ?? 0,
+                    Cantidad = p.Cantidad
+                };
+            }).ToList();
+
+            dgvCarrito.DataSource = null;
+            dgvCarrito.DataSource = datosParaMostrar;
+
+            dgvCarrito.ReadOnly = true;
+            dgvCarrito.AllowUserToAddRows = false;
+        }
+
+
     }
 }

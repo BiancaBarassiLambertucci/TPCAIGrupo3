@@ -27,8 +27,21 @@ namespace Persistencia.CarritoPersistencia
                 listadoProductos = JsonConvert.DeserializeObject<List<Producto>>(contentStream);
             }
 
-
             return listadoProductos;
+        }
+
+        public List<Producto> ObtenerTodos()
+        {
+            List<Producto> productos = new List<Producto>();
+            HttpResponseMessage response = WebHelper.Get("/api/Producto/TraerProductos");
+
+            if (response.StatusCode.Equals(HttpStatusCode.OK))
+            {
+                var contentStream = response.Content.ReadAsStringAsync().Result;
+                productos = JsonConvert.DeserializeObject<List<Producto>>(contentStream);
+            }
+
+            return productos;
         }
     }
 }

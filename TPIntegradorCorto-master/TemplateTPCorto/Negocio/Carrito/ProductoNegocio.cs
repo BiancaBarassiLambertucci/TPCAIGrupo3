@@ -30,5 +30,22 @@ namespace Negocio.Carrito
 
             return productosValidos;
         }
+        public List<Producto> ObtenerProductos()
+        {
+            ProductoPersistencia persistencia = new ProductoPersistencia();
+            return persistencia.ObtenerTodos();
+        }
+
+        public Producto BuscarPorId(Guid idProducto)
+        {
+            List<Producto> productos = ObtenerProductos(); 
+
+            return productos.FirstOrDefault(p => p.Id == idProducto);
+        }
+        public Producto BuscarPorNombre(string nombre)
+        {
+            return ObtenerProductos().FirstOrDefault(p => p.Nombre == nombre);
+        }
+
     }
 }
