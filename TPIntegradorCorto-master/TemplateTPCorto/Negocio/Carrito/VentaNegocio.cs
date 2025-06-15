@@ -83,15 +83,16 @@ namespace Negocio.Carrito
         }
 
 
+        public void LimpiarCarrito()
+        {
+            productosCarrito.Clear();
+        }
+
         public List<ProductoCarrito> ObtenerCarrito()
         {
             return productosCarrito;
         }
 
-        public void LimpiarCarrito()
-        {
-            productosCarrito.Clear();
-        }
         public void QuitarProducto(Guid idProducto)
         {
             for (int i = 0; i < productosCarrito.Count; i++)
