@@ -24,6 +24,8 @@ namespace TemplateTPCorto
         }
 
         public BindingList<CarritoDisplay> productosCarritoDinamico = new BindingList<CarritoDisplay>();
+        private Guid clienteSeleccionadoAnterior = Guid.Empty;
+        public bool ignorarCambioCliente = false;
 
         private void FormVentas_Load_1(object sender, EventArgs e)
         {
@@ -107,7 +109,49 @@ namespace TemplateTPCorto
 
         private void cmbClientes_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (ignorarCambioCliente)
+                return;
+            List<ProductoCarrito> carritoActual = ventasNegocio.ObtenerCarrito();
 
+            if (carritoActual.Count > 0)
+            {
+                DialogResult respuesta = MessageBox.Show(
+                    "Hay productos cargados en el carrito. ¿Desea cambiar el cliente?",
+                    "Confirmar cambio de cliente",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (respuesta == DialogResult.Yes)
+                {
+                    ventasNegocio.LimpiarCarrito();
+                    productosCarritoDinamico.Clear();
+                    IniciarTotales();
+                }
+                else
+                {
+                    ignorarCambioCliente = true;
+                    for (int i = 0; i < cmbClientes.Items.Count; i++)
+                    {
+                        Cliente clienteItem = (Cliente)cmbClientes.Items[i];
+                        if (clienteItem.Id == clienteSeleccionadoAnterior)
+                        {
+                            cmbClientes.SelectedIndex = i;
+                            break;
+                        }
+                    }
+
+                    ignorarCambioCliente = false;
+                    return;
+                }
+            }
+
+            // Si no había productos o el usuario aceptó limpiar, guardamos el nuevo cliente
+            if (cmbClientes.SelectedItem != null)
+            {
+                Cliente clienteNuevo = (Cliente)cmbClientes.SelectedItem;
+                clienteSeleccionadoAnterior = clienteNuevo.Id;
+            }
         }
 
         

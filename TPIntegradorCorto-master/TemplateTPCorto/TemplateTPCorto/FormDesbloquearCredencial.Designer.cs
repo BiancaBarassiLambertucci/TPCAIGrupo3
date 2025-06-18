@@ -39,9 +39,10 @@
             // 
             // btnCContraseña
             // 
-            this.btnCContraseña.Location = new System.Drawing.Point(92, 271);
+            this.btnCContraseña.Location = new System.Drawing.Point(130, 177);
+            this.btnCContraseña.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCContraseña.Name = "btnCContraseña";
-            this.btnCContraseña.Size = new System.Drawing.Size(338, 37);
+            this.btnCContraseña.Size = new System.Drawing.Size(225, 24);
             this.btnCContraseña.TabIndex = 0;
             this.btnCContraseña.Text = "Cambiar Contraseña";
             this.btnCContraseña.UseVisualStyleBackColor = true;
@@ -50,50 +51,55 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(88, 129);
+            this.label2.Location = new System.Drawing.Point(128, 85);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(149, 20);
+            this.label2.Size = new System.Drawing.Size(100, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Nombre De Usuario";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(88, 202);
+            this.label3.Location = new System.Drawing.Point(128, 132);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(141, 20);
+            this.label3.Size = new System.Drawing.Size(96, 13);
             this.label3.TabIndex = 3;
             this.label3.Text = "Nueva Contraseña";
             // 
             // textBoxUsuario
             // 
-            this.textBoxUsuario.Location = new System.Drawing.Point(262, 126);
+            this.textBoxUsuario.Location = new System.Drawing.Point(244, 83);
+            this.textBoxUsuario.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxUsuario.Name = "textBoxUsuario";
-            this.textBoxUsuario.Size = new System.Drawing.Size(168, 26);
+            this.textBoxUsuario.Size = new System.Drawing.Size(113, 20);
             this.textBoxUsuario.TabIndex = 4;
             // 
             // textBoxNuevaContraseña
             // 
-            this.textBoxNuevaContraseña.Location = new System.Drawing.Point(262, 198);
+            this.textBoxNuevaContraseña.Location = new System.Drawing.Point(244, 130);
+            this.textBoxNuevaContraseña.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxNuevaContraseña.Name = "textBoxNuevaContraseña";
-            this.textBoxNuevaContraseña.Size = new System.Drawing.Size(168, 26);
+            this.textBoxNuevaContraseña.Size = new System.Drawing.Size(113, 20);
             this.textBoxNuevaContraseña.TabIndex = 5;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 38);
+            this.label1.Location = new System.Drawing.Point(11, 25);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(676, 20);
+            this.label1.Size = new System.Drawing.Size(456, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "Por favor, ingrese el nombre de usuario y la nueva contraseña para actualizar sus" +
     " credenciales:";
             // 
             // FormDesbloquearCredencial
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(722, 431);
+            this.ClientSize = new System.Drawing.Size(481, 280);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxNuevaContraseña);
             this.Controls.Add(this.textBoxUsuario);
@@ -101,6 +107,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnCContraseña);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "FormDesbloquearCredencial";
             this.Text = "FormDesbloquearCredencial";
             this.Load += new System.EventHandler(this.FormDesbloquearCredencial_Load);
