@@ -20,6 +20,9 @@ namespace TemplateTPCorto
 {
     public partial class FormLogin : Form
     {
+
+        LoginNegocio neg = new LoginNegocio();
+
         public FormLogin()
         {
             InitializeComponent();
@@ -28,48 +31,32 @@ namespace TemplateTPCorto
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            LoginNegocio loginNegocio = new LoginNegocio();
 
-            //Paso a variables lo que tenemos en el textbox
             string usuarioTxt = txtUsuario.Text;
 
             string contraseñaTxt = txtPassword.Text;
 
-            string perfil = loginNegocio.ObtenerPerfil(usuarioTxt); //Busco el perfil del usuario ingresado
+            string perfil = neg.ObtenerPerfil(usuarioTxt); 
 
-            //Validaciones de negocio
 
-            if (string.IsNullOrWhiteSpace(usuarioTxt)) // Validamos que se haya ingresado un usuario
+            string resultadoValidacion = neg.ValidacionesNegocio(usuarioTxt, contraseñaTxt);
+
+            if (resultadoValidacion != null)
             {
-                MessageBox.Show("Debe ingresar el usuario para poder ingresar.");
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(contraseñaTxt)) // Validamos que se haya ingresado una contraseña
-            {
-                MessageBox.Show("Debe ingresar la contraseña para poder ingresar.");
-                return;
+                MessageBox.Show(resultadoValidacion);
             }
 
-            if (contraseñaTxt.Length < 8) //Longitud de password (mayor igual a 8) 
-            {
-                MessageBox.Show("La contraseña debe tener 8 o más caracteres.");
-                return;
-            }
+            List<string> usuarios = neg.BuscarRegistro(); 
 
-            //MessageBox.Show("Perfil obtenido: " + perfil);
-
-            List<string> usuarios = BuscarRegistro(); //Llamo al método que lee el archivo csv y devuelve una lista de lineas. Cada linea representa un usuario.
-
-            //Creo variable para saber si encontramos o no un usuario valido
             bool loginCorrecto = false;
             bool usuarioEncontrado = false;
 
-            foreach (string linea in usuarios.Skip(1)) // Recorremos la lista de todos los usuarios que nos devolvió el método BuscarRegistro() y salteamos el encabezado del archivo
+            foreach (string linea in usuarios.Skip(1)) 
             {
 
-                string[] datos = linea.Split(';'); // Partimos cada linea con ; para poder separar los campos
+                string[] datos = linea.Split(';'); 
 
-                if (datos.Length < 5) // Evita errores si el archivo tiene alguna linea mal escrita (ej. que falte algun campo) y la saltea para leer otra linea.
+                if (datos.Length < 5) 
                 {
                     continue;
                 }
@@ -79,11 +66,11 @@ namespace TemplateTPCorto
                 DateTime fechaAltaCredencial = DateTime.ParseExact(datos[3], "d/M/yyyy", CultureInfo.InvariantCulture);
 
 
-                if (usuarioTxt == usuarioCredencial) // Comparamos usuario ingresado vs. credenciales.csv
+                if (usuarioTxt == usuarioCredencial) 
                 {
                     usuarioEncontrado = true;
 
-                    List<string> listaBloqueados = BuscarBloqueados();
+                    List<string> listaBloqueados = neg.BuscarBloqueados();
 
                     foreach (string legajoBloqueado in listaBloqueados)
                     {
@@ -103,7 +90,7 @@ namespace TemplateTPCorto
                         if (datos.Length < 5 || string.IsNullOrWhiteSpace(datos[4]))
                         {
                             // Primer login
-                            EliminarIntentosDelDia(legajoCredencial);
+                            neg.EliminarIntentosDelDia(legajoCredencial);
                             MessageBox.Show("¡Primer ingreso detectado! Debe cambiar su contraseña.");
                             this.Hide();
                             formContraseña.ShowDialog();
@@ -123,7 +110,7 @@ namespace TemplateTPCorto
                             }
                             else
                             {
-                                EliminarIntentosDelDia(legajoCredencial);
+                                neg.EliminarIntentosDelDia(legajoCredencial);
                                 MessageBox.Show("¡Acceso concedido!");
                                 RedirigirPorPefil(perfil, usuarioTxt, legajoCredencial);
                             }
@@ -133,10 +120,10 @@ namespace TemplateTPCorto
                     }
                     else // Usuario encontrado, pero la contraseña es incorrecta.
                     {
-                        RegistrarIntento(legajoCredencial); // Llamo al método RegistrarIntento para agregar los datos al archivo 'login_intentos'
+                        neg.RegistrarIntento(legajoCredencial); // Llamo al método RegistrarIntento para agregar los datos al archivo 'login_intentos'
                         MessageBox.Show("Se guardo el legajo " + legajoCredencial + " a la lista de intentos fallidos");
 
-                        List<string> listaIntentos = ListaIntentos(); // Creo una lista en base a la lista que devuelve el método ListaIntentos()
+                        List<string> listaIntentos = neg.ListaIntentos(); // Creo una lista en base a la lista que devuelve el método ListaIntentos()
                         int contador = 0;
                         string fechaActual = DateTime.Now.ToString("d/M/yyyy");
 
@@ -153,7 +140,7 @@ namespace TemplateTPCorto
 
                         if (contador >= 3) // Si tiene 3 intentos fallidos en el dia de hoy.
                         {
-                            BloquearUsuario(legajoCredencial); // Agrego el legajo del usuario al archivo 'usuario_bloqueado' usando el método BloquearUsuario
+                            neg.BloquearUsuario(legajoCredencial); // Agrego el legajo del usuario al archivo 'usuario_bloqueado' usando el método BloquearUsuario
                             MessageBox.Show("Usted superó los intentos de ingreso permitidos. Su usuario ha sido bloqueado");
                             break;
 
@@ -173,77 +160,6 @@ namespace TemplateTPCorto
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-
-        }
-
-        public List<String> BuscarRegistro()
-        {
-            DataBaseUtils dbUtils = new DataBaseUtils();
-            List<string> registros = dbUtils.BuscarRegistro("credenciales.csv");
-            return registros;
-        }
-
-        public void RegistrarIntento(string legajo)
-        {
-            // Guardo la fecha actual
-            string fechaActual = DateTime.Now.ToString("d/M/yyyy");
-
-            // Creo la línea que se va a agregar
-            string registro = $"{legajo};{fechaActual}";
-
-            // Uso el método AgregarRegistro (del DataBaseUtils) para sumar el registro al archivo "login_intentos.csv"
-            DataBaseUtils dbUtils = new DataBaseUtils();
-            dbUtils.AgregarRegistro("login_intentos.csv", registro);
-        }
-
-        public void BloquearUsuario(string legajo)
-        {
-            DataBaseUtils dbUtils = new DataBaseUtils();
-            dbUtils.AgregarRegistro("usuario_bloqueado.csv", legajo); // Agrego el legajo al archivo 'usuario_bloqueado.csv'
-        }
-
-        public List<string> ListaIntentos()
-        {
-            DataBaseUtils dbUtils = new DataBaseUtils();
-            List<string> intentos = dbUtils.BuscarRegistro("login_intentos.csv"); // Crea una lista en base a los datos que trae el método BuscarRegistro.
-            return intentos;
-        }
-
-        public List<string> BuscarBloqueados() // Este método busca en el archivo usuario_bloqueado.csv
-        {
-            DataBaseUtils dbUtils = new DataBaseUtils();
-            List<string> listaBloqueados = dbUtils.BuscarRegistro("usuario_bloqueado.csv");
-
-            if (File.Exists("usuario_bloqueado.csv"))
-            {
-                string[] lineas = File.ReadAllLines("usuario_bloqueado.csv");
-
-                for (int i = 1; i < lineas.Length; i++)
-                {
-                    string legajo = lineas[i].Trim(); // Salta el encabezado del archivo usuario_bloqueado.csv
-                    if (!string.IsNullOrEmpty(legajo))
-                    {
-                        listaBloqueados.Add(legajo);
-                    }
-                }
-            }
-            return listaBloqueados;
-        }
-        public void EliminarIntentosDelDia(string legajo) // Método para que se borren los intentos fallidos del día.
-        {
-            string nombreArchivo = "login_intentos.csv";
-            DateTime fechaActual = DateTime.Now;
-
-            try
-            {
-                DataBaseUtils dbUtils = new DataBaseUtils();
-                dbUtils.BorrarIntentos(nombreArchivo, legajo, fechaActual);
-                //MessageBox.Show("Se han eliminado los intentos de hoy, para el usuario " + legajo);
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show("Error al eliminar los intentos " + ex.Message);
-            }
 
         }
 
@@ -279,8 +195,6 @@ namespace TemplateTPCorto
                 MessageBox.Show("Error al determinar el perfil del usuario: " + ex.Message);
             }
         }
-
-
 
     }
 }

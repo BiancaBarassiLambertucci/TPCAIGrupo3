@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormVentas));
             this.btnListarProductos = new System.Windows.Forms.Button();
             this.btnCargar = new System.Windows.Forms.Button();
             this.btnQuitar = new System.Windows.Forms.Button();
@@ -45,6 +46,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cmbClientes = new System.Windows.Forms.ComboBox();
             this.dgvCarrito = new System.Windows.Forms.DataGridView();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCarrito)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,7 +63,7 @@
             // 
             // btnCargar
             // 
-            this.btnCargar.Location = new System.Drawing.Point(1006, 594);
+            this.btnCargar.Location = new System.Drawing.Point(1003, 614);
             this.btnCargar.Name = "btnCargar";
             this.btnCargar.Size = new System.Drawing.Size(124, 43);
             this.btnCargar.TabIndex = 33;
@@ -70,7 +73,7 @@
             // 
             // btnQuitar
             // 
-            this.btnQuitar.Location = new System.Drawing.Point(1096, 358);
+            this.btnQuitar.Location = new System.Drawing.Point(1096, 390);
             this.btnQuitar.Name = "btnQuitar";
             this.btnQuitar.Size = new System.Drawing.Size(92, 38);
             this.btnQuitar.TabIndex = 32;
@@ -81,7 +84,7 @@
             // lablSubTotal
             // 
             this.lablSubTotal.AutoSize = true;
-            this.lablSubTotal.Location = new System.Drawing.Point(801, 588);
+            this.lablSubTotal.Location = new System.Drawing.Point(764, 605);
             this.lablSubTotal.Name = "lablSubTotal";
             this.lablSubTotal.Size = new System.Drawing.Size(18, 20);
             this.lablSubTotal.TabIndex = 30;
@@ -89,7 +92,7 @@
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(340, 592);
+            this.btnAgregar.Location = new System.Drawing.Point(344, 621);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(164, 43);
             this.btnAgregar.TabIndex = 29;
@@ -99,7 +102,7 @@
             // 
             // txtCantidad
             // 
-            this.txtCantidad.Location = new System.Drawing.Point(158, 602);
+            this.txtCantidad.Location = new System.Drawing.Point(162, 631);
             this.txtCantidad.Name = "txtCantidad";
             this.txtCantidad.Size = new System.Drawing.Size(112, 26);
             this.txtCantidad.TabIndex = 28;
@@ -107,7 +110,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(68, 602);
+            this.label5.Location = new System.Drawing.Point(72, 631);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(73, 20);
             this.label5.TabIndex = 27;
@@ -116,7 +119,7 @@
             // lblTotal
             // 
             this.lblTotal.AutoSize = true;
-            this.lblTotal.Location = new System.Drawing.Point(801, 632);
+            this.lblTotal.Location = new System.Drawing.Point(764, 649);
             this.lblTotal.Name = "lblTotal";
             this.lblTotal.Size = new System.Drawing.Size(18, 20);
             this.lblTotal.TabIndex = 26;
@@ -132,7 +135,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(658, 632);
+            this.label4.Location = new System.Drawing.Point(621, 649);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(44, 20);
             this.label4.TabIndex = 25;
@@ -141,7 +144,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(658, 588);
+            this.label3.Location = new System.Drawing.Point(621, 605);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 20);
             this.label3.TabIndex = 24;
@@ -151,7 +154,7 @@
             // 
             this.lstProducto.FormattingEnabled = true;
             this.lstProducto.ItemHeight = 20;
-            this.lstProducto.Location = new System.Drawing.Point(57, 232);
+            this.lstProducto.Location = new System.Drawing.Point(58, 260);
             this.lstProducto.Name = "lstProducto";
             this.lstProducto.Size = new System.Drawing.Size(506, 324);
             this.lstProducto.TabIndex = 22;
@@ -194,7 +197,7 @@
             // dgvCarrito
             // 
             this.dgvCarrito.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCarrito.Location = new System.Drawing.Point(584, 232);
+            this.dgvCarrito.Location = new System.Drawing.Point(584, 260);
             this.dgvCarrito.Name = "dgvCarrito";
             this.dgvCarrito.RowHeadersWidth = 62;
             this.dgvCarrito.RowTemplate.Height = 28;
@@ -202,11 +205,33 @@
             this.dgvCarrito.TabIndex = 35;
             this.dgvCarrito.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCarrito_CellContentClick);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(57, 223);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(167, 20);
+            this.label6.TabIndex = 36;
+            this.label6.Text = "Productos Disponibles";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(580, 223);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(146, 20);
+            this.label7.TabIndex = 37;
+            this.label7.Text = "Carrito de Compras";
+            // 
             // FormVentas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 692);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.dgvCarrito);
             this.Controls.Add(this.btnListarProductos);
             this.Controls.Add(this.btnCargar);
@@ -224,6 +249,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmbClientes);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormVentas";
             this.Text = "FormVentas";
@@ -253,5 +279,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbClientes;
         private System.Windows.Forms.DataGridView dgvCarrito;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
     }
 }

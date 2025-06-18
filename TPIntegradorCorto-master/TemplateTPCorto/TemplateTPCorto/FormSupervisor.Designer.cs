@@ -28,17 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSupervisor));
             this.btnModificarPersona = new System.Windows.Forms.Button();
             this.btnDesbloquearCredencial = new System.Windows.Forms.Button();
             this.btnCambiarContraseñaPropia = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnModificarPersona
             // 
-            this.btnModificarPersona.Location = new System.Drawing.Point(231, 107);
-            this.btnModificarPersona.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnModificarPersona.Location = new System.Drawing.Point(88, 79);
+            this.btnModificarPersona.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnModificarPersona.Name = "btnModificarPersona";
-            this.btnModificarPersona.Size = new System.Drawing.Size(192, 28);
+            this.btnModificarPersona.Size = new System.Drawing.Size(216, 35);
             this.btnModificarPersona.TabIndex = 0;
             this.btnModificarPersona.Text = "Modificar Persona";
             this.btnModificarPersona.UseVisualStyleBackColor = true;
@@ -46,10 +48,10 @@
             // 
             // btnDesbloquearCredencial
             // 
-            this.btnDesbloquearCredencial.Location = new System.Drawing.Point(231, 162);
-            this.btnDesbloquearCredencial.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDesbloquearCredencial.Location = new System.Drawing.Point(88, 138);
+            this.btnDesbloquearCredencial.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnDesbloquearCredencial.Name = "btnDesbloquearCredencial";
-            this.btnDesbloquearCredencial.Size = new System.Drawing.Size(192, 28);
+            this.btnDesbloquearCredencial.Size = new System.Drawing.Size(216, 35);
             this.btnDesbloquearCredencial.TabIndex = 1;
             this.btnDesbloquearCredencial.Text = "Desbloquear Credencial";
             this.btnDesbloquearCredencial.UseVisualStyleBackColor = true;
@@ -57,28 +59,41 @@
             // 
             // btnCambiarContraseñaPropia
             // 
-            this.btnCambiarContraseñaPropia.Location = new System.Drawing.Point(231, 219);
-            this.btnCambiarContraseñaPropia.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCambiarContraseñaPropia.Location = new System.Drawing.Point(88, 198);
+            this.btnCambiarContraseñaPropia.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCambiarContraseñaPropia.Name = "btnCambiarContraseñaPropia";
-            this.btnCambiarContraseñaPropia.Size = new System.Drawing.Size(192, 28);
+            this.btnCambiarContraseñaPropia.Size = new System.Drawing.Size(216, 35);
             this.btnCambiarContraseñaPropia.TabIndex = 2;
             this.btnCambiarContraseñaPropia.Text = "Cambiar Contraseña";
             this.btnCambiarContraseñaPropia.UseVisualStyleBackColor = true;
             this.btnCambiarContraseñaPropia.Click += new System.EventHandler(this.btnCambiarContraseñaPropia_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(48, 31);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(310, 25);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Bienvenido al sistema, Supervisor.";
+            // 
             // FormSupervisor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(664, 375);
+            this.ClientSize = new System.Drawing.Size(432, 275);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCambiarContraseñaPropia);
             this.Controls.Add(this.btnDesbloquearCredencial);
             this.Controls.Add(this.btnModificarPersona);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormSupervisor";
             this.Text = "FormSupervisor";
             this.Load += new System.EventHandler(this.FormSupervisor_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -87,5 +102,6 @@
         private System.Windows.Forms.Button btnModificarPersona;
         private System.Windows.Forms.Button btnDesbloquearCredencial;
         private System.Windows.Forms.Button btnCambiarContraseñaPropia;
+        private System.Windows.Forms.Label label1;
     }
 }

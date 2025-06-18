@@ -155,5 +155,6 @@ namespace TemplateTPCorto
             // Si no se encontró ningún registro con ese legajo
             MessageBox.Show("Legajo no encontrado.");
         }
+
     }
 }

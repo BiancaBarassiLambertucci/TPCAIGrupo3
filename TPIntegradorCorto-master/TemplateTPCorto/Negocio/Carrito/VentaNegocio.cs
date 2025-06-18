@@ -133,10 +133,7 @@ namespace Negocio.Carrito
                 {
                     decimal monto = producto.Precio * item.Cantidad;
 
-                    if (producto.IdCategoria == 3) // Electro Hogar
-                    {
-                        totalElectroHogar += monto;
-                    }
+                    totalElectroHogar += monto;
 
                     total += monto;
                 }

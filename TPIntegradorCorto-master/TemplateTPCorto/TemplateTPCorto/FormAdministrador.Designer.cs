@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAdministrador));
             this.btnAprobar = new System.Windows.Forms.Button();
             this.btnRechazar = new System.Windows.Forms.Button();
             this.CambiosPendientes = new System.Windows.Forms.ListBox();
@@ -70,6 +71,7 @@
             this.Controls.Add(this.CambiosPendientes);
             this.Controls.Add(this.btnRechazar);
             this.Controls.Add(this.btnAprobar);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormAdministrador";
             this.Text = "FormAdministrador";
             this.Load += new System.EventHandler(this.FormAdministrador_Load);
