@@ -48,6 +48,7 @@
             this.dgvCarrito = new System.Windows.Forms.DataGridView();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.btnModificar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCarrito)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,7 +76,7 @@
             // 
             this.btnQuitar.Location = new System.Drawing.Point(1096, 390);
             this.btnQuitar.Name = "btnQuitar";
-            this.btnQuitar.Size = new System.Drawing.Size(92, 38);
+            this.btnQuitar.Size = new System.Drawing.Size(161, 38);
             this.btnQuitar.TabIndex = 32;
             this.btnQuitar.Text = "Quitar";
             this.btnQuitar.UseVisualStyleBackColor = true;
@@ -225,11 +226,22 @@
             this.label7.TabIndex = 37;
             this.label7.Text = "Carrito de Compras";
             // 
+            // btnModificar
+            // 
+            this.btnModificar.Location = new System.Drawing.Point(1096, 453);
+            this.btnModificar.Name = "btnModificar";
+            this.btnModificar.Size = new System.Drawing.Size(161, 38);
+            this.btnModificar.TabIndex = 38;
+            this.btnModificar.Text = "Modificar Cantidad";
+            this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
+            // 
             // FormVentas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 692);
+            this.ClientSize = new System.Drawing.Size(1282, 692);
+            this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.dgvCarrito);
@@ -281,5 +293,6 @@
         private System.Windows.Forms.DataGridView dgvCarrito;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnModificar;
     }
 }

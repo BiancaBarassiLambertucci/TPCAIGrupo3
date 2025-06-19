@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.VisualBasic;
 
 namespace TemplateTPCorto
 {
@@ -32,15 +33,27 @@ namespace TemplateTPCorto
             CargarClientes();
             CargarCategoriasProductos();
             IniciarTotales();
-            dgvCarrito.DataSource = productosCarritoDinamico;
-            // Ocultar columna IdProducto
-            if (dgvCarrito.Columns["IdProducto"] != null)
-            {
-                dgvCarrito.Columns["IdProducto"].Visible = false;
-            }
-            dgvCarrito.AllowUserToAddRows = false;
-            dgvCarrito.ReadOnly = true;
 
+            dgvCarrito.DataSource = productosCarritoDinamico;
+
+            dgvCarrito.ReadOnly = false;
+
+            foreach (DataGridViewColumn col in dgvCarrito.Columns)
+            {
+                if (col.Name == "Cantidad")
+                    col.ReadOnly = false;
+                else
+                    col.ReadOnly = true;
+            }
+
+
+            if (dgvCarrito.Columns["IdProducto"] != null)
+                dgvCarrito.Columns["IdProducto"].Visible = false;
+
+
+            dgvCarrito.AllowUserToAddRows = false;
+
+            dgvCarrito.CellEndEdit += dgvCarrito_CellEndEdit;
         }
 
         private void IniciarTotales()
@@ -362,6 +375,56 @@ namespace TemplateTPCorto
             return lista;
         }
 
+        private void dgvCarrito_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvCarrito.Columns[e.ColumnIndex].Name != "Cantidad") return;
 
+            DataGridViewRow fila = dgvCarrito.Rows[e.RowIndex];
+            CarritoDisplay disp = (CarritoDisplay)fila.DataBoundItem;
+            string texto = (fila.Cells[e.ColumnIndex].Value ?? "").ToString();
+
+            if (!Int32.TryParse(texto, out int qty) || qty <= 0)
+            {
+                MessageBox.Show("La cantidad debe ser un entero mayor a cero.");
+                fila.Cells[e.ColumnIndex].Value = disp.Cantidad;
+                return;
+            }
+
+            ProductoNegocio pdn = new ProductoNegocio();
+            Producto realProd = pdn.BuscarPorId(disp.IdProducto);
+            if (realProd == null || qty > realProd.Stock)
+            {
+                MessageBox.Show("No hay suficiente stock.");
+                fila.Cells[e.ColumnIndex].Value = disp.Cantidad;
+                return;
+            }
+
+            List<ProductoCarrito> lst = ventasNegocio.ObtenerCarrito();
+            for (int i = 0; i < lst.Count; i++)
+                if (lst[i].IdProducto == disp.IdProducto)
+                {
+                    lst[i].Cantidad = qty;
+                    break;
+                }
+
+            disp.Cantidad = qty;
+            ActualizarTotales();
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            if (dgvCarrito.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Debe seleccionar un producto en el carrito para modificar la cantidad.");
+                return;
+            }
+
+            int rowIndex = dgvCarrito.SelectedRows[0].Index;
+            int colIndex = dgvCarrito.Columns["Cantidad"].Index;
+
+            dgvCarrito.CurrentCell = dgvCarrito.Rows[rowIndex].Cells[colIndex];
+            dgvCarrito.BeginEdit(true);
+
+        }
     }
 }
