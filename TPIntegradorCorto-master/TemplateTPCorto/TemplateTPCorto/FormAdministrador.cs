@@ -178,7 +178,6 @@ namespace TemplateTPCorto
 
             if (datosCambio == null)
             {
-                //MessageBox.Show("No se encontró la operación en " + archivoOperacion);
                 return;
             }
 
@@ -209,34 +208,26 @@ namespace TemplateTPCorto
                 if (tipoOperacion.Equals("Desbloquear Credencial", StringComparison.OrdinalIgnoreCase) && campos[1].Trim() == datosCambio[2].Trim())
                 {
                     dbUtils.ActualizarCredencial(campos[1], datosCambio[3].Trim());
-                    //campos[2] = datosCambio[3].Trim(); // Actualizar contraseña
-                    //campos[6] = ""; // Vaciar fecha último login
                 }
                 else if (tipoOperacion.Equals("Modificar Persona", StringComparison.OrdinalIgnoreCase) && campos[0].Trim() == datosCambio[1].Trim())
                 {
                     dbUtils.ActualizarPersona(campos[0], datosCambio[2].Trim(), datosCambio[3].Trim(), datosCambio[4].Trim(), datosCambio[5].Trim());
-                    //campos[1] = datosCambio[2].Trim();
-                    //campos[2] = datosCambio[3].Trim();
-                    //campos[3] = datosCambio[4].Trim();
-                    //campos[4] = datosCambio[5].Trim();
+
                 }
-
-                //string nuevaLinea = string.Join(";", campos);
-                //lineasActualizadas.Add(nuevaLinea);
             }
-
-            /*try
-            {
-                File.WriteAllLines(archivoDestino, lineasActualizadas);
-                MessageBox.Show("Cambio aplicado correctamente en " + archivoDestino);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al actualizar el archivo " + archivoDestino + ": " + ex.Message);
-            }*/
         }
 
-        
+        private void btnCerrarSesión_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FormLogin login = new FormLogin();
+            login.ShowDialog();
+        }
 
+        private void btnCambiarContraseña_Click(object sender, EventArgs e)
+        {
+            FormCambioContraseña formCambio = new FormCambioContraseña(usuario);
+            formCambio.ShowDialog();
+        }
     }
 }

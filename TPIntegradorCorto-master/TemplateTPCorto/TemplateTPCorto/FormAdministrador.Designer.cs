@@ -32,6 +32,8 @@
             this.btnAprobar = new System.Windows.Forms.Button();
             this.btnRechazar = new System.Windows.Forms.Button();
             this.CambiosPendientes = new System.Windows.Forms.ListBox();
+            this.btnCerrarSesión = new System.Windows.Forms.Button();
+            this.btnCambiarContraseña = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnAprobar
@@ -63,11 +65,33 @@
             this.CambiosPendientes.Size = new System.Drawing.Size(552, 284);
             this.CambiosPendientes.TabIndex = 2;
             // 
+            // btnCerrarSesión
+            // 
+            this.btnCerrarSesión.Location = new System.Drawing.Point(514, 426);
+            this.btnCerrarSesión.Name = "btnCerrarSesión";
+            this.btnCerrarSesión.Size = new System.Drawing.Size(123, 33);
+            this.btnCerrarSesión.TabIndex = 3;
+            this.btnCerrarSesión.Text = "Cerrar Sesión";
+            this.btnCerrarSesión.UseVisualStyleBackColor = true;
+            this.btnCerrarSesión.Click += new System.EventHandler(this.btnCerrarSesión_Click);
+            // 
+            // btnCambiarContraseña
+            // 
+            this.btnCambiarContraseña.Location = new System.Drawing.Point(215, 417);
+            this.btnCambiarContraseña.Name = "btnCambiarContraseña";
+            this.btnCambiarContraseña.Size = new System.Drawing.Size(189, 42);
+            this.btnCambiarContraseña.TabIndex = 4;
+            this.btnCambiarContraseña.Text = "Cambiar Contraseña";
+            this.btnCambiarContraseña.UseVisualStyleBackColor = true;
+            this.btnCambiarContraseña.Click += new System.EventHandler(this.btnCambiarContraseña_Click);
+            // 
             // FormAdministrador
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(649, 429);
+            this.ClientSize = new System.Drawing.Size(649, 471);
+            this.Controls.Add(this.btnCambiarContraseña);
+            this.Controls.Add(this.btnCerrarSesión);
             this.Controls.Add(this.CambiosPendientes);
             this.Controls.Add(this.btnRechazar);
             this.Controls.Add(this.btnAprobar);
@@ -84,5 +108,7 @@
         private System.Windows.Forms.Button btnAprobar;
         private System.Windows.Forms.Button btnRechazar;
         private System.Windows.Forms.ListBox CambiosPendientes;
+        private System.Windows.Forms.Button btnCerrarSesión;
+        private System.Windows.Forms.Button btnCambiarContraseña;
     }
 }

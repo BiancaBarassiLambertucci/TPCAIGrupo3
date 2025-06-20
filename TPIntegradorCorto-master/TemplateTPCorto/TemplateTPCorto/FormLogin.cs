@@ -60,9 +60,9 @@ namespace TemplateTPCorto
                 {
                     continue;
                 }
-                string legajoCredencial = datos[0]; // Guardamos el legajo del usuario
-                string usuarioCredencial = datos[1]; // Guardamos el 'usuario'
-                string contraseñaCredencial = datos[2]; // Guardamos la contraseña del usuario
+                string legajoCredencial = datos[0]; 
+                string usuarioCredencial = datos[1]; 
+                string contraseñaCredencial = datos[2]; 
                 DateTime fechaAltaCredencial = DateTime.ParseExact(datos[3], "d/M/yyyy", CultureInfo.InvariantCulture);
 
 
@@ -85,7 +85,7 @@ namespace TemplateTPCorto
                     {
                         loginCorrecto = true;
 
-                        FormCambioContraseña formContraseña = new FormCambioContraseña(usuarioTxt); //Crea una instancia del formulario contraseña.
+                        FormCambioContraseña formContraseña = new FormCambioContraseña(usuarioTxt); 
 
                         if (datos.Length < 5 || string.IsNullOrWhiteSpace(datos[4]))
                         {
@@ -105,8 +105,8 @@ namespace TemplateTPCorto
                             if (diferenciasFechas.Days > 30) // Verificamos si el usuario cambio la contraseña hace más de 30 dias.
                             {
                                 MessageBox.Show("La contraseña ha expirado. Por favor, actualízala.");
-                                this.Hide(); //Oculta el formulario actual.
-                                formContraseña.ShowDialog(); // Muestra el menú contraseña de forma modal.
+                                this.Hide(); 
+                                formContraseña.ShowDialog(); 
                             }
                             else
                             {
@@ -114,22 +114,22 @@ namespace TemplateTPCorto
                                 MessageBox.Show("¡Acceso concedido!");
                                 RedirigirPorPefil(perfil, usuarioTxt, legajoCredencial);
                             }
-                            break; // Salgo del loop porque encontré al usuario.
+                            break; 
                         }
 
                     }
                     else // Usuario encontrado, pero la contraseña es incorrecta.
                     {
-                        neg.RegistrarIntento(legajoCredencial); // Llamo al método RegistrarIntento para agregar los datos al archivo 'login_intentos'
-                        MessageBox.Show("Se guardo el legajo " + legajoCredencial + " a la lista de intentos fallidos");
+                        neg.RegistrarIntento(legajoCredencial); 
+                        //MessageBox.Show("Se guardo el legajo " + legajoCredencial + " a la lista de intentos fallidos");
 
-                        List<string> listaIntentos = neg.ListaIntentos(); // Creo una lista en base a la lista que devuelve el método ListaIntentos()
+                        List<string> listaIntentos = neg.ListaIntentos(); 
                         int contador = 0;
                         string fechaActual = DateTime.Now.ToString("d/M/yyyy");
 
-                        foreach (string registro in listaIntentos) // Recorro los registros guardados en el archivo 'login_intentos'
+                        foreach (string registro in listaIntentos) 
                         {
-                            string[] campos = registro.Split(';'); // Separo cada uno de los registros 
+                            string[] campos = registro.Split(';'); 
                             string legajoGuardado = campos[0].Trim(); // Guardo el legajo en la lista de login_intentos 
                             string fechaGuardada = campos[1].Trim(); // Guardo la fecha del login fallido
                             if (legajoGuardado == legajoCredencial && fechaActual == fechaGuardada) // Verifico si el legajo guardado es del usuario queriendo ingresar, y si el fallo es del dia de hoy
@@ -154,6 +154,12 @@ namespace TemplateTPCorto
 
                 }
 
+            }
+
+            if (usuarioEncontrado != true)
+            {
+                MessageBox.Show("Usuario no encontrado");
+                return;
             }
 
         }

@@ -44,5 +44,12 @@ namespace TemplateTPCorto
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FormLogin login = new FormLogin();
+            login.ShowDialog();
+        }
     }
 }

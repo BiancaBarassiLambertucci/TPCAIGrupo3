@@ -45,5 +45,12 @@ namespace TemplateTPCorto
             FormModificarPersona formModificar = new FormModificarPersona(legajoUsuario);
             formModificar.ShowDialog();
         }
+
+        private void btnCerrarSesión_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FormLogin login = new FormLogin();
+            login.ShowDialog();
+        }
     }
 }
