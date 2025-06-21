@@ -9,3 +9,5 @@ idOperacion;legajo;nombre;apellido;dni;fecha_ingreso
 8;1111;Juan Martin;Perez;12345678;2025-01-05
 12;3333;Nicky;Farre;12345679;2025-05-01
 15;1111;Juan;Alvarez;12345678;2025-05-01
+18;1111;Juan;Perez;123456789;2025-05-01
+19;1111;Juan;Perez;123456789;2025-05-01

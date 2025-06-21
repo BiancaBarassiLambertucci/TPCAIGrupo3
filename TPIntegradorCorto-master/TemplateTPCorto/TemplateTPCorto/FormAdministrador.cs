@@ -98,13 +98,14 @@ namespace TemplateTPCorto
                 AplicarCambio(idOperacion, tipoOperación);
                 dbUtils.ActualizarArchivoAutorizaciones(idOperacion, true, legajoUsuario);
                 MessageBox.Show("Se aprobó el cambio seleccionado");
+                EliminarItemSeleccionado();
+
 
             } catch (Exception ex)
             {
                 MessageBox.Show("No se pudo aprobar el cambio seleccionado " + ex.Message);
             }
 
-            //MessageBox.Show("ID de operación seleccionada para aprobar: " + idOperacion + " Tipo: " + tipoOperación);
         }
 
         private void btnRechazar_Click(object sender, EventArgs e)
@@ -120,9 +121,9 @@ namespace TemplateTPCorto
                 return;
             }
 
-            //MessageBox.Show("ID de operación seleccionada para rechazar: " + idOperacion + " Tipo: " + tipoOperación);
             MessageBox.Show("Se rechazó el cambio seleccionado");
             dbUtils.ActualizarArchivoAutorizaciones(idOperacion, false, legajoUsuario);
+            EliminarItemSeleccionado();
         }
 
         private string ObtenerTipoOperacion(string idOperacion)
@@ -144,7 +145,6 @@ namespace TemplateTPCorto
 
                 if (campos[0].Trim().Equals(idOperacion.Trim(), StringComparison.OrdinalIgnoreCase))
                 {
-                    //MessageBox.Show("ID encontrado! Tipo de operación: " + campos[1].Trim());
                     return campos[1].Trim();
                 }
             }
@@ -216,18 +216,25 @@ namespace TemplateTPCorto
                 }
             }
         }
-
+        public void EliminarItemSeleccionado()
+        {
+            if (CambiosPendientes.SelectedItem != null)
+            {
+                CambiosPendientes.Items.Remove(CambiosPendientes.SelectedItem);
+            }
+        }
         private void btnCerrarSesión_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
             FormLogin login = new FormLogin();
-            login.ShowDialog();
+            login.Show();
         }
 
         private void btnCambiarContraseña_Click(object sender, EventArgs e)
         {
+            this.Hide();
             FormCambioContraseña formCambio = new FormCambioContraseña(usuario);
-            formCambio.ShowDialog();
+            formCambio.Show();
         }
     }
 }

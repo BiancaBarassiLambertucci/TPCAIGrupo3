@@ -156,5 +156,9 @@ namespace TemplateTPCorto
             MessageBox.Show("Legajo no encontrado.");
         }
 
+        private void btnMenuPrincipal_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

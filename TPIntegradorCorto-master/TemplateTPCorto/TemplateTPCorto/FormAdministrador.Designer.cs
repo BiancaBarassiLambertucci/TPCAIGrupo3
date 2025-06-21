@@ -38,9 +38,10 @@
             // 
             // btnAprobar
             // 
-            this.btnAprobar.Location = new System.Drawing.Point(100, 350);
+            this.btnAprobar.Location = new System.Drawing.Point(67, 227);
+            this.btnAprobar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnAprobar.Name = "btnAprobar";
-            this.btnAprobar.Size = new System.Drawing.Size(189, 42);
+            this.btnAprobar.Size = new System.Drawing.Size(126, 27);
             this.btnAprobar.TabIndex = 0;
             this.btnAprobar.Text = "Aprobar Cambio";
             this.btnAprobar.UseVisualStyleBackColor = true;
@@ -48,9 +49,10 @@
             // 
             // btnRechazar
             // 
-            this.btnRechazar.Location = new System.Drawing.Point(336, 350);
+            this.btnRechazar.Location = new System.Drawing.Point(224, 227);
+            this.btnRechazar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnRechazar.Name = "btnRechazar";
-            this.btnRechazar.Size = new System.Drawing.Size(189, 42);
+            this.btnRechazar.Size = new System.Drawing.Size(126, 27);
             this.btnRechazar.TabIndex = 1;
             this.btnRechazar.Text = "Rechazar Cambio";
             this.btnRechazar.UseVisualStyleBackColor = true;
@@ -59,17 +61,18 @@
             // CambiosPendientes
             // 
             this.CambiosPendientes.FormattingEnabled = true;
-            this.CambiosPendientes.ItemHeight = 20;
-            this.CambiosPendientes.Location = new System.Drawing.Point(39, 36);
+            this.CambiosPendientes.Location = new System.Drawing.Point(26, 23);
+            this.CambiosPendientes.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.CambiosPendientes.Name = "CambiosPendientes";
-            this.CambiosPendientes.Size = new System.Drawing.Size(552, 284);
+            this.CambiosPendientes.Size = new System.Drawing.Size(369, 186);
             this.CambiosPendientes.TabIndex = 2;
             // 
             // btnCerrarSesión
             // 
-            this.btnCerrarSesión.Location = new System.Drawing.Point(514, 426);
+            this.btnCerrarSesión.Location = new System.Drawing.Point(11, 277);
+            this.btnCerrarSesión.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCerrarSesión.Name = "btnCerrarSesión";
-            this.btnCerrarSesión.Size = new System.Drawing.Size(123, 33);
+            this.btnCerrarSesión.Size = new System.Drawing.Size(82, 21);
             this.btnCerrarSesión.TabIndex = 3;
             this.btnCerrarSesión.Text = "Cerrar Sesión";
             this.btnCerrarSesión.UseVisualStyleBackColor = true;
@@ -77,9 +80,10 @@
             // 
             // btnCambiarContraseña
             // 
-            this.btnCambiarContraseña.Location = new System.Drawing.Point(215, 417);
+            this.btnCambiarContraseña.Location = new System.Drawing.Point(143, 271);
+            this.btnCambiarContraseña.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCambiarContraseña.Name = "btnCambiarContraseña";
-            this.btnCambiarContraseña.Size = new System.Drawing.Size(189, 42);
+            this.btnCambiarContraseña.Size = new System.Drawing.Size(126, 27);
             this.btnCambiarContraseña.TabIndex = 4;
             this.btnCambiarContraseña.Text = "Cambiar Contraseña";
             this.btnCambiarContraseña.UseVisualStyleBackColor = true;
@@ -87,17 +91,18 @@
             // 
             // FormAdministrador
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(649, 471);
+            this.ClientSize = new System.Drawing.Size(433, 306);
             this.Controls.Add(this.btnCambiarContraseña);
             this.Controls.Add(this.btnCerrarSesión);
             this.Controls.Add(this.CambiosPendientes);
             this.Controls.Add(this.btnRechazar);
             this.Controls.Add(this.btnAprobar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "FormAdministrador";
-            this.Text = "FormAdministrador";
+            this.Text = "Menú Administrador";
             this.Load += new System.EventHandler(this.FormAdministrador_Load);
             this.ResumeLayout(false);
 

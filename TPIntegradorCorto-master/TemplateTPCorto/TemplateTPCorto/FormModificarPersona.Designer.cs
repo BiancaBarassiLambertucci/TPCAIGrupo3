@@ -42,14 +42,16 @@
             this.textBoxApellido = new System.Windows.Forms.TextBox();
             this.textBoxDNI = new System.Windows.Forms.TextBox();
             this.dateTimePickerFechaIngreso = new System.Windows.Forms.DateTimePicker();
+            this.btnMenuPrincipal = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(36, 54);
+            this.label1.Location = new System.Drawing.Point(24, 35);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(462, 20);
+            this.label1.Size = new System.Drawing.Size(310, 13);
             this.label1.TabIndex = 7;
             this.label1.Text = "Por favor, ingrese el Legajo del usuario para modificar sus datos.";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -57,44 +59,46 @@
             // labelFechaDeIngreso
             // 
             this.labelFechaDeIngreso.AutoSize = true;
-            this.labelFechaDeIngreso.Location = new System.Drawing.Point(36, 418);
+            this.labelFechaDeIngreso.Location = new System.Drawing.Point(24, 272);
+            this.labelFechaDeIngreso.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelFechaDeIngreso.Name = "labelFechaDeIngreso";
             this.labelFechaDeIngreso.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelFechaDeIngreso.Size = new System.Drawing.Size(134, 20);
+            this.labelFechaDeIngreso.Size = new System.Drawing.Size(90, 13);
             this.labelFechaDeIngreso.TabIndex = 9;
             this.labelFechaDeIngreso.Text = "Fecha de Ingreso";
             // 
             // labelLegajo
             // 
             this.labelLegajo.AutoSize = true;
-            this.labelLegajo.Location = new System.Drawing.Point(36, 110);
+            this.labelLegajo.Location = new System.Drawing.Point(24, 72);
+            this.labelLegajo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelLegajo.Name = "labelLegajo";
-            this.labelLegajo.Size = new System.Drawing.Size(57, 20);
+            this.labelLegajo.Size = new System.Drawing.Size(39, 13);
             this.labelLegajo.TabIndex = 10;
             this.labelLegajo.Text = "Legajo";
             // 
             // textBoxLegajo
             // 
-            this.textBoxLegajo.Location = new System.Drawing.Point(233, 110);
-            this.textBoxLegajo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBoxLegajo.Location = new System.Drawing.Point(155, 72);
+            this.textBoxLegajo.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.textBoxLegajo.Name = "textBoxLegajo";
-            this.textBoxLegajo.Size = new System.Drawing.Size(167, 26);
+            this.textBoxLegajo.Size = new System.Drawing.Size(113, 20);
             this.textBoxLegajo.TabIndex = 11;
             // 
             // textBoxNombre
             // 
-            this.textBoxNombre.Location = new System.Drawing.Point(233, 234);
-            this.textBoxNombre.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBoxNombre.Location = new System.Drawing.Point(155, 152);
+            this.textBoxNombre.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.textBoxNombre.Name = "textBoxNombre";
-            this.textBoxNombre.Size = new System.Drawing.Size(167, 26);
+            this.textBoxNombre.Size = new System.Drawing.Size(113, 20);
             this.textBoxNombre.TabIndex = 13;
             // 
             // buscarLegajo
             // 
-            this.buscarLegajo.Location = new System.Drawing.Point(39, 160);
-            this.buscarLegajo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.buscarLegajo.Location = new System.Drawing.Point(26, 104);
+            this.buscarLegajo.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.buscarLegajo.Name = "buscarLegajo";
-            this.buscarLegajo.Size = new System.Drawing.Size(124, 40);
+            this.buscarLegajo.Size = new System.Drawing.Size(83, 26);
             this.buscarLegajo.TabIndex = 15;
             this.buscarLegajo.Text = "Buscar";
             this.buscarLegajo.UseVisualStyleBackColor = true;
@@ -102,10 +106,10 @@
             // 
             // guardarCambios
             // 
-            this.guardarCambios.Location = new System.Drawing.Point(38, 475);
-            this.guardarCambios.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.guardarCambios.Location = new System.Drawing.Point(25, 309);
+            this.guardarCambios.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.guardarCambios.Name = "guardarCambios";
-            this.guardarCambios.Size = new System.Drawing.Size(124, 40);
+            this.guardarCambios.Size = new System.Drawing.Size(83, 26);
             this.guardarCambios.TabIndex = 16;
             this.guardarCambios.Text = "Guardar";
             this.guardarCambios.UseVisualStyleBackColor = true;
@@ -114,62 +118,77 @@
             // labelNombre
             // 
             this.labelNombre.AutoSize = true;
-            this.labelNombre.Location = new System.Drawing.Point(36, 241);
+            this.labelNombre.Location = new System.Drawing.Point(24, 157);
+            this.labelNombre.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelNombre.Name = "labelNombre";
             this.labelNombre.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelNombre.Size = new System.Drawing.Size(65, 20);
+            this.labelNombre.Size = new System.Drawing.Size(44, 13);
             this.labelNombre.TabIndex = 19;
             this.labelNombre.Text = "Nombre";
             // 
             // labelApellido
             // 
             this.labelApellido.AutoSize = true;
-            this.labelApellido.Location = new System.Drawing.Point(36, 300);
+            this.labelApellido.Location = new System.Drawing.Point(24, 195);
+            this.labelApellido.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelApellido.Name = "labelApellido";
             this.labelApellido.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelApellido.Size = new System.Drawing.Size(65, 20);
+            this.labelApellido.Size = new System.Drawing.Size(44, 13);
             this.labelApellido.TabIndex = 20;
             this.labelApellido.Text = "Apellido";
             // 
             // labelDNI
             // 
             this.labelDNI.AutoSize = true;
-            this.labelDNI.Location = new System.Drawing.Point(36, 360);
+            this.labelDNI.Location = new System.Drawing.Point(24, 234);
+            this.labelDNI.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelDNI.Name = "labelDNI";
             this.labelDNI.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelDNI.Size = new System.Drawing.Size(37, 20);
+            this.labelDNI.Size = new System.Drawing.Size(26, 13);
             this.labelDNI.TabIndex = 21;
             this.labelDNI.Text = "DNI";
             // 
             // textBoxApellido
             // 
-            this.textBoxApellido.Location = new System.Drawing.Point(233, 296);
-            this.textBoxApellido.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBoxApellido.Location = new System.Drawing.Point(155, 192);
+            this.textBoxApellido.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.textBoxApellido.Name = "textBoxApellido";
-            this.textBoxApellido.Size = new System.Drawing.Size(167, 26);
+            this.textBoxApellido.Size = new System.Drawing.Size(113, 20);
             this.textBoxApellido.TabIndex = 22;
             // 
             // textBoxDNI
             // 
-            this.textBoxDNI.Location = new System.Drawing.Point(233, 360);
-            this.textBoxDNI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBoxDNI.Location = new System.Drawing.Point(155, 234);
+            this.textBoxDNI.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.textBoxDNI.Name = "textBoxDNI";
-            this.textBoxDNI.Size = new System.Drawing.Size(167, 26);
+            this.textBoxDNI.Size = new System.Drawing.Size(113, 20);
             this.textBoxDNI.TabIndex = 23;
             // 
             // dateTimePickerFechaIngreso
             // 
-            this.dateTimePickerFechaIngreso.Location = new System.Drawing.Point(233, 418);
-            this.dateTimePickerFechaIngreso.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dateTimePickerFechaIngreso.Location = new System.Drawing.Point(155, 272);
+            this.dateTimePickerFechaIngreso.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.dateTimePickerFechaIngreso.Name = "dateTimePickerFechaIngreso";
-            this.dateTimePickerFechaIngreso.Size = new System.Drawing.Size(224, 26);
+            this.dateTimePickerFechaIngreso.Size = new System.Drawing.Size(151, 20);
             this.dateTimePickerFechaIngreso.TabIndex = 24;
+            // 
+            // btnMenuPrincipal
+            // 
+            this.btnMenuPrincipal.BackColor = System.Drawing.SystemColors.Control;
+            this.btnMenuPrincipal.Location = new System.Drawing.Point(447, 12);
+            this.btnMenuPrincipal.Name = "btnMenuPrincipal";
+            this.btnMenuPrincipal.Size = new System.Drawing.Size(89, 23);
+            this.btnMenuPrincipal.TabIndex = 25;
+            this.btnMenuPrincipal.Text = "Menú Principal";
+            this.btnMenuPrincipal.UseVisualStyleBackColor = false;
+            this.btnMenuPrincipal.Click += new System.EventHandler(this.btnMenuPrincipal_Click);
             // 
             // FormModificarPersona
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(822, 565);
+            this.ClientSize = new System.Drawing.Size(548, 367);
+            this.Controls.Add(this.btnMenuPrincipal);
             this.Controls.Add(this.dateTimePickerFechaIngreso);
             this.Controls.Add(this.textBoxDNI);
             this.Controls.Add(this.textBoxApellido);
@@ -184,9 +203,9 @@
             this.Controls.Add(this.labelFechaDeIngreso);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "FormModificarPersona";
-            this.Text = "FormModificarPersona";
+            this.Text = "Modificar Persona";
             this.Load += new System.EventHandler(this.FormModificarPersona_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -208,5 +227,6 @@
         private System.Windows.Forms.TextBox textBoxApellido;
         private System.Windows.Forms.TextBox textBoxDNI;
         private System.Windows.Forms.DateTimePicker dateTimePickerFechaIngreso;
+        private System.Windows.Forms.Button btnMenuPrincipal;
     }
 }

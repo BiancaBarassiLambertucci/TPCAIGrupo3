@@ -12,8 +12,8 @@ namespace TemplateTPCorto
 {
     public partial class FormSupervisor : Form
     {
-        private string usuario;
-        private string legajoUsuario;
+        public string usuario;
+        public string legajoUsuario;
 
         public FormSupervisor(string usuario, string legajoUsuario)
         {
@@ -24,8 +24,10 @@ namespace TemplateTPCorto
 
         private void button2_Click(object sender, EventArgs e)
         {
+            this.Hide();
             FormDesbloquearCredencial formCambio3 = new FormDesbloquearCredencial();
             formCambio3.ShowDialog();
+            this.Show();
         }
 
         //private string nombreUsuario;

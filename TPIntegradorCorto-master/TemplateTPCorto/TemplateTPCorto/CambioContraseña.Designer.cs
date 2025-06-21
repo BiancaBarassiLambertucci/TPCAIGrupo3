@@ -59,7 +59,7 @@
             // textBoxNuevaContraseña
             // 
             this.textBoxNuevaContraseña.Location = new System.Drawing.Point(22, 119);
-            this.textBoxNuevaContraseña.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxNuevaContraseña.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxNuevaContraseña.Name = "textBoxNuevaContraseña";
             this.textBoxNuevaContraseña.Size = new System.Drawing.Size(141, 20);
             this.textBoxNuevaContraseña.TabIndex = 2;

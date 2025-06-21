@@ -38,10 +38,9 @@
             // 
             // btnModificarPersona
             // 
-            this.btnModificarPersona.Location = new System.Drawing.Point(201, 131);
-            this.btnModificarPersona.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnModificarPersona.Location = new System.Drawing.Point(134, 85);
             this.btnModificarPersona.Name = "btnModificarPersona";
-            this.btnModificarPersona.Size = new System.Drawing.Size(216, 35);
+            this.btnModificarPersona.Size = new System.Drawing.Size(144, 23);
             this.btnModificarPersona.TabIndex = 0;
             this.btnModificarPersona.Text = "Modificar Persona";
             this.btnModificarPersona.UseVisualStyleBackColor = true;
@@ -49,10 +48,9 @@
             // 
             // btnDesbloquearCredencial
             // 
-            this.btnDesbloquearCredencial.Location = new System.Drawing.Point(201, 191);
-            this.btnDesbloquearCredencial.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnDesbloquearCredencial.Location = new System.Drawing.Point(134, 124);
             this.btnDesbloquearCredencial.Name = "btnDesbloquearCredencial";
-            this.btnDesbloquearCredencial.Size = new System.Drawing.Size(216, 35);
+            this.btnDesbloquearCredencial.Size = new System.Drawing.Size(144, 23);
             this.btnDesbloquearCredencial.TabIndex = 1;
             this.btnDesbloquearCredencial.Text = "Desbloquear Credencial";
             this.btnDesbloquearCredencial.UseVisualStyleBackColor = true;
@@ -60,10 +58,9 @@
             // 
             // btnCambiarContraseñaPropia
             // 
-            this.btnCambiarContraseñaPropia.Location = new System.Drawing.Point(201, 251);
-            this.btnCambiarContraseñaPropia.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnCambiarContraseñaPropia.Location = new System.Drawing.Point(134, 163);
             this.btnCambiarContraseñaPropia.Name = "btnCambiarContraseñaPropia";
-            this.btnCambiarContraseñaPropia.Size = new System.Drawing.Size(216, 35);
+            this.btnCambiarContraseñaPropia.Size = new System.Drawing.Size(144, 23);
             this.btnCambiarContraseñaPropia.TabIndex = 2;
             this.btnCambiarContraseñaPropia.Text = "Cambiar Contraseña";
             this.btnCambiarContraseñaPropia.UseVisualStyleBackColor = true;
@@ -73,18 +70,18 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(142, 83);
+            this.label1.Location = new System.Drawing.Point(95, 42);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(305, 25);
+            this.label1.Size = new System.Drawing.Size(221, 17);
             this.label1.TabIndex = 3;
             this.label1.Text = "Bienvenido al sistema, Supervisor";
             // 
             // btnCerrarSesión
             // 
-            this.btnCerrarSesión.Location = new System.Drawing.Point(429, 325);
-            this.btnCerrarSesión.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnCerrarSesión.Location = new System.Drawing.Point(12, 208);
             this.btnCerrarSesión.Name = "btnCerrarSesión";
-            this.btnCerrarSesión.Size = new System.Drawing.Size(153, 35);
+            this.btnCerrarSesión.Size = new System.Drawing.Size(102, 23);
             this.btnCerrarSesión.TabIndex = 4;
             this.btnCerrarSesión.Text = "Cerrar Sesión";
             this.btnCerrarSesión.UseVisualStyleBackColor = true;
@@ -92,18 +89,17 @@
             // 
             // FormSupervisor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(589, 374);
+            this.ClientSize = new System.Drawing.Size(393, 243);
             this.Controls.Add(this.btnCerrarSesión);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCambiarContraseñaPropia);
             this.Controls.Add(this.btnDesbloquearCredencial);
             this.Controls.Add(this.btnModificarPersona);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormSupervisor";
-            this.Text = "FormSupervisor";
+            this.Text = "Menú Supervisor";
             this.Load += new System.EventHandler(this.FormSupervisor_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

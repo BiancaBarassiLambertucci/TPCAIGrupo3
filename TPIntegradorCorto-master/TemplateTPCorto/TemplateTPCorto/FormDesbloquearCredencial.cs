@@ -41,7 +41,7 @@ namespace TemplateTPCorto
             DataBaseUtils dbUtils = new DataBaseUtils();
             string legajo = dbUtils.BuscarValorEnCSV("credenciales.csv", 1, usuario, 0);
             string fechaAltaStr = dbUtils.BuscarValorEnCSV("credenciales.csv", 1, usuario, 3);
-            string legajoUsuario; // Falta guardar el legajo del solicitante
+            string legajoUsuario;
        
             DateTime fechaAlta = DateTime.ParseExact(fechaAltaStr, "d/M/yyyy", CultureInfo.InvariantCulture);
      
@@ -95,6 +95,10 @@ namespace TemplateTPCorto
 
         }
 
+        private void btnMenuPrincipal_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
     
 }

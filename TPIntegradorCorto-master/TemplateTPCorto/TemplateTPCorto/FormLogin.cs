@@ -44,6 +44,7 @@ namespace TemplateTPCorto
             if (resultadoValidacion != null)
             {
                 MessageBox.Show(resultadoValidacion);
+                return;
             }
 
             List<string> usuarios = neg.BuscarRegistro(); 
@@ -76,7 +77,7 @@ namespace TemplateTPCorto
                     {
                         if (legajoCredencial == legajoBloqueado)
                         {
-                            MessageBox.Show("No puede ingresar, su usario se encuentra bloqueado.");
+                            MessageBox.Show("No puede ingresar, su usuario se encuentra bloqueado.");
                             return;
                         }
                     }
@@ -120,8 +121,7 @@ namespace TemplateTPCorto
                     }
                     else // Usuario encontrado, pero la contraseña es incorrecta.
                     {
-                        neg.RegistrarIntento(legajoCredencial); 
-                        //MessageBox.Show("Se guardo el legajo " + legajoCredencial + " a la lista de intentos fallidos");
+                        neg.RegistrarIntento(legajoCredencial);
 
                         List<string> listaIntentos = neg.ListaIntentos(); 
                         int contador = 0;
@@ -143,13 +143,9 @@ namespace TemplateTPCorto
                             neg.BloquearUsuario(legajoCredencial); // Agrego el legajo del usuario al archivo 'usuario_bloqueado' usando el método BloquearUsuario
                             MessageBox.Show("Usted superó los intentos de ingreso permitidos. Su usuario ha sido bloqueado");
                             break;
-
                         }
-                        else
-                        {
                             MessageBox.Show("Usuario o contraseña incorrectos.");
                             break;
-                        }
                     }
 
                 }
@@ -158,7 +154,7 @@ namespace TemplateTPCorto
 
             if (usuarioEncontrado != true)
             {
-                MessageBox.Show("Usuario no encontrado");
+                MessageBox.Show("Usuario o contraseña incorrectos.");
                 return;
             }
 
