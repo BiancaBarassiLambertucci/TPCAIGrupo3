@@ -339,7 +339,7 @@ namespace TemplateTPCorto
                 /*
                 else
                 {
-                    // Confirmación con los datos enviados
+                    // Testeo confirmación con los datos enviados
                     MessageBox.Show($"Producto enviado correctamente a la API:\n\n{json}", "Confirmación API");
                 }
                 */
@@ -395,7 +395,9 @@ namespace TemplateTPCorto
             if (realProd == null || qty > realProd.Stock)
             {
                 MessageBox.Show("No hay suficiente stock.");
-                fila.Cells[e.ColumnIndex].Value = disp.Cantidad;
+                fila.Cells[e.ColumnIndex].Value = null;
+                dgvCarrito.CurrentCell = fila.Cells[e.ColumnIndex];
+                dgvCarrito.BeginEdit(true);
                 return;
             }
 

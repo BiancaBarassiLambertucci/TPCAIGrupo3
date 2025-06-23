@@ -175,7 +175,7 @@ namespace Persistencia.DataBase
                     //sw.WriteLine(Environment.NewLine);
                     sw.WriteLine(nuevoRegistro);
                 }
-                //Console.WriteLine("Registro agregado correctamente.");
+                
             }
             catch (Exception e)
             {
@@ -227,7 +227,6 @@ namespace Persistencia.DataBase
             try
             {
                 File.WriteAllLines(rutaArchivo, lineasActualizadas.ToArray());
-                //Console.WriteLine("Se actualizó la contraseña del usuario " + usuario);
             }
             catch (Exception ex) 
             {
@@ -257,12 +256,10 @@ namespace Persistencia.DataBase
             try
             {
                 File.WriteAllLines(rutaArchivo, lineasActualizadas.ToArray());
-                //Console.WriteLine("Se actualizó la ultima fecha de login para el usuario " + usuario);
             }
             catch (Exception e)
             {
                 //Console.WriteLine("Error al actualizar la ultima fecha de login del usuario " + e.Message);
-
             }
         }
 
@@ -305,7 +302,6 @@ namespace Persistencia.DataBase
                 try
                 {
                     File.WriteAllLines(rutaArchivo, lineasActualizadas.ToArray());
-                    //Console.WriteLine("Se actualizó la ultima fecha de login para el usuario " + usuario);
                 }
                 catch (Exception e)
                 {
@@ -319,12 +315,12 @@ namespace Persistencia.DataBase
         {
             List<string> registros = BuscarRegistro(archivo);
 
-            foreach (string linea in registros.Skip(1)) //Salteo el encabezado
+            foreach (string linea in registros.Skip(1)) 
             {
                 string[] campos = linea.Split(';');
-                if (campos.Length > Math.Max(columnaBuscar, columnaResultado))//Me aseguro que tenga suficientes columnas el archivo
+                if (campos.Length > Math.Max(columnaBuscar, columnaResultado))
                 {
-                    if (campos[columnaBuscar].Trim().ToLower() == valor.Trim().ToLower()) //Busco la fila donde el valor de esta columna sea igual al que estoy buscando
+                    if (campos[columnaBuscar].Trim().ToLower() == valor.Trim().ToLower()) 
                     {
                         return campos[columnaResultado].Trim();
                     }
