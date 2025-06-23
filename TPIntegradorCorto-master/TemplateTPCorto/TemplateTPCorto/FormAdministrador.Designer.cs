@@ -38,8 +38,8 @@
             // 
             // btnAprobar
             // 
-            this.btnAprobar.Location = new System.Drawing.Point(67, 227);
-            this.btnAprobar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAprobar.Location = new System.Drawing.Point(204, 225);
+            this.btnAprobar.Margin = new System.Windows.Forms.Padding(2);
             this.btnAprobar.Name = "btnAprobar";
             this.btnAprobar.Size = new System.Drawing.Size(126, 27);
             this.btnAprobar.TabIndex = 0;
@@ -49,8 +49,8 @@
             // 
             // btnRechazar
             // 
-            this.btnRechazar.Location = new System.Drawing.Point(224, 227);
-            this.btnRechazar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnRechazar.Location = new System.Drawing.Point(361, 225);
+            this.btnRechazar.Margin = new System.Windows.Forms.Padding(2);
             this.btnRechazar.Name = "btnRechazar";
             this.btnRechazar.Size = new System.Drawing.Size(126, 27);
             this.btnRechazar.TabIndex = 1;
@@ -62,15 +62,15 @@
             // 
             this.CambiosPendientes.FormattingEnabled = true;
             this.CambiosPendientes.Location = new System.Drawing.Point(26, 23);
-            this.CambiosPendientes.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CambiosPendientes.Margin = new System.Windows.Forms.Padding(2);
             this.CambiosPendientes.Name = "CambiosPendientes";
-            this.CambiosPendientes.Size = new System.Drawing.Size(369, 186);
+            this.CambiosPendientes.Size = new System.Drawing.Size(638, 186);
             this.CambiosPendientes.TabIndex = 2;
             // 
             // btnCerrarSesión
             // 
             this.btnCerrarSesión.Location = new System.Drawing.Point(11, 277);
-            this.btnCerrarSesión.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCerrarSesión.Margin = new System.Windows.Forms.Padding(2);
             this.btnCerrarSesión.Name = "btnCerrarSesión";
             this.btnCerrarSesión.Size = new System.Drawing.Size(82, 21);
             this.btnCerrarSesión.TabIndex = 3;
@@ -80,8 +80,8 @@
             // 
             // btnCambiarContraseña
             // 
-            this.btnCambiarContraseña.Location = new System.Drawing.Point(143, 271);
-            this.btnCambiarContraseña.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCambiarContraseña.Location = new System.Drawing.Point(280, 269);
+            this.btnCambiarContraseña.Margin = new System.Windows.Forms.Padding(2);
             this.btnCambiarContraseña.Name = "btnCambiarContraseña";
             this.btnCambiarContraseña.Size = new System.Drawing.Size(126, 27);
             this.btnCambiarContraseña.TabIndex = 4;
@@ -93,14 +93,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(433, 306);
+            this.ClientSize = new System.Drawing.Size(693, 306);
             this.Controls.Add(this.btnCambiarContraseña);
             this.Controls.Add(this.btnCerrarSesión);
             this.Controls.Add(this.CambiosPendientes);
             this.Controls.Add(this.btnRechazar);
             this.Controls.Add(this.btnAprobar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormAdministrador";
             this.Text = "Menú Administrador";
             this.Load += new System.EventHandler(this.FormAdministrador_Load);

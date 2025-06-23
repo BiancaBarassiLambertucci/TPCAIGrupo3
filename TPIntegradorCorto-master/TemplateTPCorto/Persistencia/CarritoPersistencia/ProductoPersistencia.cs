@@ -8,7 +8,6 @@ using System.Net.Http;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-//using MongoDB.Bson.IO;
 
 namespace Persistencia.CarritoPersistencia
 {

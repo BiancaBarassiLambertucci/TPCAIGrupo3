@@ -157,6 +157,8 @@ namespace TemplateTPCorto
                 MessageBox.Show("Usuario o contraseña incorrectos.");
                 return;
             }
+            txtUsuario.Clear();
+            txtPassword.Clear();
 
         }
 
