@@ -539,6 +539,25 @@ namespace Persistencia.DataBase
             File.WriteAllLines(archivo, nuevasLineas);
         }
 
+        public string ObtenerContraseñaPorUsuario(string nombreArchivo, string nombreUsuario)
+        {
+            List<string> listado = BuscarRegistro(nombreArchivo);
+
+            for (int i = 1; i < listado.Count; i++)
+            {
+                string linea = listado[i];
+                string[] campos = linea.Split(';');
+
+                if (campos.Length < 3) continue;
+
+                if (campos[1].Trim().ToLower() == nombreUsuario.Trim().ToLower())
+                {
+                    return campos[2].Trim();
+                }
+            }
+            return null;
+        }
+
     }
 }
     

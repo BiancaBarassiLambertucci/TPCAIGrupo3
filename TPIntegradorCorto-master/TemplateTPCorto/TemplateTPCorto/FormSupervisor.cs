@@ -32,8 +32,10 @@ namespace TemplateTPCorto
 
         private void btnCambiarContraseñaPropia_Click(object sender, EventArgs e)
         {
+            this.Hide();
             FormCambioContraseña formCambio = new FormCambioContraseña(usuario);
             formCambio.ShowDialog();
+            this.Show();
         }
 
         private void FormSupervisor_Load(object sender, EventArgs e)
@@ -43,8 +45,10 @@ namespace TemplateTPCorto
 
         private void btnModificarPersona_Click(object sender, EventArgs e)
         {
+            this.Hide();
             FormModificarPersona formModificar = new FormModificarPersona(legajoUsuario);
             formModificar.ShowDialog();
+            this.Show();
         }
 
         private void btnCerrarSesión_Click(object sender, EventArgs e)

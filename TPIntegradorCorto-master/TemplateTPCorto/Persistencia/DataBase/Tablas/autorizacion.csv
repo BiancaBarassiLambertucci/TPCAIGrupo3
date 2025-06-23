@@ -13,3 +13,5 @@ idOperacion;tipoOperacion;estado;legajoSolicitante;fechaSolicitud;legajoAutoriza
 19;Modificar persona;Rechazado;2222;21/6/2025;3333;21/6/2025
 20;Modificar persona;Aprobado;2222;22/6/2025;3333;22/6/2025
 21;Desbloquear credencial;Aprobado;1111;22/6/2025;3333;22/6/2025
+22;Modificar persona;Rechazado;2222;22/6/2025;3333;23/6/2025
+23;Desbloquear credencial;Aprobado;1111;22/6/2025;3333;23/6/2025

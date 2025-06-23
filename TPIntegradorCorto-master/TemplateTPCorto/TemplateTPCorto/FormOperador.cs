@@ -28,17 +28,19 @@ namespace TemplateTPCorto
 
         private void btnCargarVenta_Click(object sender, EventArgs e)
         {
-            FormVentas formVentas = new FormVentas();
             this.Hide();
+            FormVentas formVentas = new FormVentas();
             formVentas.ShowDialog();
+            this.Show();
         }
 
         private void cambiarContraseña_Click(object sender, EventArgs e)
         {
-            FormCambioContraseña formCambio = new FormCambioContraseña(usuario);
             this.Hide();
+            FormCambioContraseña formCambio = new FormCambioContraseña(usuario);
             formCambio.ShowDialog();
-        }     
+            this.Show();
+        }
 
         private void label1_Click(object sender, EventArgs e)
         {

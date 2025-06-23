@@ -26,17 +26,17 @@ namespace Negocio
             return null;
         }
 
-        private DataBaseUtils db = new DataBaseUtils();
+        private DataBaseUtils dbUtils = new DataBaseUtils();
 
         public string ObtenerPerfil(string nombreUsuario)
         {
-            string legajo = db.BuscarValorEnCSV("credenciales.csv", 1, nombreUsuario, 0);
+            string legajo = dbUtils.BuscarValorEnCSV("credenciales.csv", 1, nombreUsuario, 0);
             if (string.IsNullOrEmpty(legajo))
                 return null; //Si no hay legajo, termino el método
-            string idPerfil = db.BuscarValorEnCSV("usuario_perfil.csv", 0, legajo, 1);
+            string idPerfil = dbUtils.BuscarValorEnCSV("usuario_perfil.csv", 0, legajo, 1);
             if (string.IsNullOrEmpty(idPerfil))
                 return null; //Si no hay perfil, termino el método
-            string nombrePerfil = db.BuscarValorEnCSV("perfil.csv", 0, idPerfil, 1);
+            string nombrePerfil = dbUtils.BuscarValorEnCSV("perfil.csv", 0, idPerfil, 1);
             return nombrePerfil;
         }
 
@@ -47,7 +47,6 @@ namespace Negocio
 
             try
             {
-                DataBaseUtils dbUtils = new DataBaseUtils();
                 dbUtils.BorrarIntentos(nombreArchivo, legajo, fechaActual);
             }
             catch (Exception ex)
@@ -59,20 +58,15 @@ namespace Negocio
 
         public void RegistrarIntento(string legajo)
         {
-            // Guardo la fecha actual
             string fechaActual = DateTime.Now.ToString("d/M/yyyy");
 
-            // Creo la línea que se va a agregar
             string registro = $"{legajo};{fechaActual}";
 
-            // Uso el método AgregarRegistro (del DataBaseUtils) para sumar el registro al archivo "login_intentos.csv"
-            DataBaseUtils dbUtils = new DataBaseUtils();
             dbUtils.AgregarRegistro("login_intentos.csv", registro);
         }
 
         public List<string> BuscarBloqueados() // Este método busca en el archivo usuario_bloqueado.csv
         {
-            DataBaseUtils dbUtils = new DataBaseUtils();
             List<string> listaBloqueados = dbUtils.BuscarRegistro("usuario_bloqueado.csv");
 
             if (File.Exists("usuario_bloqueado.csv"))
@@ -93,20 +87,17 @@ namespace Negocio
 
         public List<String> BuscarRegistro()
         {
-            DataBaseUtils dbUtils = new DataBaseUtils();
             List<string> registros = dbUtils.BuscarRegistro("credenciales.csv");
             return registros;
         }
 
         public void BloquearUsuario(string legajo)
         {
-            DataBaseUtils dbUtils = new DataBaseUtils();
-            dbUtils.AgregarRegistro("usuario_bloqueado.csv", legajo); // Agrego el legajo al archivo 'usuario_bloqueado.csv'
+            dbUtils.AgregarRegistro("usuario_bloqueado.csv", legajo);
         }
 
         public List<string> ListaIntentos()
         {
-            DataBaseUtils dbUtils = new DataBaseUtils();
             List<string> intentos = dbUtils.BuscarRegistro("login_intentos.csv"); // Crea una lista en base a los datos que trae el método BuscarRegistro.
             return intentos;
         }
@@ -115,15 +106,15 @@ namespace Negocio
         {
             string mensaje = null;
 
-            if (string.IsNullOrWhiteSpace(usuario)) // Validamos que se haya ingresado un usuario
+            if (string.IsNullOrWhiteSpace(usuario))
             {
                 mensaje = "Debe ingresar el usuario para poder ingresar.";
 
-            } else if (string.IsNullOrWhiteSpace(contraseña)) // Validamos que se haya ingresado una contraseña
+            } else if (string.IsNullOrWhiteSpace(contraseña))
             {
                 mensaje = "Debe ingresar la contraseña para poder ingresar.";
 
-            } else if (contraseña.Length < 8) //Longitud de password (mayor igual a 8) 
+            } else if (contraseña.Length < 8)
             {
               mensaje = "La contraseña debe tener 8 o más caracteres.";
             }
@@ -131,6 +122,31 @@ namespace Negocio
             return mensaje;
         }
 
-       
+        public void ActualizarUltimoLogin(string usuario)
+        {
+            dbUtils.ActualizarLogin("credenciales.csv", usuario, DateTime.Now);
+        }
+
+        public string ValidarNuevaContraseña(string usuario, string nuevaContraseña)
+        {
+            if (string.IsNullOrWhiteSpace(nuevaContraseña))
+                return "Debe ingresar una nueva contraseña para ingresar.";
+
+            if (nuevaContraseña.Length < 8)
+                return "La contraseña debe tener 8 o más caracteres.";
+
+            string contraseñaActual = dbUtils.ObtenerContraseñaPorUsuario("credenciales.csv", usuario);
+
+            if (contraseñaActual == nuevaContraseña)
+                return "La nueva contraseña debe ser distinta a la anterior.";
+
+            return null;
+        }
+
+        public void ActualizarCredencial(string usuario, string nuevaContraseña)
+        {
+            dbUtils.ActualizarCredencial(usuario, nuevaContraseña);
+        }
+
     }
 }

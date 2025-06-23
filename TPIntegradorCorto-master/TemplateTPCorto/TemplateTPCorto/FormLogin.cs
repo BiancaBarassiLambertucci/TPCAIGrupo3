@@ -112,6 +112,7 @@ namespace TemplateTPCorto
                             else
                             {
                                 neg.EliminarIntentosDelDia(legajoCredencial);
+                                neg.ActualizarUltimoLogin(usuarioCredencial);
                                 MessageBox.Show("¡Acceso concedido!");
                                 RedirigirPorPefil(perfil, usuarioTxt, legajoCredencial);
                             }
@@ -200,5 +201,9 @@ namespace TemplateTPCorto
             }
         }
 
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

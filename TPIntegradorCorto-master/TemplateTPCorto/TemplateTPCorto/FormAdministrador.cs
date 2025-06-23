@@ -234,7 +234,8 @@ namespace TemplateTPCorto
         {
             this.Hide();
             FormCambioContraseña formCambio = new FormCambioContraseña(usuario);
-            formCambio.Show();
+            formCambio.ShowDialog();
+            this.Show();
         }
     }
 }
